@@ -1,0 +1,404 @@
+<meta name="dash-one-writer">
+<style>
+  .pf { display: grid; gap: var(--cds-gap-xl); font-family: var(--font-anthropic-sans); color: var(--color-fg); }
+  .pf-head { display: grid; gap: var(--cds-gap-sm); }
+  .pf-title { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; text-wrap: balance; }
+  .pf-lede { margin: 0; max-width: 72ch; line-height: 1.7; color: var(--color-fg-muted); }
+  .pf-lede b { color: var(--color-fg); font-weight: 600; }
+  .pf-asof { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: 0; }
+
+  .pf-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr)); gap: var(--cds-gap-md); }
+  .pf-tile { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-md) var(--cds-pad-lg); display: grid; gap: var(--cds-gap-xs); }
+  .pf-tile-label { display: flex; align-items: center; gap: var(--cds-gap-xs); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .pf-tile-num { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .pf-tile-note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+
+  .pf-dot { width: .55rem; height: .55rem; border-radius: 50%; flex: none; background: var(--cds-chart-muted); display: inline-block; }
+  .pf-dot.red { background: var(--color-bad); }
+  .pf-dot.yellow { background: var(--color-warn); }
+  .pf-dot.green { background: var(--color-ok); }
+
+  .pf-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); display: grid; gap: var(--cds-gap-md); min-width: 0; container-type: inline-size; }
+  .pf-card h2 { margin: 0; font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); }
+  .pf-card-note { margin: 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.6; max-width: 80ch; }
+
+  .pf-controls { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm); align-items: center; }
+  .pf-seg { display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs); }
+  .pf-filter { font: inherit; font-size: var(--cds-font-size-caption); display: inline-flex; align-items: center; gap: var(--cds-gap-xs); padding: var(--cds-pad-xs) var(--cds-pad-sm); border: 1px solid var(--color-border-line); border-radius: 999px; background: transparent; color: var(--color-fg); cursor: pointer; }
+  .pf-filter[aria-pressed="true"] { background: var(--color-fg); color: var(--color-bg); border-color: var(--color-fg); }
+  .pf-filter:focus-visible, .pf-search:focus-visible, .pf-check input:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 2px; }
+  .pf-check { display: inline-flex; align-items: center; gap: var(--cds-gap-xs); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); cursor: pointer; }
+  .pf-search { font: inherit; font-size: var(--cds-font-size-caption); padding: var(--cds-pad-xs) var(--cds-pad-sm); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); background: var(--color-bg); color: var(--color-fg); min-width: 0; flex: 1 1 12rem; max-width: 20rem; }
+
+  .pf-tablewrap { overflow: auto; max-height: 38rem; border-top: 1px solid var(--color-border-line); }
+  .pf-table { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+  .pf-table th { position: sticky; top: 0; background: var(--color-panel); text-align: left; font-weight: var(--cds-font-weight-medium); color: var(--color-fg-muted); padding: var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); white-space: nowrap; z-index: 1; }
+  .pf-table td { padding: var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); vertical-align: top; }
+  .pf-table td:nth-child(n+4):nth-child(-n+7) { white-space: nowrap; }
+  .pf-table a { color: var(--color-fg); text-decoration: none; font-weight: var(--cds-font-weight-medium); word-break: break-word; }
+  .pf-table a:hover { text-decoration: underline; }
+  .pf-table tr.row-red td:first-child { box-shadow: inset 3px 0 0 var(--color-bad); }
+  .pf-table tr.row-yellow td:first-child { box-shadow: inset 3px 0 0 var(--color-warn); }
+  .pf-table tr.row-green td:first-child { box-shadow: inset 3px 0 0 var(--color-ok); }
+  .pf-table tr.row-unknown td:first-child { box-shadow: inset 3px 0 0 var(--cds-chart-muted); }
+  .pf-muted { color: var(--color-fg-muted); }
+
+  .pf-pill { display: inline-flex; align-items: center; gap: .35rem; font-weight: var(--cds-font-weight-medium); white-space: nowrap; }
+  .pf-pill::before { content: ""; width: .5rem; height: .5rem; border-radius: 50%; background: var(--cds-chart-muted); flex: none; }
+  .pf-pill.st-red::before { background: var(--color-bad); }
+  .pf-pill.st-yellow::before { background: var(--color-warn); }
+  .pf-pill.st-green::before { background: var(--color-ok); }
+  .pf-ver { display: inline-block; padding: 1px var(--cds-pad-xs); border-radius: var(--cds-radius); }
+  .pf-ver.st-red { color: var(--color-bad); font-weight: var(--cds-font-weight-medium); }
+  .pf-ver.st-yellow { color: var(--color-warn); font-weight: var(--cds-font-weight-medium); }
+  .pf-ver.st-green { color: var(--color-ok); }
+  .pf-ver.st-unknown { color: var(--color-fg-muted); font-style: italic; }
+  .pf-ver.st-na { color: var(--color-fg-muted); opacity: .7; }
+  .pf-empty { margin: 0; padding: var(--cds-pad-md) 0; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+
+  @container (max-width: 780px) {
+    .pf-table .c-kind, .pf-table .c-note { display: none; }
+  }
+
+  .pf-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-md); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: 0; padding: 0; list-style: none; }
+  .pf-legend li { display: inline-flex; align-items: center; gap: var(--cds-gap-xs); }
+  .pf-sw { width: 1.1rem; height: .55rem; border-radius: 2px; background: var(--cds-chart-muted); display: inline-block; }
+  .pf-sw.light { opacity: .4; }
+  .pf-sw.red { background: var(--color-bad); }
+  .pf-sw.yellow { background: var(--color-warn); }
+  .pf-sw.green { background: var(--color-ok); }
+
+  .pf-gantt { position: relative; min-height: 46rem; }
+  .pf-gantt svg { display: block; overflow: visible; }
+  .pf-gantt .g-red { fill: var(--color-bad); }
+  .pf-gantt .g-yellow { fill: var(--color-warn); }
+  .pf-gantt .g-green { fill: var(--color-ok); }
+  .pf-gantt .g-label { fill: var(--color-fg); font-size: 12px; }
+  .pf-gantt .g-use { fill: var(--color-fg-muted); font-size: 12px; }
+  .pf-gantt .g-tick { fill: var(--color-fg-muted); font-size: 11px; }
+  .pf-gantt .g-grid { stroke: var(--cds-chart-grid); stroke-width: 1; }
+  .pf-gantt .g-today { stroke: var(--color-fg); stroke-width: 1.5; stroke-dasharray: 4 3; }
+  .pf-gantt .g-today-label { fill: var(--color-fg); font-size: 11px; font-weight: 600; }
+  .pf-gantt .g-row.unused { opacity: .38; }
+  .pf-gantt .g-row:hover .g-hit, .pf-gantt .g-row.on .g-hit { fill: var(--cds-chart-grid); }
+  .pf-gantt .g-hit { fill: transparent; }
+  .pf-tip { position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: var(--cds-font-size-caption); line-height: 1.6; white-space: nowrap; z-index: 2; }
+  .pf-tip .t-head { color: var(--cds-text-secondary); }
+  .pf-fail { display: flex; align-items: center; justify-content: center; gap: var(--cds-gap-xs); min-height: 8rem; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+  .pf-fail::before { content: ""; width: .375rem; height: .375rem; border-radius: 50%; background: var(--color-bad); }
+
+  [data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
+  [data-dash-source-state=empty] { color: transparent; }
+</style>
+
+<div class="pf">
+  <header class="pf-head">
+    <h1 class="pf-title" id="top">প্রজেক্ট পোর্টফোলিও স্বাস্থ্য</h1>
+    <p class="pf-lede">
+      <b data-draw="sum" data-source="summary" data-field="text" data-where="status=total">—</b>টি প্রজেক্টের মধ্যে
+      <b data-draw="sum" data-source="summary" data-field="text" data-where="status=red">—</b>টির কোনো অংশের সাপোর্ট শেষ হয়ে গেছে বা
+      <b data-draw="sum" data-source="summary" data-field="text" data-where="status=redDays">—</b> দিনের মধ্যে শেষ হচ্ছে।
+      <span data-draw="nextwrap">পরের সময়সীমা <b data-draw="next" data-source="next" data-field="label">—</b>,
+      <b data-draw="next" data-source="next" data-field="dateText">—</b>
+      (<b data-draw="next" data-source="next" data-field="daysText">—</b> দিন বাকি), ব্যবহার করছে
+      <b data-draw="next" data-source="next" data-field="projectsText">—</b>টি প্রজেক্ট।</span>
+      <b data-draw="sum" data-source="summary" data-field="text" data-where="status=gaps">—</b>টি প্রজেক্টে অন্তত একটি ভার্সন (প্রায়ই Node বা ডাটাবেস সার্ভার) কোথাও লেখা নেই।
+    </p>
+    <p class="pf-asof">হিসাব আজকের তারিখ ধরে: <span data-draw="sum" data-source="summary" data-field="text" data-where="status=asof">—</span>। লাল মানে সাপোর্ট শেষ বা <span data-draw="sum" data-source="summary" data-field="text" data-where="status=redDays">—</span> দিনের মধ্যে শেষ, হলুদ মানে <span data-draw="sum" data-source="summary" data-field="text" data-where="status=yellowDays">—</span> দিনের মধ্যে, সবুজ মানে তার পরে।</p>
+  </header>
+
+  <section class="pf-tiles" aria-label="সারাংশ">
+    <div class="pf-tile">
+      <span class="pf-tile-label"><span class="pf-dot red"></span>লাল</span>
+      <span class="pf-tile-num" data-draw="sum" data-source="summary" data-field="text" data-where="status=red">—</span>
+      <span class="pf-tile-note">এখনই আপগ্রেড দরকার</span>
+    </div>
+    <div class="pf-tile">
+      <span class="pf-tile-label"><span class="pf-dot yellow"></span>হলুদ</span>
+      <span class="pf-tile-num" data-draw="sum" data-source="summary" data-field="text" data-where="status=yellow">—</span>
+      <span class="pf-tile-note">এক বছরের মধ্যে পরিকল্পনা</span>
+    </div>
+    <div class="pf-tile">
+      <span class="pf-tile-label"><span class="pf-dot green"></span>সবুজ</span>
+      <span class="pf-tile-num" data-draw="sum" data-source="summary" data-field="text" data-where="status=green">—</span>
+      <span class="pf-tile-note">জানা অংশগুলো নিরাপদ</span>
+    </div>
+    <div class="pf-tile">
+      <span class="pf-tile-label"><span class="pf-dot"></span>অজানা</span>
+      <span class="pf-tile-num" data-draw="sum" data-source="summary" data-field="text" data-where="status=unknown">—</span>
+      <span class="pf-tile-note">কোনো ভার্সন ঘোষিত নেই</span>
+    </div>
+  </section>
+
+  <section class="pf-card" id="projects">
+    <h2>প্রজেক্ট অনুযায়ী অবস্থা</h2>
+    <p class="pf-card-note">PHP হলো composer.json-এর সর্বনিম্ন অনুমোদিত ভার্সন। Laravel অ্যাপে composer.lock-এ লক করা ভার্সন, প্যাকেজে সর্বোচ্চ সমর্থিত ভার্সন। Node আসে .nvmrc বা engines থেকে, ডাটাবেস আসে .env.example থেকে। সার্ভারে আসলে কোন ভার্সন চলছে, তা রিপোতে থাকে না।</p>
+    <div class="pf-controls">
+      <div class="pf-seg" role="group" aria-label="অবস্থা ফিল্টার">
+        <button type="button" class="pf-filter" data-f="all" aria-pressed="true">সব</button>
+        <button type="button" class="pf-filter" data-f="red" aria-pressed="false"><span class="pf-dot red"></span>লাল</button>
+        <button type="button" class="pf-filter" data-f="yellow" aria-pressed="false"><span class="pf-dot yellow"></span>হলুদ</button>
+        <button type="button" class="pf-filter" data-f="green" aria-pressed="false"><span class="pf-dot green"></span>সবুজ</button>
+        <button type="button" class="pf-filter" data-f="unknown" aria-pressed="false"><span class="pf-dot"></span>অজানা</button>
+      </div>
+      <label class="pf-check" for="pf-active"><input type="checkbox" id="pf-active">শুধু গত ১২ মাসে কমিট হওয়া</label>
+      <input type="search" id="pf-q" class="pf-search" placeholder="রিপো বা ধরন খুঁজুন" aria-label="রিপো বা ধরন খুঁজুন">
+    </div>
+    <div class="pf-tablewrap">
+      <table class="pf-table" data-source="health" data-row-key="repo">
+        <thead>
+          <tr>
+            <th data-field="repo">প্রজেক্ট</th>
+            <th data-field="statusText">অবস্থা</th>
+            <th data-field="reason">কারণ</th>
+            <th data-field="php">PHP</th>
+            <th data-field="laravel">Laravel</th>
+            <th data-field="node">Node</th>
+            <th data-field="db">ডাটাবেস</th>
+            <th data-field="lastCommit">সর্বশেষ কমিট</th>
+            <th data-field="kind" class="c-kind">ধরন</th>
+            <th data-field="note" class="c-note">নোট</th>
+          </tr>
+        </thead>
+        <tbody data-draw="rows"></tbody>
+      </table>
+    </div>
+    <p class="pf-empty" hidden>এই ফিল্টারে কোনো প্রজেক্ট নেই।</p>
+  </section>
+
+  <section class="pf-card" id="calendar">
+    <h2>সাপোর্ট ক্যালেন্ডার</h2>
+    <p class="pf-card-note">প্রতিটি রিলিজ কবে এসেছে, কবে সক্রিয় সাপোর্ট শেষ, আর কবে সিকিউরিটি সাপোর্টও শেষ। ডানে লেখা আছে কয়টি প্রজেক্ট সেই ভার্সন ব্যবহার করছে। ঝাপসা সারিগুলো কোনো প্রজেক্টে নেই, শুধু ডাটাবেস সার্ভার মেলানোর জন্য রাখা।</p>
+    <ul class="pf-legend">
+      <li><span class="pf-sw green"></span>সক্রিয় সাপোর্ট</li>
+      <li><span class="pf-sw green light"></span>শুধু সিকিউরিটি ফিক্স</li>
+      <li><span class="pf-sw red"></span>লাল</li>
+      <li><span class="pf-sw yellow"></span>হলুদ</li>
+      <li><span class="pf-sw green"></span>সবুজ</li>
+    </ul>
+    <div class="pf-gantt" data-draw="gantt" data-source="usage"></div>
+  </section>
+</div>
+
+<script>
+  dash.calc('health', {
+    title: 'প্রজেক্টের সাপোর্ট অবস্থা',
+    description: 'প্রতিটি প্রজেক্টের ভার্সন সাপোর্ট ক্যালেন্ডারের সাথে মিলিয়ে আজকের তারিখে লাল, হলুদ বা সবুজ ধরা হয়েছে; সবচেয়ে খারাপ অংশটিই প্রজেক্টের অবস্থা।',
+    inputs: ['projects', 'eol'],
+    fn: (projects, eol) => {
+      const RED = 90, YELLOW = 365, DAY = 864e5;
+      const now = new Date(), today = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+      const bn = (n) => n.toLocaleString('bn-BD');
+      const date = (s) => new Intl.DateTimeFormat('bn-BD', {day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC'}).format(new Date(s));
+      const rank = {red: 3, yellow: 2, green: 1, unknown: 0, na: -1};
+      const names = {red: 'লাল', yellow: 'হলুদ', green: 'সবুজ', unknown: 'অজানা'};
+      const judge = (product, cycle) => {
+        const e = eol.find((x) => x.product === product && x.cycle === cycle);
+        if (!e) return {status: 'unknown', text: cycle + ' · ক্যালেন্ডারে নেই'};
+        const days = Math.round((Date.parse(e.eol) - today) / DAY);
+        const status = days <= RED ? 'red' : days <= YELLOW ? 'yellow' : 'green';
+        const when = days < 0 ? date(e.eol) + '-এ শেষ' : days <= YELLOW ? bn(days) + ' দিন বাকি' : date(e.eol) + ' পর্যন্ত';
+        return {status, days, key: e.key, label: product + ' ' + cycle, text: cycle + ' · ' + when + (e.approx ? ' (আনুমানিক)' : '')};
+      };
+      const na = (text) => ({status: 'na', text});
+      const unknown = (text) => ({status: 'unknown', text});
+      const rows = projects.map((p) => {
+        const laravelish = p.kind.startsWith('Laravel');
+        const php = p.php ? judge('PHP', p.php) : laravelish ? unknown('উল্লেখ নেই') : na('প্রযোজ্য নয়');
+        const laravel = p.laravel ? judge('Laravel', p.laravel) : na('প্রযোজ্য নয়');
+        const node = p.node ? judge('Node.js', p.node) : (p.nodeHint || !laravelish) ? unknown('উল্লেখ নেই') : na('প্রযোজ্য নয়');
+        const db = !p.db ? na('প্রযোজ্য নয়') : p.db === 'SQLite' ? na('SQLite · ফাইলভিত্তিক') : p.dbVersion ? judge(p.db, p.dbVersion) : unknown(p.db + ' · সার্ভার ভার্সন অজানা');
+        const parts = [php, laravel, node, db];
+        const status = parts.reduce((a, b) => (rank[b.status] > rank[a] ? b.status : a), 'unknown');
+        const known = parts.filter((x) => x.days !== undefined);
+        const reason = status === 'unknown' ? 'কোনো ভার্সন ঘোষিত নেই'
+          : status === 'green' ? 'জানা সব অংশ নিরাপদ'
+          : parts.filter((x) => x.status === status).map((x) => x.label).join(', ');
+        const note = [
+          p.nodeFrom ? 'Node: ' + p.nodeFrom : p.nodeHint ? p.nodeHint : '',
+          p.kind.includes('প্যাকেজ') && p.laravelFrom ? 'Laravel: ' + p.laravelFrom : '',
+          p.laravelLocked ? 'লক: ' + p.laravelLocked : '',
+        ].filter(Boolean).join(' · ');
+        return {
+          repo: p.repo, kind: p.kind, status, statusText: names[status], reason,
+          php: php.text, phpStatus: php.status, laravel: laravel.text, laravelStatus: laravel.status,
+          node: node.text, nodeStatus: node.status, db: db.text, dbStatus: db.status,
+          lastCommit: date(p.lastCommit), active: today - Date.parse(p.lastCommit) <= 365 * DAY,
+          note, hasUnknown: parts.some((x) => x.status === 'unknown'),
+          keys: known.map((x) => x.key), soonest: known.length ? Math.min(...known.map((x) => x.days)) : null,
+          lastISO: p.lastCommit, redDays: RED, yellowDays: YELLOW,
+        };
+      });
+      return rows.sort((a, b) => rank[b.status] - rank[a.status]
+        || (a.soonest ?? 1e9) - (b.soonest ?? 1e9) || b.lastISO.localeCompare(a.lastISO));
+    },
+  });
+
+  dash.calc('summary', {
+    title: 'অবস্থা অনুযায়ী গণনা',
+    description: 'কয়টি প্রজেক্ট লাল, হলুদ, সবুজ বা অজানা, আর কয়টিতে কোনো ভার্সন লেখা নেই।',
+    inputs: ['health'],
+    fn: (health) => {
+      const bn = (n) => n.toLocaleString('bn-BD');
+      const count = (f) => { const n = health.filter(f).length; return {count: n, text: bn(n)}; };
+      const asof = new Intl.DateTimeFormat('bn-BD', {day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC'}).format(new Date());
+      return [
+        {status: 'total', count: health.length, text: bn(health.length)},
+        ...['red', 'yellow', 'green', 'unknown'].map((s) => ({status: s, ...count((h) => h.status === s)})),
+        {status: 'gaps', ...count((h) => h.hasUnknown)},
+        {status: 'redDays', count: health[0]?.redDays ?? null, text: bn(health[0]?.redDays ?? 0)},
+        {status: 'yellowDays', count: health[0]?.yellowDays ?? null, text: bn(health[0]?.yellowDays ?? 0)},
+        {status: 'asof', count: null, text: asof},
+      ];
+    },
+  });
+
+  dash.calc('usage', {
+    title: 'ভার্সনভিত্তিক ব্যবহার',
+    description: 'সাপোর্ট ক্যালেন্ডারের প্রতিটি রিলিজ কয়টি প্রজেক্টে ব্যবহৃত, আর আজকের হিসাবে সেটির রং।',
+    inputs: ['health', 'eol'],
+    fn: (health, eol) => {
+      const RED = 90, YELLOW = 365, now = new Date();
+      const today = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+      return eol.map((e) => {
+        const days = Math.round((Date.parse(e.eol) - today) / 864e5);
+        return {...e, days, status: days <= RED ? 'red' : days <= YELLOW ? 'yellow' : 'green',
+          projects: health.filter((h) => h.keys.includes(e.key)).length};
+      });
+    },
+  });
+
+  dash.calc('next', {
+    title: 'পরের সাপোর্ট-শেষ',
+    description: 'যে ভার্সন অন্তত একটি প্রজেক্টে আছে, তাদের মধ্যে যার সাপোর্ট সবচেয়ে আগে শেষ হবে।',
+    inputs: ['usage'],
+    fn: (usage) => {
+      const bn = (n) => n.toLocaleString('bn-BD');
+      const u = usage.filter((x) => x.projects > 0 && x.days >= 0).sort((a, b) => a.days - b.days)[0];
+      if (!u) return [];
+      return [{key: u.key, label: u.key, days: u.days, daysText: bn(u.days), projects: u.projects, projectsText: bn(u.projects),
+        dateText: new Intl.DateTimeFormat('bn-BD', {day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC'}).format(new Date(u.eol))}];
+    },
+  });
+
+  dash.draw('sum', (el) => {
+    const d = dash.data('summary');
+    const st = (el.dataset.where || '').split('=')[1];
+    const r = d.status === 'ok' ? d.data.find((x) => x.status === st) : null;
+    el.textContent = r ? r.text : '—';
+    el.classList.toggle('dash-skeleton', d.status === 'loading');
+  });
+
+  dash.draw('next', (el) => {
+    const d = dash.data('next');
+    const r = d.status === 'ok' ? d.data[0] : null;
+    el.textContent = r ? r[el.dataset.field] : '—';
+    el.classList.toggle('dash-skeleton', d.status === 'loading');
+  });
+
+  dash.draw('nextwrap', (el) => {
+    const d = dash.data('next');
+    el.hidden = d.status === 'ok' && d.data.length === 0;
+  });
+
+  window.pfState = {f: 'all', active: false, q: ''};
+  document.querySelectorAll('.pf-filter').forEach((b) => b.addEventListener('click', () => {
+    window.pfState.f = b.dataset.f;
+    document.querySelectorAll('.pf-filter').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    dash.draw('rows');
+  }));
+  document.querySelectorAll('#pf-active').forEach((c) => c.addEventListener('change', () => { window.pfState.active = c.checked; dash.draw('rows'); }));
+  document.querySelectorAll('#pf-q').forEach((i) => i.addEventListener('input', () => { window.pfState.q = i.value; dash.draw('rows'); }));
+
+  dash.draw('rows', (tb) => {
+    const h = dash.data('health');
+    tb.replaceChildren();
+    const empties = document.querySelectorAll('.pf-empty');
+    if (h.status !== 'ok') { empties.forEach((e) => { e.hidden = true; }); return; }
+    const s = window.pfState, q = s.q.trim().toLowerCase();
+    const rows = h.data.filter((r) => (s.f === 'all' || r.status === s.f) && (!s.active || r.active)
+      && (!q || (r.repo + ' ' + r.kind).toLowerCase().includes(q)));
+    for (const r of rows) {
+      const tr = document.createElement('tr');
+      tr.className = 'row-' + r.status;
+      const td = (cls) => { const c = document.createElement('td'); if (cls) c.className = cls; tr.append(c); return c; };
+      const span = (cell, text, cls) => { const sp = document.createElement('span'); sp.className = cls; sp.textContent = text; cell.append(sp); };
+      const a = document.createElement('a');
+      a.href = 'https://github.com/' + r.repo; a.target = '_blank'; a.rel = 'noopener'; a.textContent = r.repo;
+      td().append(a);
+      span(td(), r.statusText, 'pf-pill st-' + r.status);
+      td().textContent = r.reason;
+      span(td(), r.php, 'pf-ver st-' + r.phpStatus);
+      span(td(), r.laravel, 'pf-ver st-' + r.laravelStatus);
+      span(td(), r.node, 'pf-ver st-' + r.nodeStatus);
+      span(td(), r.db, 'pf-ver st-' + r.dbStatus);
+      td('pf-muted').textContent = r.lastCommit;
+      td('c-kind').textContent = r.kind;
+      td('c-note pf-muted').textContent = r.note;
+      tb.append(tr);
+    }
+    empties.forEach((e) => { e.hidden = rows.length > 0; });
+  });
+
+  dash.draw('gantt', (el) => {
+    const u = dash.data('usage');
+    el.replaceChildren();
+    el.classList.toggle('dash-skeleton', u.status === 'loading');
+    if (u.status === 'error') { const f = document.createElement('div'); f.className = 'pf-fail'; f.textContent = 'লোড হয়নি'; el.append(f); return; }
+    if (u.status !== 'ok') return;
+    const bn = (n) => n.toLocaleString('bn-BD');
+    const dfmt = new Intl.DateTimeFormat('bn-BD', {day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC'});
+    const order = ['PHP', 'Laravel', 'Node.js', 'MySQL', 'MariaDB', 'PostgreSQL'];
+    const rows = u.data.slice().sort((a, b) => order.indexOf(a.product) - order.indexOf(b.product));
+    const W = Math.max(320, el.clientWidth), rowH = 22, gap = 12, top = 26;
+    let y = top, prev = null;
+    const pos = rows.map((r) => { if (prev && prev !== r.product) y += gap; prev = r.product; const p = y; y += rowH; return p; });
+    const H = y + 8;
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('height', H);
+    const labels = svg.append('g');
+    const maxLabel = d3.max(rows, (r) => { const t = labels.append('text').attr('class', 'g-label').text(r.key); const w = t.node().getComputedTextLength(); t.remove(); return w; }) || 80;
+    const useMax = d3.max(rows, (r) => { if (!r.projects) return 0; const t = labels.append('text').attr('class', 'g-use').text(bn(r.projects) + 'টি প্রজেক্ট'); const w = t.node().getComputedTextLength(); t.remove(); return w; }) || 0;
+    const L = Math.ceil(maxLabel) + 12, R = Math.ceil(useMax) + 12;
+    const d0 = new Date(Date.UTC(2020, 0, 1)), d1 = new Date(Date.UTC(2033, 0, 1));
+    const x = d3.scaleUtc([d0, d1], [L, W - R]);
+    const clamp = (s) => new Date(Math.min(Math.max(Date.parse(s), +d0), +d1));
+    const step = (W - L - R) < 420 ? 4 : (W - L - R) < 720 ? 2 : 1;
+    const ticks = x.ticks(d3.utcYear.every(step));
+    const grid = svg.append('g');
+    grid.selectAll('line').data(ticks).join('line').attr('class', 'g-grid').attr('x1', (d) => x(d)).attr('x2', (d) => x(d)).attr('y1', top - 4).attr('y2', H - 4);
+    grid.selectAll('text').data(ticks).join('text').attr('class', 'g-tick').attr('x', (d) => x(d)).attr('y', 12).attr('text-anchor', 'middle').text((d) => bn(d.getUTCFullYear()).replace(/,/g, ''));
+    const tip = document.createElement('div'); tip.className = 'pf-tip'; tip.hidden = true; el.append(tip);
+    const g = svg.append('g').selectAll('g').data(rows).join('g')
+      .attr('class', (r) => 'g-row' + (r.projects ? '' : ' unused')).attr('transform', (r, i) => `translate(0,${pos[i]})`);
+    g.append('rect').attr('class', 'g-hit').attr('x', 0).attr('y', 0).attr('width', W).attr('height', rowH).attr('rx', 3);
+    g.append('text').attr('class', 'g-label').attr('x', L - 10).attr('y', rowH / 2 + 4).attr('text-anchor', 'end').text((r) => r.key);
+    const bh = 10, by = (rowH - bh) / 2;
+    g.append('rect').attr('class', (r) => 'g-' + r.status).attr('opacity', 0.4)
+      .attr('x', (r) => x(clamp(r.released))).attr('y', by).attr('height', bh).attr('rx', 2)
+      .attr('width', (r) => Math.max(0, x(clamp(r.eol)) - x(clamp(r.released))));
+    g.append('rect').attr('class', (r) => 'g-' + r.status)
+      .attr('x', (r) => x(clamp(r.released))).attr('y', by).attr('height', bh).attr('rx', 2)
+      .attr('width', (r) => Math.max(0, x(clamp(r.activeUntil || r.eol)) - x(clamp(r.released))));
+    g.append('text').attr('class', 'g-use').attr('x', W - R + 8).attr('y', rowH / 2 + 4)
+      .text((r) => (r.projects ? bn(r.projects) + 'টি প্রজেক্ট' : ''));
+    const now = new Date(), tx = x(now);
+    svg.append('line').attr('class', 'g-today').attr('x1', tx).attr('x2', tx).attr('y1', top - 6).attr('y2', H - 4);
+    svg.append('text').attr('class', 'g-today-label').attr('x', tx).attr('y', top - 9).attr('text-anchor', 'middle').text('আজ');
+    const statusName = {red: 'লাল', yellow: 'হলুদ', green: 'সবুজ'};
+    g.on('mouseenter', function (ev, r) {
+      d3.select(this).classed('on', true);
+      tip.replaceChildren();
+      const line = (t, cls) => { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = t; tip.append(d); };
+      line(r.key + (r.approx ? ' (তারিখ আনুমানিক)' : ''), 't-head');
+      line('প্রকাশ: ' + dfmt.format(new Date(r.released)));
+      if (r.activeUntil) line('সক্রিয় সাপোর্ট: ' + dfmt.format(new Date(r.activeUntil)) + ' পর্যন্ত');
+      line('সাপোর্ট শেষ: ' + dfmt.format(new Date(r.eol)) + ' · ' + statusName[r.status]);
+      line(r.projects ? bn(r.projects) + 'টি প্রজেক্টে ব্যবহৃত' : 'কোনো প্রজেক্টে নেই');
+      tip.hidden = false;
+      const i = rows.indexOf(r), tw = tip.offsetWidth, th = tip.offsetHeight;
+      let left = Math.min(Math.max(0, x(clamp(r.eol)) - tw / 2), el.clientWidth - tw);
+      let topPx = pos[i] + rowH + 4; if (topPx + th > H) topPx = pos[i] - th - 4;
+      tip.style.left = left + 'px'; tip.style.top = topPx + 'px';
+    }).on('mouseleave', function () { d3.select(this).classed('on', false); tip.hidden = true; });
+  });
+</script>

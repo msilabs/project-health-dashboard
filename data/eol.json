@@ -1,0 +1,281 @@
+[
+ {
+  "key": "PHP 7.4",
+  "product": "PHP",
+  "cycle": "7.4",
+  "released": "2019-11-28",
+  "activeUntil": "2021-11-28",
+  "eol": "2022-11-28",
+  "approx": false
+ },
+ {
+  "key": "PHP 8.0",
+  "product": "PHP",
+  "cycle": "8.0",
+  "released": "2020-11-26",
+  "activeUntil": "2022-11-26",
+  "eol": "2023-11-26",
+  "approx": false
+ },
+ {
+  "key": "PHP 8.1",
+  "product": "PHP",
+  "cycle": "8.1",
+  "released": "2021-11-25",
+  "activeUntil": "2023-11-25",
+  "eol": "2025-12-31",
+  "approx": false
+ },
+ {
+  "key": "PHP 8.2",
+  "product": "PHP",
+  "cycle": "8.2",
+  "released": "2022-12-08",
+  "activeUntil": "2024-12-31",
+  "eol": "2026-12-31",
+  "approx": false
+ },
+ {
+  "key": "PHP 8.3",
+  "product": "PHP",
+  "cycle": "8.3",
+  "released": "2023-11-23",
+  "activeUntil": "2025-12-31",
+  "eol": "2027-12-31",
+  "approx": false
+ },
+ {
+  "key": "PHP 8.4",
+  "product": "PHP",
+  "cycle": "8.4",
+  "released": "2024-11-21",
+  "activeUntil": "2026-12-31",
+  "eol": "2028-12-31",
+  "approx": false
+ },
+ {
+  "key": "PHP 8.5",
+  "product": "PHP",
+  "cycle": "8.5",
+  "released": "2025-11-20",
+  "activeUntil": "2027-12-31",
+  "eol": "2029-12-31",
+  "approx": false
+ },
+ {
+  "key": "Laravel 8",
+  "product": "Laravel",
+  "cycle": "8",
+  "released": "2020-09-08",
+  "activeUntil": "2022-07-26",
+  "eol": "2023-01-24",
+  "approx": false
+ },
+ {
+  "key": "Laravel 9",
+  "product": "Laravel",
+  "cycle": "9",
+  "released": "2022-02-08",
+  "activeUntil": "2023-08-08",
+  "eol": "2024-02-06",
+  "approx": false
+ },
+ {
+  "key": "Laravel 10",
+  "product": "Laravel",
+  "cycle": "10",
+  "released": "2023-02-14",
+  "activeUntil": "2024-08-06",
+  "eol": "2025-02-04",
+  "approx": false
+ },
+ {
+  "key": "Laravel 11",
+  "product": "Laravel",
+  "cycle": "11",
+  "released": "2024-03-12",
+  "activeUntil": "2025-09-03",
+  "eol": "2026-03-12",
+  "approx": false
+ },
+ {
+  "key": "Laravel 12",
+  "product": "Laravel",
+  "cycle": "12",
+  "released": "2025-02-24",
+  "activeUntil": "2026-08-13",
+  "eol": "2027-02-24",
+  "approx": false
+ },
+ {
+  "key": "Laravel 13",
+  "product": "Laravel",
+  "cycle": "13",
+  "released": "2026-03-17",
+  "activeUntil": "2027-09-17",
+  "eol": "2028-03-17",
+  "approx": true
+ },
+ {
+  "key": "Node.js 18",
+  "product": "Node.js",
+  "cycle": "18",
+  "released": "2022-04-19",
+  "activeUntil": "2023-10-18",
+  "eol": "2025-04-30",
+  "approx": false
+ },
+ {
+  "key": "Node.js 20",
+  "product": "Node.js",
+  "cycle": "20",
+  "released": "2023-04-18",
+  "activeUntil": "2024-10-22",
+  "eol": "2026-04-30",
+  "approx": false
+ },
+ {
+  "key": "Node.js 22",
+  "product": "Node.js",
+  "cycle": "22",
+  "released": "2024-04-24",
+  "activeUntil": "2025-10-21",
+  "eol": "2027-04-30",
+  "approx": false
+ },
+ {
+  "key": "Node.js 24",
+  "product": "Node.js",
+  "cycle": "24",
+  "released": "2025-05-06",
+  "activeUntil": "2026-10-20",
+  "eol": "2028-04-30",
+  "approx": false
+ },
+ {
+  "key": "Node.js 26",
+  "product": "Node.js",
+  "cycle": "26",
+  "released": "2026-04-22",
+  "activeUntil": "2027-10-20",
+  "eol": "2029-04-30",
+  "approx": true
+ },
+ {
+  "key": "MySQL 5.7",
+  "product": "MySQL",
+  "cycle": "5.7",
+  "released": "2015-10-21",
+  "activeUntil": null,
+  "eol": "2023-10-31",
+  "approx": false
+ },
+ {
+  "key": "MySQL 8.0",
+  "product": "MySQL",
+  "cycle": "8.0",
+  "released": "2018-04-19",
+  "activeUntil": null,
+  "eol": "2026-04-30",
+  "approx": false
+ },
+ {
+  "key": "MySQL 8.4",
+  "product": "MySQL",
+  "cycle": "8.4",
+  "released": "2024-04-30",
+  "activeUntil": null,
+  "eol": "2032-04-30",
+  "approx": false
+ },
+ {
+  "key": "MariaDB 10.6",
+  "product": "MariaDB",
+  "cycle": "10.6",
+  "released": "2021-07-06",
+  "activeUntil": null,
+  "eol": "2026-07-06",
+  "approx": false
+ },
+ {
+  "key": "MariaDB 10.11",
+  "product": "MariaDB",
+  "cycle": "10.11",
+  "released": "2023-02-16",
+  "activeUntil": null,
+  "eol": "2028-02-16",
+  "approx": false
+ },
+ {
+  "key": "MariaDB 11.4",
+  "product": "MariaDB",
+  "cycle": "11.4",
+  "released": "2024-05-29",
+  "activeUntil": null,
+  "eol": "2029-05-29",
+  "approx": false
+ },
+ {
+  "key": "MariaDB 11.8",
+  "product": "MariaDB",
+  "cycle": "11.8",
+  "released": "2025-06-04",
+  "activeUntil": null,
+  "eol": "2028-06-04",
+  "approx": false
+ },
+ {
+  "key": "PostgreSQL 13",
+  "product": "PostgreSQL",
+  "cycle": "13",
+  "released": "2020-09-24",
+  "activeUntil": null,
+  "eol": "2025-11-13",
+  "approx": false
+ },
+ {
+  "key": "PostgreSQL 14",
+  "product": "PostgreSQL",
+  "cycle": "14",
+  "released": "2021-09-30",
+  "activeUntil": null,
+  "eol": "2026-11-12",
+  "approx": false
+ },
+ {
+  "key": "PostgreSQL 15",
+  "product": "PostgreSQL",
+  "cycle": "15",
+  "released": "2022-10-13",
+  "activeUntil": null,
+  "eol": "2027-11-11",
+  "approx": false
+ },
+ {
+  "key": "PostgreSQL 16",
+  "product": "PostgreSQL",
+  "cycle": "16",
+  "released": "2023-09-14",
+  "activeUntil": null,
+  "eol": "2028-11-09",
+  "approx": false
+ },
+ {
+  "key": "PostgreSQL 17",
+  "product": "PostgreSQL",
+  "cycle": "17",
+  "released": "2024-09-26",
+  "activeUntil": null,
+  "eol": "2029-11-08",
+  "approx": false
+ },
+ {
+  "key": "PostgreSQL 18",
+  "product": "PostgreSQL",
+  "cycle": "18",
+  "released": "2025-09-25",
+  "activeUntil": null,
+  "eol": "2030-11-14",
+  "approx": false
+ }
+]
