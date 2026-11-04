@@ -8,4 +8,5 @@
 ## Data
 - `data/projects.json`: version info from each GitHub repo (PHP, Laravel, Node, database).
 - `data/eol.json`: release and end-of-life dates for each product version.
-- `index.html`: the dashboard page. It is stored in the Claude Artifact store, and this file is its copy.
+- `index.html`: the static GitHub Pages dashboard. It reads `data/*.json` and does its own calculations, so it needs no Artifact runtime.
+- `artifact/index.html`: the older Claude Artifact version. It uses the `dash` runtime, so it works only inside Claude, not on GitHub Pages.

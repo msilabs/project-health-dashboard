@@ -1,404 +1,355 @@
-<meta name="dash-one-writer">
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>প্রজেক্ট পোর্টফোলিও স্বাস্থ্য</title>
 <style>
-  .pf { display: grid; gap: var(--cds-gap-xl); font-family: var(--font-anthropic-sans); color: var(--color-fg); }
-  .pf-head { display: grid; gap: var(--cds-gap-sm); }
-  .pf-title { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; text-wrap: balance; }
-  .pf-lede { margin: 0; max-width: 72ch; line-height: 1.7; color: var(--color-fg-muted); }
-  .pf-lede b { color: var(--color-fg); font-weight: 600; }
-  .pf-asof { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: 0; }
-
-  .pf-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr)); gap: var(--cds-gap-md); }
-  .pf-tile { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-md) var(--cds-pad-lg); display: grid; gap: var(--cds-gap-xs); }
-  .pf-tile-label { display: flex; align-items: center; gap: var(--cds-gap-xs); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
-  .pf-tile-num { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); font-variant-numeric: tabular-nums; line-height: 1.1; }
-  .pf-tile-note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
-
-  .pf-dot { width: .55rem; height: .55rem; border-radius: 50%; flex: none; background: var(--cds-chart-muted); display: inline-block; }
-  .pf-dot.red { background: var(--color-bad); }
-  .pf-dot.yellow { background: var(--color-warn); }
-  .pf-dot.green { background: var(--color-ok); }
-
-  .pf-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); display: grid; gap: var(--cds-gap-md); min-width: 0; container-type: inline-size; }
-  .pf-card h2 { margin: 0; font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); }
-  .pf-card-note { margin: 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.6; max-width: 80ch; }
-
-  .pf-controls { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm); align-items: center; }
-  .pf-seg { display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs); }
-  .pf-filter { font: inherit; font-size: var(--cds-font-size-caption); display: inline-flex; align-items: center; gap: var(--cds-gap-xs); padding: var(--cds-pad-xs) var(--cds-pad-sm); border: 1px solid var(--color-border-line); border-radius: 999px; background: transparent; color: var(--color-fg); cursor: pointer; }
-  .pf-filter[aria-pressed="true"] { background: var(--color-fg); color: var(--color-bg); border-color: var(--color-fg); }
-  .pf-filter:focus-visible, .pf-search:focus-visible, .pf-check input:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 2px; }
-  .pf-check { display: inline-flex; align-items: center; gap: var(--cds-gap-xs); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); cursor: pointer; }
-  .pf-search { font: inherit; font-size: var(--cds-font-size-caption); padding: var(--cds-pad-xs) var(--cds-pad-sm); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); background: var(--color-bg); color: var(--color-fg); min-width: 0; flex: 1 1 12rem; max-width: 20rem; }
-
-  .pf-tablewrap { overflow: auto; max-height: 38rem; border-top: 1px solid var(--color-border-line); }
-  .pf-table { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
-  .pf-table th { position: sticky; top: 0; background: var(--color-panel); text-align: left; font-weight: var(--cds-font-weight-medium); color: var(--color-fg-muted); padding: var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); white-space: nowrap; z-index: 1; }
-  .pf-table td { padding: var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); vertical-align: top; }
-  .pf-table td:nth-child(n+4):nth-child(-n+7) { white-space: nowrap; }
-  .pf-table a { color: var(--color-fg); text-decoration: none; font-weight: var(--cds-font-weight-medium); word-break: break-word; }
-  .pf-table a:hover { text-decoration: underline; }
-  .pf-table tr.row-red td:first-child { box-shadow: inset 3px 0 0 var(--color-bad); }
-  .pf-table tr.row-yellow td:first-child { box-shadow: inset 3px 0 0 var(--color-warn); }
-  .pf-table tr.row-green td:first-child { box-shadow: inset 3px 0 0 var(--color-ok); }
-  .pf-table tr.row-unknown td:first-child { box-shadow: inset 3px 0 0 var(--cds-chart-muted); }
-  .pf-muted { color: var(--color-fg-muted); }
-
-  .pf-pill { display: inline-flex; align-items: center; gap: .35rem; font-weight: var(--cds-font-weight-medium); white-space: nowrap; }
-  .pf-pill::before { content: ""; width: .5rem; height: .5rem; border-radius: 50%; background: var(--cds-chart-muted); flex: none; }
-  .pf-pill.st-red::before { background: var(--color-bad); }
-  .pf-pill.st-yellow::before { background: var(--color-warn); }
-  .pf-pill.st-green::before { background: var(--color-ok); }
-  .pf-ver { display: inline-block; padding: 1px var(--cds-pad-xs); border-radius: var(--cds-radius); }
-  .pf-ver.st-red { color: var(--color-bad); font-weight: var(--cds-font-weight-medium); }
-  .pf-ver.st-yellow { color: var(--color-warn); font-weight: var(--cds-font-weight-medium); }
-  .pf-ver.st-green { color: var(--color-ok); }
-  .pf-ver.st-unknown { color: var(--color-fg-muted); font-style: italic; }
-  .pf-ver.st-na { color: var(--color-fg-muted); opacity: .7; }
-  .pf-empty { margin: 0; padding: var(--cds-pad-md) 0; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
-
-  @container (max-width: 780px) {
-    .pf-table .c-kind, .pf-table .c-note { display: none; }
+  :root {
+    color-scheme: light;
+    --bg: #f7f6f3; --panel: #ffffff; --fg: #1d1c1a; --muted: #6b6963; --line: #e3e1db;
+    --red: #b93a0b; --yellow: #9a6410; --green: #2c7a4b; --unknown: #8d8a82;
+    --red-bg: #fbe9e1; --yellow-bg: #fbf1dc; --green-bg: #e3f2e8; --unknown-bg: #ecebe7;
+    --font: system-ui, -apple-system, "Segoe UI", "Noto Sans Bengali", "Hind Siliguri", sans-serif;
+    --serif: Georgia, "Noto Serif Bengali", "Noto Serif", serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #161513; --panel: #1f1e1b; --fg: #ecebe7; --muted: #a3a097; --line: #34322d;
+      --red: #f0834a; --yellow: #e6b34d; --green: #6cc088; --unknown: #8f8c84;
+      --red-bg: #3a2119; --yellow-bg: #3a2f18; --green-bg: #1d3327; --unknown-bg: #2a2925;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #161513; --panel: #1f1e1b; --fg: #ecebe7; --muted: #a3a097; --line: #34322d;
+    --red: #f0834a; --yellow: #e6b34d; --green: #6cc088; --unknown: #8f8c84;
+    --red-bg: #3a2119; --yellow-bg: #3a2f18; --green-bg: #1d3327; --unknown-bg: #2a2925;
   }
 
-  .pf-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-md); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: 0; padding: 0; list-style: none; }
-  .pf-legend li { display: inline-flex; align-items: center; gap: var(--cds-gap-xs); }
-  .pf-sw { width: 1.1rem; height: .55rem; border-radius: 2px; background: var(--cds-chart-muted); display: inline-block; }
-  .pf-sw.light { opacity: .4; }
-  .pf-sw.red { background: var(--color-bad); }
-  .pf-sw.yellow { background: var(--color-warn); }
-  .pf-sw.green { background: var(--color-ok); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 15px; line-height: 1.6; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding-block: 32px 48px; padding-inline: max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 24px; }
 
-  .pf-gantt { position: relative; min-height: 46rem; }
-  .pf-gantt svg { display: block; overflow: visible; }
-  .pf-gantt .g-red { fill: var(--color-bad); }
-  .pf-gantt .g-yellow { fill: var(--color-warn); }
-  .pf-gantt .g-green { fill: var(--color-ok); }
-  .pf-gantt .g-label { fill: var(--color-fg); font-size: 12px; }
-  .pf-gantt .g-use { fill: var(--color-fg-muted); font-size: 12px; }
-  .pf-gantt .g-tick { fill: var(--color-fg-muted); font-size: 11px; }
-  .pf-gantt .g-grid { stroke: var(--cds-chart-grid); stroke-width: 1; }
-  .pf-gantt .g-today { stroke: var(--color-fg); stroke-width: 1.5; stroke-dasharray: 4 3; }
-  .pf-gantt .g-today-label { fill: var(--color-fg); font-size: 11px; font-weight: 600; }
-  .pf-gantt .g-row.unused { opacity: .38; }
-  .pf-gantt .g-row:hover .g-hit, .pf-gantt .g-row.on .g-hit { fill: var(--cds-chart-grid); }
-  .pf-gantt .g-hit { fill: transparent; }
-  .pf-tip { position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: var(--cds-font-size-caption); line-height: 1.6; white-space: nowrap; z-index: 2; }
-  .pf-tip .t-head { color: var(--cds-text-secondary); }
-  .pf-fail { display: flex; align-items: center; justify-content: center; gap: var(--cds-gap-xs); min-height: 8rem; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
-  .pf-fail::before { content: ""; width: .375rem; height: .375rem; border-radius: 50%; background: var(--color-bad); }
+  h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(1.6rem, 4vw, 2.2rem); margin: 0; line-height: 1.25; text-wrap: balance; }
+  h2 { font-size: 1.05rem; font-weight: 600; margin: 0; }
+  p { margin: 0; }
+  .lede { max-width: 72ch; color: var(--fg); }
+  .muted { color: var(--muted); }
+  .small { font-size: 0.85rem; }
+  .num { font-variant-numeric: tabular-nums; }
 
-  [data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
-  [data-dash-source-state=empty] { color: transparent; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: 12px; }
+  .tile { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 4px; }
+  .tile-label { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--muted); }
+  .tile-num { font-family: var(--serif); font-size: 2rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .tile-note { font-size: 0.8rem; color: var(--muted); }
+
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px; display: grid; gap: 14px; min-width: 0; }
+  .card-note { font-size: 0.88rem; color: var(--muted); max-width: 80ch; }
+
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--unknown); display: inline-block; flex: none; }
+  .dot.red { background: var(--red); } .dot.yellow { background: var(--yellow); } .dot.green { background: var(--green); }
+
+  .controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .btn { font: inherit; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border: 1px solid var(--line); border-radius: 999px; background: transparent; color: var(--fg); cursor: pointer; }
+  .btn[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+  .search { font: inherit; font-size: 0.85rem; padding: 5px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--fg); min-width: 0; flex: 1 1 12rem; max-width: 20rem; }
+  .check { display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; color: var(--muted); cursor: pointer; }
+  button:focus-visible, input:focus-visible, a:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+
+  .tablewrap { overflow: auto; max-height: 36rem; border-top: 1px solid var(--line); }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+  th { position: sticky; top: 0; background: var(--panel); text-align: left; font-weight: 600; color: var(--muted); padding: 8px; border-bottom: 1px solid var(--line); white-space: nowrap; z-index: 1; }
+  td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr.r-red td:first-child { box-shadow: inset 3px 0 0 var(--red); }
+  tr.r-yellow td:first-child { box-shadow: inset 3px 0 0 var(--yellow); }
+  tr.r-green td:first-child { box-shadow: inset 3px 0 0 var(--green); }
+  tr.r-unknown td:first-child { box-shadow: inset 3px 0 0 var(--unknown); }
+  td a { color: var(--fg); font-weight: 600; text-decoration: none; word-break: break-word; }
+  td a:hover { text-decoration: underline; }
+  .pill { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; white-space: nowrap; }
+  .ver { display: inline-block; padding: 1px 6px; border-radius: 6px; white-space: nowrap; }
+  .ver.red { color: var(--red); background: var(--red-bg); font-weight: 600; }
+  .ver.yellow { color: var(--yellow); background: var(--yellow-bg); font-weight: 600; }
+  .ver.green { color: var(--green); background: var(--green-bg); }
+  .ver.unknown { color: var(--muted); background: var(--unknown-bg); font-style: italic; }
+  .ver.na { color: var(--muted); opacity: .7; }
+  .empty { padding: 16px 0; color: var(--muted); }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 0.82rem; color: var(--muted); list-style: none; margin: 0; padding: 0; }
+  .legend li { display: inline-flex; align-items: center; gap: 6px; }
+  .sw { width: 18px; height: 8px; border-radius: 2px; display: inline-block; }
+  .timeline { width: 100%; overflow-x: auto; }
+  .timeline svg { display: block; width: 100%; height: auto; }
+  .timeline text { fill: var(--fg); font-size: 12px; font-family: var(--font); }
+  .timeline .tick { fill: var(--muted); font-size: 11px; }
+  .timeline .use { fill: var(--muted); font-size: 12px; }
+  .timeline .grid { stroke: var(--line); stroke-width: 1; }
+  .timeline .today { stroke: var(--fg); stroke-width: 1.5; stroke-dasharray: 4 3; }
+  .timeline .row.unused { opacity: .38; }
+  footer { font-size: 0.8rem; color: var(--muted); }
 </style>
-
-<div class="pf">
-  <header class="pf-head">
-    <h1 class="pf-title" id="top">প্রজেক্ট পোর্টফোলিও স্বাস্থ্য</h1>
-    <p class="pf-lede">
-      <b data-draw="sum" data-source="summary" data-field="text" data-where="status=total">—</b>টি প্রজেক্টের মধ্যে
-      <b data-draw="sum" data-source="summary" data-field="text" data-where="status=red">—</b>টির কোনো অংশের সাপোর্ট শেষ হয়ে গেছে বা
-      <b data-draw="sum" data-source="summary" data-field="text" data-where="status=redDays">—</b> দিনের মধ্যে শেষ হচ্ছে।
-      <span data-draw="nextwrap">পরের সময়সীমা <b data-draw="next" data-source="next" data-field="label">—</b>,
-      <b data-draw="next" data-source="next" data-field="dateText">—</b>
-      (<b data-draw="next" data-source="next" data-field="daysText">—</b> দিন বাকি), ব্যবহার করছে
-      <b data-draw="next" data-source="next" data-field="projectsText">—</b>টি প্রজেক্ট।</span>
-      <b data-draw="sum" data-source="summary" data-field="text" data-where="status=gaps">—</b>টি প্রজেক্টে অন্তত একটি ভার্সন (প্রায়ই Node বা ডাটাবেস সার্ভার) কোথাও লেখা নেই।
-    </p>
-    <p class="pf-asof">হিসাব আজকের তারিখ ধরে: <span data-draw="sum" data-source="summary" data-field="text" data-where="status=asof">—</span>। লাল মানে সাপোর্ট শেষ বা <span data-draw="sum" data-source="summary" data-field="text" data-where="status=redDays">—</span> দিনের মধ্যে শেষ, হলুদ মানে <span data-draw="sum" data-source="summary" data-field="text" data-where="status=yellowDays">—</span> দিনের মধ্যে, সবুজ মানে তার পরে।</p>
+</head>
+<body>
+<main class="wrap">
+  <header style="display:grid; gap:10px;">
+    <h1>প্রজেক্ট পোর্টফোলিও স্বাস্থ্য</h1>
+    <p class="lede" id="lede">ডেটা লোড হচ্ছে…</p>
+    <p class="muted small" id="asof"></p>
   </header>
 
-  <section class="pf-tiles" aria-label="সারাংশ">
-    <div class="pf-tile">
-      <span class="pf-tile-label"><span class="pf-dot red"></span>লাল</span>
-      <span class="pf-tile-num" data-draw="sum" data-source="summary" data-field="text" data-where="status=red">—</span>
-      <span class="pf-tile-note">এখনই আপগ্রেড দরকার</span>
-    </div>
-    <div class="pf-tile">
-      <span class="pf-tile-label"><span class="pf-dot yellow"></span>হলুদ</span>
-      <span class="pf-tile-num" data-draw="sum" data-source="summary" data-field="text" data-where="status=yellow">—</span>
-      <span class="pf-tile-note">এক বছরের মধ্যে পরিকল্পনা</span>
-    </div>
-    <div class="pf-tile">
-      <span class="pf-tile-label"><span class="pf-dot green"></span>সবুজ</span>
-      <span class="pf-tile-num" data-draw="sum" data-source="summary" data-field="text" data-where="status=green">—</span>
-      <span class="pf-tile-note">জানা অংশগুলো নিরাপদ</span>
-    </div>
-    <div class="pf-tile">
-      <span class="pf-tile-label"><span class="pf-dot"></span>অজানা</span>
-      <span class="pf-tile-num" data-draw="sum" data-source="summary" data-field="text" data-where="status=unknown">—</span>
-      <span class="pf-tile-note">কোনো ভার্সন ঘোষিত নেই</span>
-    </div>
-  </section>
+  <section class="tiles" id="tiles" aria-label="সারাংশ"></section>
 
-  <section class="pf-card" id="projects">
+  <section class="card" id="projects-card">
     <h2>প্রজেক্ট অনুযায়ী অবস্থা</h2>
-    <p class="pf-card-note">PHP হলো composer.json-এর সর্বনিম্ন অনুমোদিত ভার্সন। Laravel অ্যাপে composer.lock-এ লক করা ভার্সন, প্যাকেজে সর্বোচ্চ সমর্থিত ভার্সন। Node আসে .nvmrc বা engines থেকে, ডাটাবেস আসে .env.example থেকে। সার্ভারে আসলে কোন ভার্সন চলছে, তা রিপোতে থাকে না।</p>
-    <div class="pf-controls">
-      <div class="pf-seg" role="group" aria-label="অবস্থা ফিল্টার">
-        <button type="button" class="pf-filter" data-f="all" aria-pressed="true">সব</button>
-        <button type="button" class="pf-filter" data-f="red" aria-pressed="false"><span class="pf-dot red"></span>লাল</button>
-        <button type="button" class="pf-filter" data-f="yellow" aria-pressed="false"><span class="pf-dot yellow"></span>হলুদ</button>
-        <button type="button" class="pf-filter" data-f="green" aria-pressed="false"><span class="pf-dot green"></span>সবুজ</button>
-        <button type="button" class="pf-filter" data-f="unknown" aria-pressed="false"><span class="pf-dot"></span>অজানা</button>
+    <p class="card-note">PHP হলো composer.json-এর সর্বনিম্ন অনুমোদিত ভার্সন। Laravel অ্যাপে composer.lock-এ লক করা ভার্সন, প্যাকেজে সর্বোচ্চ সমর্থিত ভার্সন। Node আসে .nvmrc বা engines থেকে, ডাটাবেস আসে .env.example থেকে। সার্ভারে আসলে কোন ভার্সন চলছে, তা রিপোতে থাকে না।</p>
+    <div class="controls">
+      <div role="group" aria-label="অবস্থা ফিল্টার" style="display:flex; flex-wrap:wrap; gap:8px;">
+        <button class="btn" type="button" data-f="all" aria-pressed="true">সব</button>
+        <button class="btn" type="button" data-f="red" aria-pressed="false"><span class="dot red"></span>লাল</button>
+        <button class="btn" type="button" data-f="yellow" aria-pressed="false"><span class="dot yellow"></span>হলুদ</button>
+        <button class="btn" type="button" data-f="green" aria-pressed="false"><span class="dot green"></span>সবুজ</button>
+        <button class="btn" type="button" data-f="unknown" aria-pressed="false"><span class="dot"></span>অজানা</button>
       </div>
-      <label class="pf-check" for="pf-active"><input type="checkbox" id="pf-active">শুধু গত ১২ মাসে কমিট হওয়া</label>
-      <input type="search" id="pf-q" class="pf-search" placeholder="রিপো বা ধরন খুঁজুন" aria-label="রিপো বা ধরন খুঁজুন">
+      <label class="check"><input type="checkbox" id="active">শুধু গত ১২ মাসে কমিট হওয়া</label>
+      <input type="search" id="q" class="search" placeholder="রিপো বা ধরন খুঁজুন" aria-label="রিপো বা ধরন খুঁজুন">
     </div>
-    <div class="pf-tablewrap">
-      <table class="pf-table" data-source="health" data-row-key="repo">
+    <div class="tablewrap">
+      <table>
         <thead>
           <tr>
-            <th data-field="repo">প্রজেক্ট</th>
-            <th data-field="statusText">অবস্থা</th>
-            <th data-field="reason">কারণ</th>
-            <th data-field="php">PHP</th>
-            <th data-field="laravel">Laravel</th>
-            <th data-field="node">Node</th>
-            <th data-field="db">ডাটাবেস</th>
-            <th data-field="lastCommit">সর্বশেষ কমিট</th>
-            <th data-field="kind" class="c-kind">ধরন</th>
-            <th data-field="note" class="c-note">নোট</th>
+            <th>প্রজেক্ট</th><th>অবস্থা</th><th>কারণ</th><th>PHP</th><th>Laravel</th><th>Node</th><th>ডাটাবেস</th><th>সর্বশেষ কমিট</th>
           </tr>
         </thead>
-        <tbody data-draw="rows"></tbody>
+        <tbody id="rows"></tbody>
       </table>
     </div>
-    <p class="pf-empty" hidden>এই ফিল্টারে কোনো প্রজেক্ট নেই।</p>
+    <p class="empty" id="empty" hidden>এই ফিল্টারে কোনো প্রজেক্ট নেই।</p>
   </section>
 
-  <section class="pf-card" id="calendar">
+  <section class="card" id="timeline-card">
     <h2>সাপোর্ট ক্যালেন্ডার</h2>
-    <p class="pf-card-note">প্রতিটি রিলিজ কবে এসেছে, কবে সক্রিয় সাপোর্ট শেষ, আর কবে সিকিউরিটি সাপোর্টও শেষ। ডানে লেখা আছে কয়টি প্রজেক্ট সেই ভার্সন ব্যবহার করছে। ঝাপসা সারিগুলো কোনো প্রজেক্টে নেই, শুধু ডাটাবেস সার্ভার মেলানোর জন্য রাখা।</p>
-    <ul class="pf-legend">
-      <li><span class="pf-sw green"></span>সক্রিয় সাপোর্ট</li>
-      <li><span class="pf-sw green light"></span>শুধু সিকিউরিটি ফিক্স</li>
-      <li><span class="pf-sw red"></span>লাল</li>
-      <li><span class="pf-sw yellow"></span>হলুদ</li>
-      <li><span class="pf-sw green"></span>সবুজ</li>
+    <p class="card-note">প্রতিটি রিলিজ কবে এসেছে, কবে সক্রিয় সাপোর্ট শেষ, আর কবে সিকিউরিটি সাপোর্টও শেষ। ডানে লেখা আছে কয়টি প্রজেক্ট সেই ভার্সন ব্যবহার করছে। ফিকে সারিগুলো কোনো প্রজেক্টে নেই।</p>
+    <ul class="legend">
+      <li><span class="sw" style="background:var(--green)"></span>সক্রিয় সাপোর্ট (সবুজ)</li>
+      <li><span class="sw" style="background:var(--yellow)"></span>হলুদ</li>
+      <li><span class="sw" style="background:var(--red)"></span>লাল</li>
+      <li><span class="sw" style="background:var(--unknown); opacity:.35"></span>শুধু সিকিউরিটি ফিক্স</li>
     </ul>
-    <div class="pf-gantt" data-draw="gantt" data-source="usage"></div>
+    <div class="timeline" id="timeline"></div>
   </section>
-</div>
+
+  <footer>ডেটা: রিপোর <code>data/projects.json</code> ও <code>data/eol.json</code>। হিসাব হয় পেজ খোলার দিনের তারিখে। সাপোর্ট-শেষের তারিখগুলো প্রকাশিত সাপোর্ট নীতি থেকে নেওয়া; Laravel 13 ও Node 26-এর তারিখ আনুমানিক।</footer>
+</main>
 
 <script>
-  dash.calc('health', {
-    title: 'প্রজেক্টের সাপোর্ট অবস্থা',
-    description: 'প্রতিটি প্রজেক্টের ভার্সন সাপোর্ট ক্যালেন্ডারের সাথে মিলিয়ে আজকের তারিখে লাল, হলুদ বা সবুজ ধরা হয়েছে; সবচেয়ে খারাপ অংশটিই প্রজেক্টের অবস্থা।',
-    inputs: ['projects', 'eol'],
-    fn: (projects, eol) => {
-      const RED = 90, YELLOW = 365, DAY = 864e5;
-      const now = new Date(), today = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
-      const bn = (n) => n.toLocaleString('bn-BD');
-      const date = (s) => new Intl.DateTimeFormat('bn-BD', {day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC'}).format(new Date(s));
-      const rank = {red: 3, yellow: 2, green: 1, unknown: 0, na: -1};
-      const names = {red: 'লাল', yellow: 'হলুদ', green: 'সবুজ', unknown: 'অজানা'};
-      const judge = (product, cycle) => {
-        const e = eol.find((x) => x.product === product && x.cycle === cycle);
-        if (!e) return {status: 'unknown', text: cycle + ' · ক্যালেন্ডারে নেই'};
-        const days = Math.round((Date.parse(e.eol) - today) / DAY);
-        const status = days <= RED ? 'red' : days <= YELLOW ? 'yellow' : 'green';
-        const when = days < 0 ? date(e.eol) + '-এ শেষ' : days <= YELLOW ? bn(days) + ' দিন বাকি' : date(e.eol) + ' পর্যন্ত';
-        return {status, days, key: e.key, label: product + ' ' + cycle, text: cycle + ' · ' + when + (e.approx ? ' (আনুমানিক)' : '')};
+(function () {
+  var RED = 90, YELLOW = 365, DAY = 864e5;
+  var now = new Date();
+  var today = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+  var bn = function (n) { return Number(n).toLocaleString('bn-BD'); };
+  var dShort = new Intl.DateTimeFormat('bn-BD', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+  var dLong = new Intl.DateTimeFormat('bn-BD', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+  var rank = { red: 3, yellow: 2, green: 1, unknown: 0, na: -1 };
+  var names = { red: 'লাল', yellow: 'হলুদ', green: 'সবুজ', unknown: 'অজানা' };
+  var NA = { status: 'na', text: 'প্রযোজ্য নয়' };
+  var UNKNOWN_NOT_SET = { status: 'unknown', text: 'উল্লেখ নেই' };
+
+  function statusOf(days) { return days <= RED ? 'red' : days <= YELLOW ? 'yellow' : 'green'; }
+
+  function judge(eol, product, cycle) {
+    var e = null;
+    for (var i = 0; i < eol.length; i++) { if (eol[i].product === product && eol[i].cycle === cycle) { e = eol[i]; break; } }
+    if (!e) return { status: 'unknown', text: cycle + ' · ক্যালেন্ডারে নেই' };
+    var days = Math.round((Date.parse(e.eol) - today) / DAY);
+    var when = days < 0 ? dShort.format(new Date(e.eol)) + '-এ শেষ'
+      : days <= YELLOW ? bn(days) + ' দিন বাকি'
+      : dShort.format(new Date(e.eol)) + ' পর্যন্ত';
+    return {
+      status: statusOf(days), days: days, key: e.key, released: e.released, eol: e.eol,
+      activeUntil: e.activeUntil, approx: !!e.approx, label: product + ' ' + cycle,
+      text: cycle + ' · ' + when + (e.approx ? ' (আনুমানিক)' : '')
+    };
+  }
+
+  function buildRows(projects, eol) {
+    var rows = projects.map(function (p) {
+      var laravelish = p.kind.indexOf('Laravel') === 0;
+      var php = p.php ? judge(eol, 'PHP', p.php) : (laravelish ? UNKNOWN_NOT_SET : NA);
+      var laravel = p.laravel ? judge(eol, 'Laravel', p.laravel) : NA;
+      var node = p.node ? judge(eol, 'Node.js', p.node) : ((p.nodeHint || !laravelish) ? UNKNOWN_NOT_SET : NA);
+      var db = !p.db ? NA
+        : p.db === 'SQLite' ? { status: 'na', text: 'SQLite · ফাইলভিত্তিক' }
+        : p.dbVersion ? judge(eol, p.db, p.dbVersion)
+        : { status: 'unknown', text: p.db + ' · সার্ভার ভার্সন অজানা' };
+      var parts = [php, laravel, node, db];
+      var st = 'unknown';
+      parts.forEach(function (x) { if (rank[x.status] > rank[st]) st = x.status; });
+      var reason = st === 'unknown' ? 'কোনো ভার্সন ঘোষিত নেই'
+        : st === 'green' ? 'জানা সব অংশ নিরাপদ'
+        : parts.filter(function (x) { return x.status === st; }).map(function (x) { return x.label; }).join(', ');
+      var days = parts.filter(function (x) { return x.days !== undefined; }).map(function (x) { return x.days; });
+      var note = [
+        p.nodeFrom ? 'Node: ' + p.nodeFrom : (p.nodeHint || ''),
+        (p.kind.indexOf('প্যাকেজ') !== -1 && p.laravelFrom) ? 'Laravel: ' + p.laravelFrom : '',
+        p.laravelLocked ? 'লক: ' + p.laravelLocked : ''
+      ].filter(Boolean).join(' · ');
+      return {
+        repo: p.repo, kind: p.kind, st: st, reason: reason, parts: parts, note: note,
+        last: p.lastCommit, lastText: dShort.format(new Date(p.lastCommit)),
+        active: today - Date.parse(p.lastCommit) <= 365 * DAY,
+        soonest: days.length ? Math.min.apply(null, days) : null,
+        hasUnknown: parts.some(function (x) { return x.status === 'unknown'; })
       };
-      const na = (text) => ({status: 'na', text});
-      const unknown = (text) => ({status: 'unknown', text});
-      const rows = projects.map((p) => {
-        const laravelish = p.kind.startsWith('Laravel');
-        const php = p.php ? judge('PHP', p.php) : laravelish ? unknown('উল্লেখ নেই') : na('প্রযোজ্য নয়');
-        const laravel = p.laravel ? judge('Laravel', p.laravel) : na('প্রযোজ্য নয়');
-        const node = p.node ? judge('Node.js', p.node) : (p.nodeHint || !laravelish) ? unknown('উল্লেখ নেই') : na('প্রযোজ্য নয়');
-        const db = !p.db ? na('প্রযোজ্য নয়') : p.db === 'SQLite' ? na('SQLite · ফাইলভিত্তিক') : p.dbVersion ? judge(p.db, p.dbVersion) : unknown(p.db + ' · সার্ভার ভার্সন অজানা');
-        const parts = [php, laravel, node, db];
-        const status = parts.reduce((a, b) => (rank[b.status] > rank[a] ? b.status : a), 'unknown');
-        const known = parts.filter((x) => x.days !== undefined);
-        const reason = status === 'unknown' ? 'কোনো ভার্সন ঘোষিত নেই'
-          : status === 'green' ? 'জানা সব অংশ নিরাপদ'
-          : parts.filter((x) => x.status === status).map((x) => x.label).join(', ');
-        const note = [
-          p.nodeFrom ? 'Node: ' + p.nodeFrom : p.nodeHint ? p.nodeHint : '',
-          p.kind.includes('প্যাকেজ') && p.laravelFrom ? 'Laravel: ' + p.laravelFrom : '',
-          p.laravelLocked ? 'লক: ' + p.laravelLocked : '',
-        ].filter(Boolean).join(' · ');
-        return {
-          repo: p.repo, kind: p.kind, status, statusText: names[status], reason,
-          php: php.text, phpStatus: php.status, laravel: laravel.text, laravelStatus: laravel.status,
-          node: node.text, nodeStatus: node.status, db: db.text, dbStatus: db.status,
-          lastCommit: date(p.lastCommit), active: today - Date.parse(p.lastCommit) <= 365 * DAY,
-          note, hasUnknown: parts.some((x) => x.status === 'unknown'),
-          keys: known.map((x) => x.key), soonest: known.length ? Math.min(...known.map((x) => x.days)) : null,
-          lastISO: p.lastCommit, redDays: RED, yellowDays: YELLOW,
-        };
+    });
+    return rows.sort(function (a, b) {
+      return (rank[b.st] - rank[a.st]) || ((a.soonest === null ? 1e9 : a.soonest) - (b.soonest === null ? 1e9 : b.soonest))
+        || (a.last < b.last ? 1 : a.last > b.last ? -1 : 0);
+    });
+  }
+
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+
+  function renderSummary(rows, eol) {
+    var count = function (s) { return rows.filter(function (r) { return r.st === s; }).length; };
+    var gaps = rows.filter(function (r) { return r.hasUnknown; }).length;
+    var first = null;
+    rows.forEach(function (r) {
+      r.parts.forEach(function (x) {
+        if (x.days !== undefined && x.days >= 0 && (!first || x.days < first.days)) first = x;
       });
-      return rows.sort((a, b) => rank[b.status] - rank[a.status]
-        || (a.soonest ?? 1e9) - (b.soonest ?? 1e9) || b.lastISO.localeCompare(a.lastISO));
-    },
-  });
+    });
+    document.getElementById('asof').textContent = 'হিসাব আজকের তারিখ ধরে: ' + dLong.format(new Date(today)) + '। লাল মানে সাপোর্ট শেষ বা ৯০ দিনের মধ্যে শেষ, হলুদ মানে ৩৬৫ দিনের মধ্যে।';
+    var lede = bn(rows.length) + 'টি প্রজেক্টের মধ্যে ' + bn(count('red')) + 'টির কোনো অংশের সাপোর্ট শেষ বা ৯০ দিনের মধ্যে শেষ হচ্ছে। '
+      + (first ? 'সবচেয়ে আগে শেষ হচ্ছে ' + first.label + ' (' + dShort.format(new Date(first.eol)) + ', ' + bn(first.days) + ' দিন বাকি)। ' : '')
+      + bn(gaps) + 'টি প্রজেক্টে অন্তত একটি ভার্সন কোথাও লেখা নেই।';
+    document.getElementById('lede').textContent = lede;
 
-  dash.calc('summary', {
-    title: 'অবস্থা অনুযায়ী গণনা',
-    description: 'কয়টি প্রজেক্ট লাল, হলুদ, সবুজ বা অজানা, আর কয়টিতে কোনো ভার্সন লেখা নেই।',
-    inputs: ['health'],
-    fn: (health) => {
-      const bn = (n) => n.toLocaleString('bn-BD');
-      const count = (f) => { const n = health.filter(f).length; return {count: n, text: bn(n)}; };
-      const asof = new Intl.DateTimeFormat('bn-BD', {day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC'}).format(new Date());
-      return [
-        {status: 'total', count: health.length, text: bn(health.length)},
-        ...['red', 'yellow', 'green', 'unknown'].map((s) => ({status: s, ...count((h) => h.status === s)})),
-        {status: 'gaps', ...count((h) => h.hasUnknown)},
-        {status: 'redDays', count: health[0]?.redDays ?? null, text: bn(health[0]?.redDays ?? 0)},
-        {status: 'yellowDays', count: health[0]?.yellowDays ?? null, text: bn(health[0]?.yellowDays ?? 0)},
-        {status: 'asof', count: null, text: asof},
-      ];
-    },
-  });
+    var tiles = [
+      { st: 'red', label: 'লাল', note: 'এখনই আপগ্রেড দরকার' },
+      { st: 'yellow', label: 'হলুদ', note: 'এক বছরের মধ্যে পরিকল্পনা' },
+      { st: 'green', label: 'সবুজ', note: 'জানা অংশগুলো নিরাপদ' },
+      { st: 'unknown', label: 'অজানা', note: 'কোনো ভার্সন ঘোষিত নেই' }
+    ];
+    document.getElementById('tiles').innerHTML = tiles.map(function (t) {
+      return '<div class="tile"><span class="tile-label"><span class="dot ' + (t.st === 'unknown' ? '' : t.st) + '"></span>' + t.label
+        + '</span><span class="tile-num">' + bn(count(t.st)) + '</span><span class="tile-note">' + t.note + '</span></div>';
+    }).join('');
+  }
 
-  dash.calc('usage', {
-    title: 'ভার্সনভিত্তিক ব্যবহার',
-    description: 'সাপোর্ট ক্যালেন্ডারের প্রতিটি রিলিজ কয়টি প্রজেক্টে ব্যবহৃত, আর আজকের হিসাবে সেটির রং।',
-    inputs: ['health', 'eol'],
-    fn: (health, eol) => {
-      const RED = 90, YELLOW = 365, now = new Date();
-      const today = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
-      return eol.map((e) => {
-        const days = Math.round((Date.parse(e.eol) - today) / 864e5);
-        return {...e, days, status: days <= RED ? 'red' : days <= YELLOW ? 'yellow' : 'green',
-          projects: health.filter((h) => h.keys.includes(e.key)).length};
-      });
-    },
-  });
+  var state = { f: 'all', active: false, q: '', rows: [] };
 
-  dash.calc('next', {
-    title: 'পরের সাপোর্ট-শেষ',
-    description: 'যে ভার্সন অন্তত একটি প্রজেক্টে আছে, তাদের মধ্যে যার সাপোর্ট সবচেয়ে আগে শেষ হবে।',
-    inputs: ['usage'],
-    fn: (usage) => {
-      const bn = (n) => n.toLocaleString('bn-BD');
-      const u = usage.filter((x) => x.projects > 0 && x.days >= 0).sort((a, b) => a.days - b.days)[0];
-      if (!u) return [];
-      return [{key: u.key, label: u.key, days: u.days, daysText: bn(u.days), projects: u.projects, projectsText: bn(u.projects),
-        dateText: new Intl.DateTimeFormat('bn-BD', {day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC'}).format(new Date(u.eol))}];
-    },
-  });
+  function verCell(x) {
+    return '<span class="ver ' + x.status + '">' + esc(x.text) + '</span>';
+  }
 
-  dash.draw('sum', (el) => {
-    const d = dash.data('summary');
-    const st = (el.dataset.where || '').split('=')[1];
-    const r = d.status === 'ok' ? d.data.find((x) => x.status === st) : null;
-    el.textContent = r ? r.text : '—';
-    el.classList.toggle('dash-skeleton', d.status === 'loading');
-  });
+  function renderTable() {
+    var q = state.q.trim().toLowerCase();
+    var list = state.rows.filter(function (r) {
+      return (state.f === 'all' || r.st === state.f)
+        && (!state.active || r.active)
+        && (!q || (r.repo + ' ' + r.kind).toLowerCase().indexOf(q) !== -1);
+    });
+    document.getElementById('rows').innerHTML = list.map(function (r) {
+      return '<tr class="r-' + r.st + '">'
+        + '<td><a href="https://github.com/' + esc(r.repo) + '" target="_blank" rel="noopener">' + esc(r.repo) + '</a></td>'
+        + '<td><span class="pill">' + names[r.st] + '</span></td>'
+        + '<td>' + esc(r.reason) + '</td>'
+        + '<td>' + verCell(r.parts[0]) + '</td>'
+        + '<td>' + verCell(r.parts[1]) + '</td>'
+        + '<td>' + verCell(r.parts[2]) + '</td>'
+        + '<td>' + verCell(r.parts[3]) + '</td>'
+        + '<td class="muted num">' + esc(r.lastText) + '</td>'
+        + '</tr>';
+    }).join('');
+    document.getElementById('empty').hidden = list.length > 0;
+  }
 
-  dash.draw('next', (el) => {
-    const d = dash.data('next');
-    const r = d.status === 'ok' ? d.data[0] : null;
-    el.textContent = r ? r[el.dataset.field] : '—';
-    el.classList.toggle('dash-skeleton', d.status === 'loading');
-  });
+  function renderTimeline(eol, rows) {
+    var el = document.getElementById('timeline');
+    var W = Math.max(360, el.clientWidth || 720), L = 170, R = 110, rowH = 22, top = 26, gapPx = 10;
+    var order = ['PHP', 'Laravel', 'Node.js', 'MySQL', 'MariaDB', 'PostgreSQL'];
+    var items = eol.slice().sort(function (a, b) { return order.indexOf(a.product) - order.indexOf(b.product); });
+    var used = {};
+    rows.forEach(function (r) { r.parts.forEach(function (x) { if (x.key) used[x.key] = (used[x.key] || 0) + 1; }); });
 
-  dash.draw('nextwrap', (el) => {
-    const d = dash.data('next');
-    el.hidden = d.status === 'ok' && d.data.length === 0;
-  });
+    var d0 = Date.UTC(2020, 0, 1), d1 = Date.UTC(2033, 0, 1);
+    var x = function (t) { return L + (t - d0) / (d1 - d0) * (W - L - R); };
+    var clamp = function (s) { return Math.min(Math.max(Date.parse(s), d0), d1); };
 
-  window.pfState = {f: 'all', active: false, q: ''};
-  document.querySelectorAll('.pf-filter').forEach((b) => b.addEventListener('click', () => {
-    window.pfState.f = b.dataset.f;
-    document.querySelectorAll('.pf-filter').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
-    dash.draw('rows');
-  }));
-  document.querySelectorAll('#pf-active').forEach((c) => c.addEventListener('change', () => { window.pfState.active = c.checked; dash.draw('rows'); }));
-  document.querySelectorAll('#pf-q').forEach((i) => i.addEventListener('input', () => { window.pfState.q = i.value; dash.draw('rows'); }));
+    var y = top, prev = null, ys = items.map(function (it) {
+      if (prev !== null && prev !== it.product) y += gapPx;
+      prev = it.product;
+      var p = y; y += rowH; return p;
+    });
+    var H = y + 8;
+    var step = (W - L - R) < 420 ? 4 : (W - L - R) < 720 ? 2 : 1;
+    var out = ['<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="সাপোর্ট টাইমলাইন">'];
 
-  dash.draw('rows', (tb) => {
-    const h = dash.data('health');
-    tb.replaceChildren();
-    const empties = document.querySelectorAll('.pf-empty');
-    if (h.status !== 'ok') { empties.forEach((e) => { e.hidden = true; }); return; }
-    const s = window.pfState, q = s.q.trim().toLowerCase();
-    const rows = h.data.filter((r) => (s.f === 'all' || r.status === s.f) && (!s.active || r.active)
-      && (!q || (r.repo + ' ' + r.kind).toLowerCase().includes(q)));
-    for (const r of rows) {
-      const tr = document.createElement('tr');
-      tr.className = 'row-' + r.status;
-      const td = (cls) => { const c = document.createElement('td'); if (cls) c.className = cls; tr.append(c); return c; };
-      const span = (cell, text, cls) => { const sp = document.createElement('span'); sp.className = cls; sp.textContent = text; cell.append(sp); };
-      const a = document.createElement('a');
-      a.href = 'https://github.com/' + r.repo; a.target = '_blank'; a.rel = 'noopener'; a.textContent = r.repo;
-      td().append(a);
-      span(td(), r.statusText, 'pf-pill st-' + r.status);
-      td().textContent = r.reason;
-      span(td(), r.php, 'pf-ver st-' + r.phpStatus);
-      span(td(), r.laravel, 'pf-ver st-' + r.laravelStatus);
-      span(td(), r.node, 'pf-ver st-' + r.nodeStatus);
-      span(td(), r.db, 'pf-ver st-' + r.dbStatus);
-      td('pf-muted').textContent = r.lastCommit;
-      td('c-kind').textContent = r.kind;
-      td('c-note pf-muted').textContent = r.note;
-      tb.append(tr);
+    for (var yr = 2020; yr <= 2033; yr += step) {
+      var gx = x(Date.UTC(yr, 0, 1));
+      out.push('<line class="grid" x1="' + gx + '" x2="' + gx + '" y1="' + (top - 4) + '" y2="' + (H - 4) + '"></line>');
+      out.push('<text class="tick" x="' + gx + '" y="12" text-anchor="middle">' + bn(yr) + '</text>');
     }
-    empties.forEach((e) => { e.hidden = rows.length > 0; });
-  });
 
-  dash.draw('gantt', (el) => {
-    const u = dash.data('usage');
-    el.replaceChildren();
-    el.classList.toggle('dash-skeleton', u.status === 'loading');
-    if (u.status === 'error') { const f = document.createElement('div'); f.className = 'pf-fail'; f.textContent = 'লোড হয়নি'; el.append(f); return; }
-    if (u.status !== 'ok') return;
-    const bn = (n) => n.toLocaleString('bn-BD');
-    const dfmt = new Intl.DateTimeFormat('bn-BD', {day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC'});
-    const order = ['PHP', 'Laravel', 'Node.js', 'MySQL', 'MariaDB', 'PostgreSQL'];
-    const rows = u.data.slice().sort((a, b) => order.indexOf(a.product) - order.indexOf(b.product));
-    const W = Math.max(320, el.clientWidth), rowH = 22, gap = 12, top = 26;
-    let y = top, prev = null;
-    const pos = rows.map((r) => { if (prev && prev !== r.product) y += gap; prev = r.product; const p = y; y += rowH; return p; });
-    const H = y + 8;
-    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('height', H);
-    const labels = svg.append('g');
-    const maxLabel = d3.max(rows, (r) => { const t = labels.append('text').attr('class', 'g-label').text(r.key); const w = t.node().getComputedTextLength(); t.remove(); return w; }) || 80;
-    const useMax = d3.max(rows, (r) => { if (!r.projects) return 0; const t = labels.append('text').attr('class', 'g-use').text(bn(r.projects) + 'টি প্রজেক্ট'); const w = t.node().getComputedTextLength(); t.remove(); return w; }) || 0;
-    const L = Math.ceil(maxLabel) + 12, R = Math.ceil(useMax) + 12;
-    const d0 = new Date(Date.UTC(2020, 0, 1)), d1 = new Date(Date.UTC(2033, 0, 1));
-    const x = d3.scaleUtc([d0, d1], [L, W - R]);
-    const clamp = (s) => new Date(Math.min(Math.max(Date.parse(s), +d0), +d1));
-    const step = (W - L - R) < 420 ? 4 : (W - L - R) < 720 ? 2 : 1;
-    const ticks = x.ticks(d3.utcYear.every(step));
-    const grid = svg.append('g');
-    grid.selectAll('line').data(ticks).join('line').attr('class', 'g-grid').attr('x1', (d) => x(d)).attr('x2', (d) => x(d)).attr('y1', top - 4).attr('y2', H - 4);
-    grid.selectAll('text').data(ticks).join('text').attr('class', 'g-tick').attr('x', (d) => x(d)).attr('y', 12).attr('text-anchor', 'middle').text((d) => bn(d.getUTCFullYear()).replace(/,/g, ''));
-    const tip = document.createElement('div'); tip.className = 'pf-tip'; tip.hidden = true; el.append(tip);
-    const g = svg.append('g').selectAll('g').data(rows).join('g')
-      .attr('class', (r) => 'g-row' + (r.projects ? '' : ' unused')).attr('transform', (r, i) => `translate(0,${pos[i]})`);
-    g.append('rect').attr('class', 'g-hit').attr('x', 0).attr('y', 0).attr('width', W).attr('height', rowH).attr('rx', 3);
-    g.append('text').attr('class', 'g-label').attr('x', L - 10).attr('y', rowH / 2 + 4).attr('text-anchor', 'end').text((r) => r.key);
-    const bh = 10, by = (rowH - bh) / 2;
-    g.append('rect').attr('class', (r) => 'g-' + r.status).attr('opacity', 0.4)
-      .attr('x', (r) => x(clamp(r.released))).attr('y', by).attr('height', bh).attr('rx', 2)
-      .attr('width', (r) => Math.max(0, x(clamp(r.eol)) - x(clamp(r.released))));
-    g.append('rect').attr('class', (r) => 'g-' + r.status)
-      .attr('x', (r) => x(clamp(r.released))).attr('y', by).attr('height', bh).attr('rx', 2)
-      .attr('width', (r) => Math.max(0, x(clamp(r.activeUntil || r.eol)) - x(clamp(r.released))));
-    g.append('text').attr('class', 'g-use').attr('x', W - R + 8).attr('y', rowH / 2 + 4)
-      .text((r) => (r.projects ? bn(r.projects) + 'টি প্রজেক্ট' : ''));
-    const now = new Date(), tx = x(now);
-    svg.append('line').attr('class', 'g-today').attr('x1', tx).attr('x2', tx).attr('y1', top - 6).attr('y2', H - 4);
-    svg.append('text').attr('class', 'g-today-label').attr('x', tx).attr('y', top - 9).attr('text-anchor', 'middle').text('আজ');
-    const statusName = {red: 'লাল', yellow: 'হলুদ', green: 'সবুজ'};
-    g.on('mouseenter', function (ev, r) {
-      d3.select(this).classed('on', true);
-      tip.replaceChildren();
-      const line = (t, cls) => { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = t; tip.append(d); };
-      line(r.key + (r.approx ? ' (তারিখ আনুমানিক)' : ''), 't-head');
-      line('প্রকাশ: ' + dfmt.format(new Date(r.released)));
-      if (r.activeUntil) line('সক্রিয় সাপোর্ট: ' + dfmt.format(new Date(r.activeUntil)) + ' পর্যন্ত');
-      line('সাপোর্ট শেষ: ' + dfmt.format(new Date(r.eol)) + ' · ' + statusName[r.status]);
-      line(r.projects ? bn(r.projects) + 'টি প্রজেক্টে ব্যবহৃত' : 'কোনো প্রজেক্টে নেই');
-      tip.hidden = false;
-      const i = rows.indexOf(r), tw = tip.offsetWidth, th = tip.offsetHeight;
-      let left = Math.min(Math.max(0, x(clamp(r.eol)) - tw / 2), el.clientWidth - tw);
-      let topPx = pos[i] + rowH + 4; if (topPx + th > H) topPx = pos[i] - th - 4;
-      tip.style.left = left + 'px'; tip.style.top = topPx + 'px';
-    }).on('mouseleave', function () { d3.select(this).classed('on', false); tip.hidden = true; });
+    items.forEach(function (it, i) {
+      var key = it.product + ' ' + it.cycle;
+      var n = used[it.key] || 0;
+      var st = statusOf(Math.round((Date.parse(it.eol) - today) / DAY));
+      var yy = ys[i], by = yy + (rowH - 10) / 2;
+      var x0 = x(clamp(it.released)), xe = x(clamp(it.eol)), xa = x(clamp(it.activeUntil || it.eol));
+      var cls = 'row' + (n ? '' : ' unused');
+      out.push('<g class="' + cls + '">');
+      out.push('<text x="' + (L - 10) + '" y="' + (yy + rowH / 2 + 4) + '" text-anchor="end">' + esc(it.key) + '</text>');
+      out.push('<rect x="' + x0 + '" y="' + by + '" width="' + Math.max(0, xe - x0) + '" height="10" rx="2" fill="var(--' + st + ')" opacity="0.35"></rect>');
+      out.push('<rect x="' + x0 + '" y="' + by + '" width="' + Math.max(0, xa - x0) + '" height="10" rx="2" fill="var(--' + st + ')"></rect>');
+      out.push('<text class="use" x="' + (W - R + 8) + '" y="' + (yy + rowH / 2 + 4) + '">' + (n ? bn(n) + 'টি প্রজেক্ট' : '') + '</text>');
+      out.push('</g>');
+    });
+
+    var tx = x(today);
+    out.push('<line class="today" x1="' + tx + '" x2="' + tx + '" y1="' + (top - 6) + '" y2="' + (H - 4) + '"></line>');
+    out.push('<text x="' + tx + '" y="' + (top - 9) + '" text-anchor="middle" style="font-weight:600">আজ</text>');
+    out.push('</svg>');
+    el.innerHTML = out.join('');
+  }
+
+  function showError(msg) {
+    document.getElementById('lede').textContent = msg;
+  }
+
+  document.querySelectorAll('[data-f]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      state.f = b.getAttribute('data-f');
+      document.querySelectorAll('[data-f]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      renderTable();
+    });
   });
+  document.getElementById('active').addEventListener('change', function (e) { state.active = e.target.checked; renderTable(); });
+  document.getElementById('q').addEventListener('input', function (e) { state.q = e.target.value; renderTable(); });
+
+  var data = null;
+  Promise.all([
+    fetch('data/projects.json').then(function (r) { if (!r.ok) throw new Error('projects'); return r.json(); }),
+    fetch('data/eol.json').then(function (r) { if (!r.ok) throw new Error('eol'); return r.json(); })
+  ]).then(function (res) {
+    data = { projects: res[0], eol: res[1] };
+    state.rows = buildRows(data.projects, data.eol);
+    renderSummary(state.rows, data.eol);
+    renderTable();
+    renderTimeline(data.eol, state.rows);
+    var t;
+    window.addEventListener('resize', function () {
+      clearTimeout(t);
+      t = setTimeout(function () { renderTimeline(data.eol, state.rows); }, 150);
+    });
+  }).catch(function () {
+    showError('ডেটা লোড হয়নি। data/projects.json আর data/eol.json ফাইল আছে কিনা দেখুন।');
+  });
+})();
 </script>
+</body>
+</html>
