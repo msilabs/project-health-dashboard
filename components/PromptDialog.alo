@@ -1,0 +1,54 @@
+<template>
+    <dialog class="modal" aria-labelledby="prompt-title">
+        <div class="sheet">
+            <div class="sheet-head">
+                <div>
+                    <h2 id="prompt-title">AI প্রম্পট</h2>
+                    <p class="small muted" data-note></p>
+                </div>
+                <button class="btn btn-ghost btn-sm btn-icon" type="button" data-close aria-label="বন্ধ করুন"><Icon name="x" /></button>
+            </div>
+            <div class="sheet-body">
+                <ol class="small" style="margin: 0; padding-left: 1.1rem; display: grid; gap: 0.25rem">
+                    <li>প্রম্পট কপি করুন।</li>
+                    <li>ChatGPT, Claude বা Gemini খুলে পেস্ট করুন।</li>
+                    <li>উত্তরটা নিজের কাছে রাখুন বা শেয়ার করুন; এখানে কিছু বসাতে হবে না।</li>
+                </ol>
+                <textarea rows="12" readonly aria-label="প্রম্পট" data-text></textarea>
+                <p class="small muted">প্রম্পটে প্রজেক্টের URL, হোস্ট, রিপো, owner বা নোট থাকে না।</p>
+            </div>
+            <div class="sheet-foot">
+                <div class="row">
+                    <a class="btn btn-ghost btn-sm" href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT <Icon name="external" /></a>
+                    <a class="btn btn-ghost btn-sm" href="https://claude.ai/new" target="_blank" rel="noopener">Claude <Icon name="external" /></a>
+                    <a class="btn btn-ghost btn-sm" href="https://gemini.google.com/app" target="_blank" rel="noopener">Gemini <Icon name="external" /></a>
+                </div>
+                <button class="btn btn-primary" type="button" data-copy><Icon name="copy" />প্রম্পট কপি করুন</button>
+            </div>
+        </div>
+    </dialog>
+</template>
+
+<script>
+    const P = PHD;
+    const ui = P.ui;
+    const text = $el.querySelector('[data-text]');
+    ui.bindDialog($el);
+
+    ui.showPrompt = function (title, prompt, note) {
+        $el.querySelector('#prompt-title').textContent = title;
+        $el.querySelector('[data-note]').textContent = note || '';
+        text.value = prompt;
+        $el.showModal();
+        text.scrollTop = 0;
+    };
+
+    $el.querySelector('[data-copy]').addEventListener('click', function () {
+        ui.copy(text.value).then(function () {
+            ui.toast('প্রম্পট কপি হয়েছে। এবার AI-তে পেস্ট করুন।');
+        }, function () {
+            text.select();
+            ui.toast('নিজে থেকে কপি করা গেল না। লেখাটা সিলেক্ট করা আছে, Ctrl/Cmd+C চাপুন।', 'warning');
+        });
+    });
+</script>

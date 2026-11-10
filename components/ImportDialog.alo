@@ -1,0 +1,208 @@
+<template>
+    <dialog class="modal wide" aria-labelledby="import-title">
+        <div class="sheet">
+            <div class="sheet-head">
+                <div class="stack" style="gap: 0.6rem">
+                    <h2 id="import-title">ডেটা import</h2>
+                    <div class="segmented" role="tablist">
+                        <button type="button" data-tab="file" aria-pressed="true"><Icon name="upload" />ফাইল বা লেখা</button>
+                        <button type="button" data-tab="ai" aria-pressed="false"><Icon name="sparkles" />AI দিয়ে বানান</button>
+                    </div>
+                </div>
+                <button class="btn btn-ghost btn-sm btn-icon" type="button" data-close aria-label="বন্ধ করুন"><Icon name="x" /></button>
+            </div>
+
+            <div class="sheet-body">
+                <div class="stack" data-pane="file">
+                    <p class="small muted">এই টুল থেকে export করা JSON, বা একই আকারের যেকোনো JSON। বসানোর আগে দেখাবে কী বদলাবে।</p>
+                    <label class="dropzone" data-drop>
+                        <input type="file" accept=".json,application/json" hidden data-file>
+                        <Icon name="upload" />
+                        <b>JSON ফাইল টেনে আনুন বা ক্লিক করে বাছুন</b>
+                    </label>
+                    <label class="field"><span>অথবা লেখা পেস্ট করুন</span><textarea rows="5" data-paste placeholder='{ "projects": [ … ] }'></textarea></label>
+                    <div class="spread">
+                        <div class="row">
+                            <label class="check"><input type="radio" name="import-mode" value="merge" checked>মিলিয়ে নিন</label>
+                            <label class="check"><input type="radio" name="import-mode" value="replace">পুরো বদলে দিন</label>
+                        </div>
+                        <button class="btn" type="button" data-check-paste>যাচাই করুন</button>
+                    </div>
+                    <p class="small muted">মিলিয়ে নিলে একই id-র তথ্য হালনাগাদ হয়, বাকি সব থাকে। বদলে দিলে ফাইলে যে অংশ আছে (প্রজেক্ট, ক্যাটালগ বা সেটিংস), সেটা পুরো বদলায়।</p>
+                </div>
+
+                <div class="steps" data-pane="ai" hidden>
+                    <div class="step">
+                        <b>তথ্য পেস্ট করুন</b>
+                        <textarea rows="6" data-ai-input placeholder="composer.json, package.json, সার্ভারে php -v / mysql --version এর আউটপুট, বা স্প্রেডশিটের সারি…"></textarea>
+                        <details>
+                            <summary class="small">তথ্য জোগাড়ের কমান্ড</summary>
+                            <div class="stack" style="margin-top: 0.6rem">
+                                <span class="small muted">প্রজেক্টের ফোল্ডারগুলো যেখানে আছে, সেখানে চালান (.env পড়ে না):</span>
+                                <pre data-cmd="repos">for d in */; do echo "### $d"; for f in composer.json package.json .nvmrc .node-version requirements.txt; do [ -f "$d$f" ] &amp;&amp; { echo "--- $f"; head -c 3000 "$d$f"; echo; }; done; done</pre>
+                                <span class="small muted">সার্ভারে চালান, আর উপরে লিখে দিন কোন প্রজেক্টের কোন environment (যেমন "shop production:"):</span>
+                                <pre data-cmd="server">php -v | head -1; node -v; mysql --version; psql --version; nginx -v 2&gt;&amp;1; redis-server --version; (lsb_release -ds || head -2 /etc/os-release) 2&gt;/dev/null</pre>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="step">
+                        <b>প্রম্পট কপি করে AI-তে দিন</b>
+                        <div class="row">
+                            <button class="btn btn-primary btn-sm" type="button" data-copy-prompt><Icon name="copy" />প্রম্পট কপি করুন</button>
+                            <a class="btn btn-ghost btn-sm" href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT <Icon name="external" /></a>
+                            <a class="btn btn-ghost btn-sm" href="https://claude.ai/new" target="_blank" rel="noopener">Claude <Icon name="external" /></a>
+                            <a class="btn btn-ghost btn-sm" href="https://gemini.google.com/app" target="_blank" rel="noopener">Gemini <Icon name="external" /></a>
+                        </div>
+                        <span class="small muted">প্রম্পটে শুধু আপনার পেস্ট করা লেখা আর ক্যাটালগের প্রোডাক্টের নাম যায়। পাঠানোর আগে দেখে নিন তাতে পাসওয়ার্ড বা গোপন কিছু নেই।</span>
+                    </div>
+                    <div class="step">
+                        <b>AI-এর উত্তর পেস্ট করুন</b>
+                        <textarea rows="5" data-ai-reply placeholder="AI-এর পুরো উত্তর; JSON ব্লক নিজে খুঁজে নেবে"></textarea>
+                        <div><button class="btn" type="button" data-check-ai>যাচাই করুন</button></div>
+                    </div>
+                </div>
+
+                <p class="notice s-eol" data-error hidden></p>
+                <div class="notice s-warning" data-warnings hidden></div>
+                <div class="notice" data-preview hidden>
+                    <div class="stack" style="gap: 0.4rem">
+                        <b data-preview-title>যা বদলাবে</b>
+                        <div data-preview-body></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sheet-foot">
+                <span class="small muted">বসানোর পর এক ক্লিকে আগের অবস্থায় ফেরা যায়।</span>
+                <span class="row">
+                    <button class="btn" type="button" data-close>বাতিল</button>
+                    <button class="btn btn-primary" type="button" data-apply disabled>প্রয়োগ করুন</button>
+                </span>
+            </div>
+        </div>
+    </dialog>
+</template>
+
+<script>
+    const P = PHD;
+    const ui = P.ui;
+    const q = function (sel) { return $el.querySelector(sel); };
+    let tab = 'file';
+    let pending = null;
+    ui.bindDialog($el);
+
+    function reset() {
+        pending = null;
+        q('[data-error]').hidden = true;
+        q('[data-warnings]').hidden = true;
+        q('[data-preview]').hidden = true;
+        q('[data-apply]').disabled = true;
+    }
+
+    function setTab(t) {
+        tab = t;
+        $el.querySelectorAll('[data-tab]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.tab === t)); });
+        $el.querySelectorAll('[data-pane]').forEach(function (p) { p.hidden = p.dataset.pane !== t; });
+        reset();
+    }
+
+    function error(msg) {
+        reset();
+        q('[data-error]').textContent = msg;
+        q('[data-error]').hidden = false;
+    }
+
+    function preview(next, title, warnings) {
+        const diff = ui.diffHtml(P.store.get(), P.normalizeData(next));
+        pending = next;
+        q('[data-error]').hidden = true;
+        q('[data-preview-title]').textContent = title;
+        q('[data-preview-body]').innerHTML = diff.html;
+        q('[data-preview]').hidden = false;
+        q('[data-apply]').disabled = diff.empty;
+        const w = q('[data-warnings]');
+        w.innerHTML = (warnings || []).map(function (x) { return '<p>' + x + '</p>'; }).join('');
+        w.hidden = !(warnings && warnings.length);
+    }
+
+    function readFileText(text, source) {
+        try {
+            const incoming = P.normalizeData(P.extractJson(text));
+            const mode = $el.querySelector('input[name="import-mode"]:checked').value;
+            const parts = [];
+            if (incoming.has.projects) parts.push(P.num(incoming.projects.length) + 'টি প্রজেক্ট');
+            if (incoming.has.tech || incoming.has.env) parts.push('ক্যাটালগ');
+            if (incoming.has.settings) parts.push('সেটিংস');
+            preview(P.mergeData(P.store.get(), incoming, mode), source + '-এ আছে ' + parts.join(', ') + '। ' + (mode === 'merge' ? 'মিলিয়ে নিলে:' : 'বদলে দিলে:'));
+        } catch (err) {
+            error(ui.importError(err));
+        }
+    }
+
+    function readAiReply() {
+        const data = P.store.get();
+        const source = q('[data-ai-input]').value;
+        try {
+            const incoming = P.normalizeData(P.extractJson(q('[data-ai-reply]').value));
+            if (!incoming.has.projects) throw new Error('no-projects');
+            incoming.has.settings = false;
+            incoming.has.tech = false;
+            incoming.has.env = false;
+            const warnings = [];
+            const invented = P.inventedVersions(incoming, source);
+            if (invented.length) warnings.push('এই ভার্সনগুলো আপনার দেওয়া লেখায় নেই, AI হয়তো অনুমান করেছে। মিলিয়ে নিন: ' + invented.map(P.esc).join(', '));
+            const missing = [];
+            incoming.projects.forEach(function (p) {
+                p.tech.forEach(function (r) { if (!P.findProduct(data, 'tech', r.product)) missing.push(r.product); });
+                p.deployments.forEach(function (d) { d.stack.forEach(function (r) { if (!P.findProduct(data, 'env', r.product)) missing.push(r.product); }); });
+            });
+            if (missing.length) warnings.push('ক্যাটালগে নেই, তাই অবস্থা অজানা দেখাবে: ' + P.esc(P.unique(missing).join(', ')));
+            preview(P.mergeData(data, incoming, 'merge'), 'AI-এর উত্তরে ' + P.num(incoming.projects.length) + 'টি প্রজেক্ট। মিলিয়ে নিলে:', warnings);
+        } catch (err) {
+            error(err.message === 'no-projects' ? 'উত্তরে "projects" তালিকা নেই। AI-কে প্রম্পটের ফরম্যাট মেনে আবার উত্তর দিতে বলুন।' : ui.importError(err));
+        }
+    }
+
+    ui.openImport = function (t) {
+        setTab(t || 'file');
+        $el.showModal();
+    };
+
+    $el.querySelectorAll('[data-tab]').forEach(function (b) {
+        b.addEventListener('click', function () { setTab(b.dataset.tab); });
+    });
+
+    const drop = q('[data-drop]');
+    function takeFile(file) {
+        if (!file) return;
+        ui.readFile(file).then(function (text) { readFileText(text, file.name); }, function () { error('ফাইল পড়া গেল না।'); });
+    }
+    q('[data-file]').addEventListener('change', function (e) { takeFile(e.target.files[0]); e.target.value = ''; });
+    drop.addEventListener('dragover', function (e) { e.preventDefault(); drop.classList.add('over'); });
+    drop.addEventListener('dragleave', function () { drop.classList.remove('over'); });
+    drop.addEventListener('drop', function (e) {
+        e.preventDefault();
+        drop.classList.remove('over');
+        takeFile(e.dataTransfer.files[0]);
+    });
+    q('[data-check-paste]').addEventListener('click', function () { readFileText(q('[data-paste]').value, 'পেস্ট করা লেখা'); });
+    $el.querySelectorAll('input[name="import-mode"]').forEach(function (r) { r.addEventListener('change', reset); });
+
+    q('[data-copy-prompt]').addEventListener('click', function () {
+        if (!q('[data-ai-input]').value.trim()) return ui.toast('আগে আপনার তথ্য পেস্ট করুন।', 'warning');
+        ui.copy(P.aiPrompts.projects(P.store.get(), q('[data-ai-input]').value)).then(function () {
+            ui.toast('প্রম্পট কপি হয়েছে। এবার AI-তে পেস্ট করুন।');
+        }, function () { ui.toast('কপি করা গেল না।', 'warning'); });
+    });
+    q('[data-check-ai]').addEventListener('click', readAiReply);
+
+    q('[data-apply]').addEventListener('click', function () {
+        if (!pending) return;
+        P.store.apply(pending, tab === 'ai' ? 'AI দিয়ে প্রজেক্ট বসানো' : 'JSON import');
+        q('[data-paste]').value = '';
+        q('[data-ai-reply]').value = '';
+        reset();
+        $el.close();
+        ui.undoToast('ডেটা বসানো হয়েছে।');
+    });
+</script>
