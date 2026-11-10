@@ -9,7 +9,9 @@
 - Built with Alo (`@msilabs/alo`). Read `AGENTS.md` before editing any `.alo` file.
 - Alo only renders the page shell at build time. All user data lives in the browser (`localStorage`), so lists, filters and calculations are plain JS.
 - Shared JS is in `global/*.js`, loaded in file-name order on every page. `10`–`40` and `60` must not touch the DOM at load time, because `tests/load.mjs` runs them in Node.
-- Scoped `<style>` does not reach HTML built by JS. Put styles for JS-rendered markup in `global/03-ui.css`.
+- Scoped `<style>` does not reach HTML built by JS. Put styles for JS-rendered markup in `global/03-ui.css`, using the tokens in `global/02-theme.css`.
+- Three pages only: dashboard (`/`), `/projects/`, `/catalog/`. Import, export, settings and AI prompts live in layout components (`ImportDialog`, `SettingsDialog`, `PromptDialog`) opened from the header data menu; the project panel is `ProjectDrawer`. Open them with `PHD.ui.openImport()`, `openSettings()`, `showPrompt()`, `openProject(id)`.
+- Keep the UI calm: colour only for status, neutral text for healthy parts, no new top-level pages without a strong reason.
 - In JS, build internal links with `PHD.url('/path/')` so the GitHub Pages base path is added. In templates, write `/path/` and Alo adds the base.
 - Escape every user value with `PHD.esc()` before putting it into HTML.
 
