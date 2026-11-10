@@ -341,7 +341,6 @@ a.tile:hover {
     font-size: 1.9rem;
     font-weight: 650;
     line-height: 1.2;
-    font-variant-numeric: tabular-nums;
 }
 
 .tile-note {
@@ -633,7 +632,7 @@ legend {
 
 .chart .today {
     stroke: var(--text);
-    stroke-dasharray: 3 3;
+    stroke-width: 1.5;
 }
 
 .legend {
