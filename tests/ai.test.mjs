@@ -30,7 +30,5 @@ test('prompts include catalog ids and never project URLs or owners', () => {
         assert.doesNotMatch(prompt, /Secret Owner|internal\.example|db-01|git\.example/);
     }
     assert.match(P.aiPrompts.plan(data, '', { project: 'shop' }), /"12 \(security until 2027-02-24\)"/);
-    const cat = P.aiPrompts.catalog(data, '', { kind: 'env', product: 'php' });
-    assert.match(cat, /"id": "php"/);
-    assert.match(cat, /WHAT I ALREADY HAVE/);
+    assert.equal(P.aiPrompts.catalog, undefined);
 });

@@ -1,9 +1,9 @@
 /* AI (ChatGPT, Claude, Gemini) দিয়ে কাজ: API key ছাড়া, প্রম্পট কপি আর উত্তর পেস্ট করে।
+   তিনটা কাজ: তথ্য থেকে প্রজেক্ট, একটা প্রজেক্টের আপগ্রেড পরিকল্পনা, আর ম্যানেজমেন্ট রিপোর্ট।
    AI-কে কখনো URL, হোস্ট, owner, রিপো বা নোট পাঠানো হয় না। */
 (function (P) {
     P.AI_TASKS = {
         projects: { label: 'তথ্য থেকে প্রজেক্ট', returnsJson: true },
-        catalog: { label: 'ক্যাটালগের তারিখ', returnsJson: true },
         plan: { label: 'আপগ্রেড পরিকল্পনা', returnsJson: false },
         report: { label: 'ম্যানেজমেন্ট রিপোর্ট', returnsJson: false }
     };
@@ -83,34 +83,6 @@
             ].join('\n');
         },
 
-        catalog: function (data, input, opts) {
-            var kind = opts.kind;
-            var existing = P.findProduct(data, kind, opts.product);
-            var name = existing ? existing.name : opts.name || opts.product;
-            var id = existing ? existing.id : P.slug(name);
-            var lines = [
-                'List the release cycles of ' + name + ' with their official support dates, as JSON for a support calendar.',
-                '',
-                'STRICT RULES:',
-                '- Use only dates published by the official project or by endoflife.date. Never invent a date.',
-                '- "released" = first release of the cycle. "supportUntil" = end of active support (bug fixes). "securityUntil" = end of security fixes (end of life). Dates are "YYYY-MM-DD".',
-                '- If a date is not announced, leave it "". Only if you estimate it from the published support policy, fill it and set "approx": true.',
-                '- "state": "supported" if the cycle is still supported and no end date is announced, "ended" if support ended but you do not know the date, otherwise "".',
-                '- "lts": true only for officially designated LTS cycles.',
-                '- "requires": runtime or framework versions the cycle needs, e.g. [{ "product": "php", "min": "8.2", "max": "8.4" }]. Use these ids: ' + catalogIds(data, 'env') + (kind === 'tech' ? ', ' + catalogIds(data, 'tech') : '') + '. Leave [] if unsure.',
-                '- Include every cycle released since 2018 and any older cycle that might still be in use.',
-                '- In "note" of the newest cycle, give the source URL.',
-                '',
-                'OUTPUT FORMAT: Reply with ONLY this JSON inside a single ```json code block:',
-                '{ "catalog": { "' + kind + '": [ { "id": "' + id + '", "name": "' + name + '", "category": "' + (existing ? existing.category : Object.keys(P.CATEGORIES[kind])[0]) + '", "versions": [ { "version": "", "released": "", "supportUntil": "", "securityUntil": "", "lts": false, "state": "", "approx": false, "requires": [], "note": "" } ] } ] } }'
-            ];
-            if (existing && existing.versions.length) {
-                lines.push('', 'WHAT I ALREADY HAVE (correct and extend it):', json(existing.versions));
-            }
-            if (String(input || '').trim()) lines.push('', 'EXTRA NOTES:', fence(input));
-            return lines.join('\n');
-        },
-
         plan: function (data, input, opts) {
             var project = data.projects.filter(function (p) {
                 return p.id === opts.project;
@@ -177,7 +149,7 @@
                 thresholds: { criticalDays: data.settings.redDays, warningDays: data.settings.yellowDays },
                 endedOrEndingSoon: up,
                 problems: a.issues.map(function (i) { return i.project.name + ': ' + i.text; }),
-                partsWithUnknownStatus: P.gaps(a.rows).length
+                partsWithUnknownStatus: a.rows.reduce(function (n, r) { return n + r.unknownCount; }, 0)
             };
             return [
                 'Write a short management report on the health of our software portfolio, using only the data below.',
