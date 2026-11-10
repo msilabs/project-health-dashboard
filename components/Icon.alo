@@ -20,5 +20,16 @@
         <template else-if="props.name === 'copy'"><rect x="8" y="8" width="12" height="12" rx="2" /><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3" /></template>
         <template else-if="props.name === 'external'"><path d="M14 4h6v6M20 4l-9 9" /><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" /></template>
         <template else-if="props.name === 'pulse'"><path d="M3 12h4l2.5-6 5 12 2.5-6H21" /></template>
+        <template else-if="props.name === 'monitor'"><rect x="3" y="4" width="18" height="12" rx="2" /><path d="M8 20h8M12 16v4" /></template>
+        <template else-if="props.name === 'sun'"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></template>
+        <template else-if="props.name === 'moon'"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z" /></template>
+        <template else-if="props.name === 'menu'"><path d="M4 6h16M4 12h16M4 18h16" /></template>
+        <template else-if="props.name === 'alert'"><path d="M12 3 2 20h20z" /><path d="M12 10v4M12 17.5v.01" /></template>
+        <template else-if="props.name === 'clock'"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></template>
+        <template else-if="props.name === 'unlink'"><path d="M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1" /><path d="M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1" /></template>
+        <template else-if="props.name === 'compare'"><path d="M7 4v16M17 4v16M3 8h8M13 16h8" /></template>
+        <template else-if="props.name === 'calendar'"><rect x="3" y="5" width="18" height="16" rx="2" /><path d="M3 10h18M8 3v4M16 3v4" /></template>
+        <template else-if="props.name === 'shield'"><path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6z" /><path d="m9 12 2 2 4-4" /></template>
+        <template else-if="props.name === 'chevron'"><path d="m9 6 6 6-6 6" /></template>
     </svg>
 </template>

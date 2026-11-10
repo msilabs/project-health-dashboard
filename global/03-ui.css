@@ -1,16 +1,319 @@
-/* ---------- পেজের কাঠামো ---------- */
+/* ---------- অ্যাপের কাঠামো: সাইডবার + মূল অংশ ---------- */
+.app {
+    display: grid;
+    grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
+    min-height: 100vh;
+}
+
+.main {
+    position: relative;
+    min-width: 0;
+    isolation: isolate;
+}
+
+.main::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: -1;
+    height: 22rem;
+    background: radial-gradient(60rem 18rem at 30% -4rem, var(--bg-glow), transparent 70%);
+    pointer-events: none;
+}
+
 .page {
     display: grid;
     gap: 1.25rem;
-    padding-block: 1.75rem 3rem;
+    width: min(100% - 3rem, var(--page));
+    margin-inline: auto;
+    padding-block: 1.5rem 3.5rem;
 }
 
+@media (max-width: 60rem) {
+    .app {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .page {
+        width: min(100% - 2rem, var(--page));
+    }
+}
+
+/* ---------- টপবার ---------- */
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    height: 3.6rem;
+    padding: 0 1.5rem;
+    border-bottom: 1px solid var(--border);
+    background: color-mix(in srgb, var(--bg) 78%, transparent);
+    backdrop-filter: saturate(1.5) blur(12px);
+}
+
+.topbar .menu-toggle {
+    display: none;
+}
+
+.search-trigger {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    width: min(100%, 26rem);
+    height: 2.2rem;
+    padding: 0 0.6rem 0 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    box-shadow: var(--shadow-xs);
+    color: var(--muted);
+    font-size: 0.86rem;
+    text-align: left;
+}
+
+.search-trigger:hover {
+    border-color: var(--border-strong);
+}
+
+.search-trigger span {
+    flex: 1;
+}
+
+kbd {
+    display: inline-grid;
+    place-items: center;
+    min-width: 1.35rem;
+    height: 1.35rem;
+    padding: 0 0.3rem;
+    border: 1px solid var(--border);
+    border-bottom-width: 2px;
+    border-radius: 5px;
+    background: var(--surface-2);
+    color: var(--muted);
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.topbar .spacer {
+    flex: 1;
+}
+
+@media (max-width: 60rem) {
+    .topbar {
+        padding: 0 1rem;
+    }
+
+    .topbar .menu-toggle {
+        display: inline-flex;
+    }
+}
+
+@media (max-width: 40rem) {
+    .search-trigger kbd,
+    .topbar .btn-primary .label {
+        display: none;
+    }
+}
+
+/* ---------- সাইডবার ---------- */
+.sidebar {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    height: 100vh;
+    padding: 1rem 0.8rem;
+    border-right: 1px solid var(--border);
+    background: var(--sidebar);
+    overflow-y: auto;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.25rem 0.45rem;
+    color: var(--text);
+    font-size: 0.98rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+}
+
+.brand:hover {
+    text-decoration: none;
+}
+
+.brand-mark {
+    display: inline-grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 9px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    box-shadow: 0 6px 16px -6px var(--accent), var(--highlight);
+    color: #fff;
+}
+
+.brand small {
+    display: block;
+    color: var(--muted);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0;
+}
+
+.nav-group {
+    display: grid;
+    gap: 0.1rem;
+}
+
+.nav-label {
+    padding: 0 0.6rem 0.35rem;
+    color: var(--muted);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    height: 2.1rem;
+    padding: 0 0.6rem;
+    border: 0;
+    border-radius: 8px;
+    background: none;
+    color: var(--text-2);
+    font-size: 0.88rem;
+    font-weight: 500;
+    text-align: left;
+    text-decoration: none;
+}
+
+.nav-item .icon {
+    color: var(--muted);
+}
+
+.nav-item:hover {
+    background: var(--surface-2);
+    color: var(--text);
+    text-decoration: none;
+}
+
+.nav-item[aria-current='page'] {
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+    color: var(--text);
+    font-weight: 600;
+}
+
+.nav-item[aria-current='page'] .icon {
+    color: var(--accent);
+}
+
+.nav-item .count {
+    margin-left: auto;
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.sidebar-foot {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: auto;
+}
+
+.sidebar-credit {
+    padding: 0 0.6rem;
+    color: var(--muted);
+    font-size: 0.74rem;
+    line-height: 1.5;
+}
+
+.sidebar-credit a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: var(--border-strong);
+}
+
+.theme-switch {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    padding: 3px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface-2);
+}
+
+.theme-switch button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    height: 1.8rem;
+    border: 0;
+    border-radius: 7px;
+    background: none;
+    color: var(--muted);
+    font-size: 0.74rem;
+    font-weight: 550;
+}
+
+.theme-switch button:hover {
+    color: var(--text);
+}
+
+.theme-switch button[aria-pressed='true'] {
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+    color: var(--text);
+}
+
+.scrim {
+    display: none;
+}
+
+@media (max-width: 60rem) {
+    .sidebar {
+        position: fixed;
+        inset: 0 auto 0 0;
+        z-index: 60;
+        width: min(82vw, 17rem);
+        box-shadow: var(--shadow-lg);
+        transform: translateX(-105%);
+        transition: transform 0.2s ease;
+    }
+
+    .nav-open .sidebar {
+        transform: none;
+    }
+
+    .nav-open .scrim {
+        position: fixed;
+        inset: 0;
+        z-index: 55;
+        display: block;
+        background: rgb(5 6 10 / 45%);
+    }
+}
+
+/* ---------- পেজের শিরোনাম ---------- */
 .page-head {
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-start;
+    align-items: flex-end;
     justify-content: space-between;
     gap: 0.75rem 1.5rem;
+    padding-top: 0.5rem;
 }
 
 .page-head > div:first-child {
@@ -18,14 +321,20 @@
     min-width: 0;
 }
 
-.page-head p {
-    max-width: 72ch;
-    margin-top: 0.25rem;
-    color: var(--muted);
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.35rem;
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 600;
 }
 
-.page-head .actions {
-    flex: none;
+.page-head p {
+    max-width: 70ch;
+    margin-top: 0.35rem;
+    color: var(--muted);
 }
 
 .actions {
@@ -35,12 +344,17 @@
     gap: 0.5rem;
 }
 
+.page-head .actions {
+    flex: none;
+}
+
+/* ---------- সাধারণ ---------- */
 .muted {
     color: var(--muted);
 }
 
 .small {
-    font-size: 0.86rem;
+    font-size: 0.85rem;
 }
 
 .num {
@@ -70,12 +384,12 @@
 
 .grid-main {
     display: grid;
-    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
     gap: 1.25rem;
     align-items: start;
 }
 
-@media (max-width: 56rem) {
+@media (max-width: 72rem) {
     .grid-main {
         grid-template-columns: minmax(0, 1fr);
     }
@@ -93,6 +407,7 @@
     border: 1px solid var(--border);
     border-radius: var(--radius);
     background: var(--surface);
+    box-shadow: var(--shadow-sm);
 }
 
 .card-head {
@@ -101,23 +416,44 @@
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem 1rem;
-    padding: 0.9rem 1.1rem;
+    padding: 1rem 1.2rem 0.85rem;
+}
+
+.card-head.divided {
     border-bottom: 1px solid var(--border);
 }
 
 .card-head p {
+    margin-top: 0.15rem;
     color: var(--muted);
-    font-size: 0.86rem;
+    font-size: 0.84rem;
+}
+
+.card-title {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
 }
 
 .card-body {
-    padding: 1rem 1.1rem;
+    padding: 0 1.2rem 1.1rem;
 }
 
 .card-foot {
-    padding: 0.7rem 1.1rem;
+    padding: 0.7rem 1.2rem;
     border-top: 1px solid var(--border);
-    font-size: 0.86rem;
+    font-size: 0.85rem;
+}
+
+.chip-icon {
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 9px;
+    background: var(--s-bg, var(--accent-soft));
+    color: var(--s, var(--accent));
 }
 
 /* ---------- বোতাম ---------- */
@@ -125,25 +461,30 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.4rem;
-    height: 2.15rem;
-    padding: 0 0.8rem;
-    border: 1px solid var(--border-strong);
+    gap: 0.45rem;
+    height: 2.2rem;
+    padding: 0 0.85rem;
+    border: 1px solid var(--border);
     border-radius: var(--radius-sm);
     background: var(--surface);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-xs), var(--highlight);
     color: var(--text);
-    font-size: 0.88rem;
+    font-size: 0.86rem;
     font-weight: 550;
     line-height: 1;
     text-decoration: none;
     white-space: nowrap;
-    transition: background 0.12s ease, border-color 0.12s ease;
+    transition: background 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease, transform 0.06s ease;
 }
 
 .btn:hover {
+    border-color: var(--border-strong);
     background: var(--surface-2);
     text-decoration: none;
+}
+
+.btn:active {
+    transform: translateY(1px);
 }
 
 .btn:disabled {
@@ -151,14 +492,24 @@
     cursor: not-allowed;
 }
 
+.btn .icon {
+    color: var(--muted);
+}
+
 .btn-primary {
     border-color: transparent;
-    background: var(--accent);
+    background: linear-gradient(180deg, var(--accent-2), var(--accent));
+    box-shadow: 0 1px 2px rgb(0 0 0 / 12%), 0 6px 16px -8px var(--accent), inset 0 1px 0 rgb(255 255 255 / 22%);
     color: var(--on-accent);
 }
 
+.btn-primary .icon {
+    color: currentColor;
+}
+
 .btn-primary:hover {
-    background: var(--accent-hover);
+    border-color: transparent;
+    background: linear-gradient(180deg, var(--accent-2), var(--accent-hover));
 }
 
 .btn-ghost {
@@ -169,26 +520,28 @@
 }
 
 .btn-ghost:hover {
+    border-color: transparent;
     background: var(--surface-2);
 }
 
-.btn-danger {
+.btn-danger,
+.btn-danger .icon {
     color: var(--eol);
 }
 
 .btn-sm {
-    height: 1.85rem;
-    padding: 0 0.6rem;
-    font-size: 0.82rem;
+    height: 1.9rem;
+    padding: 0 0.65rem;
+    font-size: 0.8rem;
 }
 
 .btn-icon {
-    width: 2.15rem;
+    width: 2.2rem;
     padding: 0;
 }
 
 .btn-sm.btn-icon {
-    width: 1.85rem;
+    width: 1.9rem;
 }
 
 .link-btn {
@@ -197,6 +550,7 @@
     background: none;
     color: var(--accent);
     font-size: inherit;
+    font-weight: 550;
 }
 
 .link-btn:hover {
@@ -206,19 +560,19 @@
 /* ---------- ফর্ম ---------- */
 .field {
     display: grid;
-    gap: 0.3rem;
+    gap: 0.35rem;
     min-width: 0;
 }
 
 .field > span {
     color: var(--text-2);
-    font-size: 0.82rem;
-    font-weight: 550;
+    font-size: 0.8rem;
+    font-weight: 600;
 }
 
 .field small {
     color: var(--muted);
-    font-size: 0.78rem;
+    font-size: 0.76rem;
 }
 
 input[type='text'],
@@ -229,29 +583,46 @@ input[type='date'],
 select,
 textarea {
     width: 100%;
-    height: 2.15rem;
-    padding: 0 0.65rem;
-    border: 1px solid var(--border-strong);
+    height: 2.2rem;
+    padding: 0 0.7rem;
+    border: 1px solid var(--border);
     border-radius: var(--radius-sm);
     background: var(--surface);
+    box-shadow: var(--shadow-xs);
     color: var(--text);
-    font-size: 0.88rem;
+    font-size: 0.86rem;
+    transition: border-color 0.12s ease, box-shadow 0.12s ease;
+}
+
+select {
+    padding-right: 2rem;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238a90a3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E");
+    background-position: right 0.55rem center;
+    background-repeat: no-repeat;
+    background-size: 16px;
 }
 
 textarea {
     height: auto;
     min-height: 7rem;
-    padding: 0.5rem 0.65rem;
+    padding: 0.55rem 0.7rem;
     font-family: var(--font-mono);
-    font-size: 0.8rem;
-    line-height: 1.5;
+    font-size: 0.78rem;
+    line-height: 1.55;
     resize: vertical;
 }
 
 input::placeholder,
 textarea::placeholder {
     color: var(--muted);
-    opacity: 0.8;
+    opacity: 0.85;
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+    border-color: var(--border-strong);
 }
 
 input:focus,
@@ -259,7 +630,7 @@ select:focus,
 textarea:focus {
     border-color: var(--accent);
     outline: none;
-    box-shadow: 0 0 0 3px var(--accent-soft);
+    box-shadow: 0 0 0 3px var(--accent-ring);
 }
 
 .check {
@@ -267,7 +638,7 @@ textarea:focus {
     align-items: center;
     gap: 0.45rem;
     color: var(--text-2);
-    font-size: 0.88rem;
+    font-size: 0.86rem;
     cursor: pointer;
 }
 
@@ -286,19 +657,19 @@ textarea:focus {
 .search {
     position: relative;
     flex: 1 1 14rem;
-    max-width: 22rem;
+    max-width: 20rem;
 }
 
 .search .icon {
     position: absolute;
     top: 50%;
-    left: 0.65rem;
+    left: 0.7rem;
     color: var(--muted);
     transform: translateY(-50%);
 }
 
 .search input {
-    padding-left: 2rem;
+    padding-left: 2.1rem;
 }
 
 /* ---------- টুলবার, segmented ---------- */
@@ -307,13 +678,13 @@ textarea:focus {
     flex-wrap: wrap;
     align-items: center;
     gap: 0.6rem;
-    padding: 0.75rem 1.1rem;
+    padding: 0.8rem 1.2rem;
     border-bottom: 1px solid var(--border);
 }
 
 .toolbar select {
     width: auto;
-    min-width: 9rem;
+    min-width: 9.5rem;
 }
 
 .toolbar .spacer {
@@ -324,36 +695,37 @@ textarea:focus {
     display: flex;
     flex-wrap: wrap;
     gap: 0.6rem;
-    padding: 0.75rem 1.1rem;
+    padding: 0.8rem 1.2rem;
     border-bottom: 1px solid var(--border);
     background: var(--surface-2);
 }
 
 .more-filters select {
     width: auto;
-    min-width: 9rem;
+    min-width: 9.5rem;
 }
 
 .segmented {
     display: inline-flex;
     flex-wrap: wrap;
     gap: 2px;
-    padding: 2px;
-    border-radius: var(--radius-sm);
+    padding: 3px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
     background: var(--surface-2);
 }
 
 .segmented button {
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
-    height: 1.85rem;
+    gap: 0.4rem;
+    height: 1.8rem;
     padding: 0 0.65rem;
     border: 0;
-    border-radius: 6px;
+    border-radius: 7px;
     background: transparent;
     color: var(--muted);
-    font-size: 0.84rem;
+    font-size: 0.82rem;
     font-weight: 550;
     white-space: nowrap;
 }
@@ -383,8 +755,8 @@ textarea:focus {
     border-radius: 999px;
     background: var(--accent);
     color: var(--on-accent);
-    font-size: 0.7rem;
-    font-weight: 650;
+    font-size: 0.68rem;
+    font-weight: 700;
 }
 
 /* ---------- অবস্থা ---------- */
@@ -420,84 +792,310 @@ textarea:focus {
     height: 0.5rem;
     border-radius: 50%;
     background: var(--s, var(--unknown));
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--s, var(--unknown)) 18%, transparent);
 }
 
 .badge {
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
-    height: 1.4rem;
+    gap: 0.4rem;
+    height: 1.45rem;
     padding: 0 0.55rem;
+    border: 1px solid color-mix(in srgb, var(--s, var(--border-strong)) 22%, transparent);
     border-radius: 999px;
     background: var(--s-bg, var(--surface-2));
     color: var(--s, var(--text-2));
-    font-size: 0.76rem;
+    font-size: 0.74rem;
     font-weight: 600;
     white-space: nowrap;
 }
 
-.badge.neutral {
-    background: var(--surface-2);
-    color: var(--text-2);
+.badge .dot {
+    width: 0.4rem;
+    height: 0.4rem;
+    box-shadow: none;
 }
 
 .tag {
     display: inline-flex;
     align-items: center;
-    height: 1.3rem;
+    height: 1.35rem;
     padding: 0 0.45rem;
     border: 1px solid var(--border);
     border-radius: 6px;
-    color: var(--muted);
-    font-size: 0.75rem;
+    background: var(--surface-2);
+    color: var(--text-2);
+    font-size: 0.72rem;
+    font-weight: 500;
     white-space: nowrap;
 }
 
-/* ---------- KPI ---------- */
-.kpis {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 0.75rem;
-}
-
-@media (max-width: 48rem) {
-    .kpis {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-.kpi {
-    display: grid;
-    gap: 0.35rem;
-    padding: 0.85rem 1rem;
+/* প্রজেক্টের আদ্যক্ষর */
+.avatar {
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    width: 2.1rem;
+    height: 2.1rem;
     border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--surface);
-    color: inherit;
-    text-decoration: none;
-    transition: border-color 0.12s ease, box-shadow 0.12s ease;
+    border-radius: 9px;
+    background: linear-gradient(180deg, var(--surface), var(--surface-2));
+    box-shadow: var(--shadow-xs);
+    color: var(--text-2);
+    font-size: 0.8rem;
+    font-weight: 700;
 }
 
-a.kpi:hover {
-    border-color: var(--border-strong);
-    box-shadow: var(--shadow);
-    text-decoration: none;
+.avatar.lg {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 12px;
+    font-size: 1rem;
 }
 
-.kpi-label {
+.who {
     display: flex;
     align-items: center;
-    gap: 0.45rem;
+    gap: 0.7rem;
+    min-width: 0;
+}
+
+.who b {
+    display: block;
+    color: var(--text);
+    font-weight: 600;
+}
+
+.who span {
     color: var(--muted);
-    font-size: 0.82rem;
+    font-size: 0.8rem;
+}
+
+/* environment-এর ছোট চিহ্ন: নাম + অবস্থার বিন্দু */
+.env-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+}
+
+.env-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    height: 1.4rem;
+    padding: 0 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--text-2);
+    font-size: 0.72rem;
     font-weight: 550;
 }
 
-.kpi-num {
-    font-size: 1.65rem;
-    font-weight: 650;
-    line-height: 1.1;
+.env-pill .dot {
+    width: 0.4rem;
+    height: 0.4rem;
+    box-shadow: none;
+}
+
+/* সাপোর্টের সময় কতটা গেছে */
+.lifebar {
+    position: relative;
+    height: 4px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--surface-3);
+}
+
+.lifebar span {
+    position: absolute;
+    inset: 0 auto 0 0;
+    border-radius: inherit;
+    background: var(--s, var(--accent));
+}
+
+/* ---------- ড্যাশবোর্ড: হিরো আর পরিসংখ্যান ---------- */
+.overview {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: 1.25rem;
+}
+
+@media (max-width: 72rem) {
+    .overview {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+.hero {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 1rem;
+    padding: 1.3rem 1.3rem 1rem;
+}
+
+.hero .segbar {
+    align-self: end;
+}
+
+.hero-kv {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-self: center;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface-2);
+}
+
+.hero-kv div {
+    display: grid;
+    gap: 0.1rem;
+    min-width: 0;
+    padding: 0.7rem 0.85rem;
+}
+
+.hero-kv div + div {
+    border-left: 1px solid var(--border);
+}
+
+.hero-kv span {
+    color: var(--muted);
+    font-size: 0.74rem;
+    font-weight: 600;
+}
+
+.hero-kv b {
+    font-size: 1.2rem;
+    font-weight: 700;
     letter-spacing: -0.02em;
+}
+
+.hero-kv small {
+    overflow: hidden;
+    color: var(--muted);
+    font-size: 0.72rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.hero-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.hero-label {
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.hero-num {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-top: 0.2rem;
+    font-size: 2.6rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.04em;
+}
+
+.hero-num small {
+    color: var(--muted);
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0;
+}
+
+.segbar {
+    display: flex;
+    gap: 3px;
+    height: 0.65rem;
+}
+
+.segbar span {
+    min-width: 6px;
+    border-radius: 3px;
+    background: var(--s);
+}
+
+.seg-legend {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.5rem;
+}
+
+@media (max-width: 40rem) {
+    .seg-legend {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+.seg-legend a {
+    display: grid;
+    gap: 0.15rem;
+    padding: 0.5rem 0.6rem;
+    border-radius: 9px;
+    color: inherit;
+    text-decoration: none;
+}
+
+.seg-legend a:hover {
+    background: var(--surface-2);
+    text-decoration: none;
+}
+
+.seg-legend .lbl {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--muted);
+    font-size: 0.76rem;
+    font-weight: 550;
+}
+
+.seg-legend .val {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+}
+
+.stat {
+    display: grid;
+    align-content: space-between;
+    gap: 0.9rem;
+    padding: 1.1rem 1.2rem;
+}
+
+.stat-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.stat-num {
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+}
+
+.stat-sub {
+    margin-top: 0.2rem;
+    color: var(--muted);
+    font-size: 0.8rem;
 }
 
 /* ---------- টেবিল ---------- */
@@ -507,23 +1105,23 @@ a.kpi:hover {
 
 .table {
     width: 100%;
-    font-size: 0.88rem;
+    font-size: 0.86rem;
 }
 
 .table th,
 .table td {
-    padding: 0.7rem 1.1rem;
+    padding: 0.75rem 1.2rem;
     border-bottom: 1px solid var(--border);
     text-align: left;
     vertical-align: middle;
 }
 
 .table th {
+    background: var(--surface-2);
     color: var(--muted);
-    font-size: 0.78rem;
-    font-weight: 550;
+    font-size: 0.74rem;
+    font-weight: 600;
     white-space: nowrap;
-    background: var(--surface);
 }
 
 .table tbody tr:last-child td {
@@ -532,20 +1130,19 @@ a.kpi:hover {
 
 .table tbody tr.clickable {
     cursor: pointer;
+    transition: background 0.1s ease;
 }
 
 .table tbody tr.clickable:hover td {
-    background: var(--surface-2);
+    background: color-mix(in srgb, var(--accent-soft) 45%, var(--surface));
 }
 
-.cell-title {
-    display: grid;
-    gap: 0.15rem;
-    min-width: 10rem;
+.table .arrow {
+    color: var(--border-strong);
 }
 
-.cell-title b {
-    font-weight: 600;
+.table tbody tr.clickable:hover .arrow {
+    color: var(--accent);
 }
 
 /* ---------- করণীয় তালিকা ---------- */
@@ -558,42 +1155,44 @@ a.kpi:hover {
 .items > li {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
-    gap: 0.25rem 0.75rem;
-    align-items: baseline;
-    padding: 0.75rem 1.1rem;
-    border-bottom: 1px solid var(--border);
+    gap: 0.2rem 0.85rem;
+    align-items: center;
+    padding: 0.8rem 1.2rem;
+    border-top: 1px solid var(--border);
 }
 
-.items > li:last-child {
-    border-bottom: 0;
-}
-
-.items .dot {
-    transform: translateY(-1px);
+.item-main {
+    min-width: 0;
 }
 
 .item-title {
-    font-weight: 550;
+    font-weight: 600;
 }
 
 .item-sub {
-    grid-column: 2 / 4;
+    margin-top: 0.1rem;
     color: var(--muted);
-    font-size: 0.84rem;
+    font-size: 0.82rem;
 }
 
 .item-meta {
+    display: grid;
+    justify-items: end;
+    gap: 0.2rem;
     color: var(--muted);
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     white-space: nowrap;
 }
 
 .group-label {
-    padding: 0.55rem 1.1rem;
-    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1.2rem;
+    border-top: 1px solid var(--border);
     background: var(--surface-2);
     color: var(--muted);
-    font-size: 0.78rem;
+    font-size: 0.74rem;
     font-weight: 600;
 }
 
@@ -602,34 +1201,46 @@ a.kpi:hover {
     display: grid;
     justify-items: center;
     gap: 0.6rem;
-    padding: 2.5rem 1.5rem;
+    padding: 3rem 1.5rem;
     color: var(--muted);
     text-align: center;
 }
 
 .empty h2 {
     color: var(--text);
+    font-size: 1.1rem;
+}
+
+.empty .chip-icon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 14px;
 }
 
 .notice {
-    padding: 0.65rem 0.85rem;
+    padding: 0.7rem 0.9rem;
     border: 1px solid color-mix(in srgb, var(--s, var(--accent)) 25%, var(--border));
     border-radius: var(--radius-sm);
     background: var(--s-bg, var(--accent-soft));
     color: var(--text);
-    font-size: 0.86rem;
+    font-size: 0.85rem;
 }
 
 .sample-bar {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
-    gap: 0.35rem 0.9rem;
-    padding: 0.45rem 1rem;
-    border-bottom: 1px solid var(--border);
+    gap: 0.4rem 1rem;
+    margin-bottom: -0.25rem;
+    padding: 0.6rem 0.9rem;
+    border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border));
+    border-radius: var(--radius-sm);
     background: var(--accent-soft);
     font-size: 0.84rem;
+}
+
+.sample-bar .icon {
+    color: var(--accent);
 }
 
 /* ---------- ডায়ালগ আর ড্রয়ার ---------- */
@@ -642,22 +1253,33 @@ dialog {
 }
 
 dialog::backdrop {
-    background: rgb(9 9 11 / 45%);
-    backdrop-filter: blur(2px);
+    background: rgb(5 6 10 / 50%);
+    backdrop-filter: blur(3px);
 }
 
 dialog.modal {
     width: min(100% - 1.5rem, 40rem);
     max-height: calc(100vh - 2rem);
-    border-radius: var(--radius);
+    border-radius: 16px;
 }
 
 dialog.modal.wide {
     width: min(100% - 1.5rem, 56rem);
 }
 
+dialog.modal[open] {
+    animation: pop 0.16s ease-out;
+}
+
+@keyframes pop {
+    from {
+        transform: translateY(6px) scale(0.985);
+        opacity: 0;
+    }
+}
+
 dialog.drawer {
-    width: min(100vw, 36rem);
+    width: min(100vw, 38rem);
     max-width: 100vw;
     height: 100vh;
     max-height: 100vh;
@@ -667,12 +1289,12 @@ dialog.drawer {
 }
 
 dialog.drawer[open] {
-    animation: slide-in 0.18s ease-out;
+    animation: slide-in 0.2s ease-out;
 }
 
 @keyframes slide-in {
     from {
-        transform: translateX(24px);
+        transform: translateX(28px);
         opacity: 0;
     }
 }
@@ -693,19 +1315,19 @@ dialog.modal .sheet {
     align-items: flex-start;
     justify-content: space-between;
     gap: 0.75rem;
-    padding: 1rem 1.15rem;
+    padding: 1.1rem 1.25rem;
     border-bottom: 1px solid var(--border);
 }
 
 .sheet-head h2 {
-    font-size: 1.05rem;
+    font-size: 1.08rem;
 }
 
 .sheet-body {
     display: grid;
     align-content: start;
-    gap: 1.25rem;
-    padding: 1.1rem 1.15rem;
+    gap: 1.35rem;
+    padding: 1.2rem 1.25rem;
     overflow-y: auto;
 }
 
@@ -715,13 +1337,42 @@ dialog.modal .sheet {
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
-    padding: 0.8rem 1.15rem;
+    padding: 0.85rem 1.25rem;
     border-top: 1px solid var(--border);
+    background: var(--surface-2);
+}
+
+.mini-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+}
+
+.mini-stats div {
+    display: grid;
+    gap: 0.1rem;
+    padding: 0.65rem 0.8rem;
+}
+
+.mini-stats div + div {
+    border-left: 1px solid var(--border);
+}
+
+.mini-stats span {
+    color: var(--muted);
+    font-size: 0.74rem;
+    font-weight: 550;
+}
+
+.mini-stats b {
+    font-size: 1.15rem;
+    font-weight: 700;
 }
 
 .section {
     display: grid;
-    gap: 0.5rem;
+    gap: 0.55rem;
 }
 
 .section-title {
@@ -730,12 +1381,14 @@ dialog.modal .sheet {
     justify-content: space-between;
     gap: 0.5rem;
     color: var(--muted);
-    font-size: 0.78rem;
-    font-weight: 600;
+    font-size: 0.74rem;
+    font-weight: 650;
+    letter-spacing: 0.02em;
 }
 
 /* প্রজেক্টের একটা অংশ, যেমন PHP 8.2 */
 .parts {
+    overflow: hidden;
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
 }
@@ -743,9 +1396,9 @@ dialog.modal .sheet {
 .part {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
-    gap: 0.15rem 0.75rem;
+    gap: 0.35rem 0.75rem;
     align-items: center;
-    padding: 0.6rem 0.8rem;
+    padding: 0.7rem 0.85rem;
     border-bottom: 1px solid var(--border);
 }
 
@@ -756,15 +1409,22 @@ dialog.modal .sheet {
 .part-name {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    font-weight: 550;
+    gap: 0.55rem;
+    font-weight: 600;
 }
 
 .part-note {
     grid-column: 1 / -1;
-    padding-left: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.25rem 1rem;
     color: var(--muted);
-    font-size: 0.82rem;
+    font-size: 0.78rem;
+}
+
+.part .lifebar {
+    grid-column: 1 / -1;
 }
 
 .edit-row {
@@ -777,7 +1437,7 @@ dialog.modal .sheet {
 .env-block {
     display: grid;
     gap: 0.6rem;
-    padding: 0.8rem;
+    padding: 0.85rem;
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
     background: var(--surface-2);
@@ -787,6 +1447,163 @@ dialog.modal .sheet {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     gap: 0.5rem;
+}
+
+/* ---------- দ্রুত খোঁজা ---------- */
+dialog.palette {
+    width: min(100% - 1.5rem, 36rem);
+    margin-top: 12vh;
+    border-radius: 16px;
+}
+
+.palette-input {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.palette-input .icon {
+    color: var(--muted);
+}
+
+.palette-input input {
+    height: 3.2rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    box-shadow: none;
+    font-size: 0.95rem;
+}
+
+.palette-input input:focus {
+    box-shadow: none;
+}
+
+.palette-list {
+    display: grid;
+    max-height: 22rem;
+    padding: 0.4rem;
+    overflow-y: auto;
+}
+
+.palette-group {
+    padding: 0.5rem 0.6rem 0.25rem;
+    color: var(--muted);
+    font-size: 0.72rem;
+    font-weight: 650;
+}
+
+.palette-item {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.5rem 0.6rem;
+    border: 0;
+    border-radius: 8px;
+    background: none;
+    color: var(--text);
+    font-size: 0.88rem;
+    text-align: left;
+}
+
+.palette-item .avatar {
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 7px;
+    font-size: 0.7rem;
+}
+
+.palette-item .meta {
+    margin-left: auto;
+}
+
+.palette-item[aria-selected='true'] {
+    background: var(--accent-soft);
+}
+
+.palette-foot {
+    display: flex;
+    gap: 1rem;
+    padding: 0.6rem 1rem;
+    border-top: 1px solid var(--border);
+    background: var(--surface-2);
+    color: var(--muted);
+    font-size: 0.75rem;
+}
+
+/* ---------- টোস্ট ---------- */
+.toasts {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 100;
+    display: grid;
+    gap: 0.5rem;
+    max-width: min(24rem, calc(100% - 2rem));
+}
+
+.toast {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+    font-size: 0.86rem;
+    animation: pop 0.16s ease-out;
+}
+
+.toast .dot {
+    background: var(--s, var(--accent));
+}
+
+/* ---------- ড্রপ জোন, ধাপ ---------- */
+.dropzone {
+    display: grid;
+    place-items: center;
+    gap: 0.35rem;
+    padding: 1.5rem;
+    border: 1.5px dashed var(--border-strong);
+    border-radius: var(--radius-sm);
+    color: var(--muted);
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.12s ease, background 0.12s ease;
+}
+
+.dropzone:hover,
+.dropzone.over {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+}
+
+.steps {
+    display: grid;
+    gap: 1.1rem;
+    counter-reset: step;
+}
+
+.step {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.step > b::before {
+    counter-increment: step;
+    content: counter(step);
+    display: inline-grid;
+    place-items: center;
+    width: 1.35rem;
+    height: 1.35rem;
+    margin-right: 0.5rem;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 0.74rem;
 }
 
 /* ---------- ড্রপডাউন মেনু ---------- */
@@ -811,130 +1628,25 @@ dialog.modal .sheet {
     min-width: 14rem;
     padding: 0.3rem;
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 12px;
     background: var(--surface);
     box-shadow: var(--shadow);
-}
-
-.menu-panel button,
-.menu-panel a {
-    display: flex;
-    align-items: center;
-    gap: 0.55rem;
-    height: 2.1rem;
-    padding: 0 0.6rem;
-    border: 0;
-    border-radius: 6px;
-    background: none;
-    color: var(--text);
-    font-size: 0.88rem;
-    text-align: left;
-    text-decoration: none;
-}
-
-.menu-panel button:hover,
-.menu-panel a:hover {
-    background: var(--surface-2);
-    text-decoration: none;
-}
-
-.menu-panel .icon {
-    color: var(--muted);
-}
-
-.menu-panel hr {
-    margin: 0.3rem 0;
-    border: 0;
-    border-top: 1px solid var(--border);
-}
-
-/* ---------- টোস্ট ---------- */
-.toasts {
-    position: fixed;
-    right: 1rem;
-    bottom: 1rem;
-    z-index: 100;
-    display: grid;
-    gap: 0.5rem;
-    max-width: min(24rem, calc(100% - 2rem));
-}
-
-.toast {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.65rem 0.8rem;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    background: var(--surface);
-    box-shadow: var(--shadow);
-    font-size: 0.88rem;
-}
-
-.toast .dot {
-    background: var(--s, var(--accent));
-}
-
-/* ---------- ড্রপ জোন ---------- */
-.dropzone {
-    display: grid;
-    place-items: center;
-    gap: 0.25rem;
-    padding: 1.4rem;
-    border: 1.5px dashed var(--border-strong);
-    border-radius: var(--radius-sm);
-    color: var(--muted);
-    text-align: center;
-    cursor: pointer;
-}
-
-.dropzone:hover,
-.dropzone.over {
-    border-color: var(--accent);
-    background: var(--accent-soft);
-}
-
-.steps {
-    display: grid;
-    gap: 1rem;
-    counter-reset: step;
-}
-
-.step {
-    display: grid;
-    gap: 0.5rem;
-}
-
-.step > b::before {
-    counter-increment: step;
-    content: counter(step);
-    display: inline-grid;
-    place-items: center;
-    width: 1.3rem;
-    height: 1.3rem;
-    margin-right: 0.45rem;
-    border-radius: 50%;
-    background: var(--surface-3);
-    font-size: 0.75rem;
 }
 
 /* ---------- ক্যাটালগ ---------- */
 .product {
-    border-bottom: 1px solid var(--border);
-}
-
-.product:last-child {
-    border-bottom: 0;
+    border-top: 1px solid var(--border);
 }
 
 .product > summary {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto auto;
+    grid-template-columns: auto auto minmax(0, 1fr) auto auto;
     gap: 0.75rem;
     align-items: center;
-    padding: 0.7rem 1.1rem;
+    padding: 0.75rem 1.2rem;
     cursor: pointer;
     list-style: none;
+    transition: background 0.1s ease;
 }
 
 .product > summary:hover {
@@ -955,25 +1667,39 @@ dialog.modal .sheet {
 }
 
 .product-body {
-    padding: 0 1.1rem 1rem;
+    padding: 0 1.2rem 1.1rem 3.3rem;
+}
+
+.product-body .table {
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    border-collapse: separate;
+    border-spacing: 0;
 }
 
 .product-body .table th,
 .product-body .table td {
-    padding: 0.5rem 0.6rem;
+    padding: 0.55rem 0.75rem;
+}
+
+@media (max-width: 40rem) {
+    .product-body {
+        padding-left: 1.2rem;
+    }
 }
 
 .ver-edit td {
-    padding: 0.35rem 0.4rem;
+    padding: 0.4rem 0.45rem;
     vertical-align: middle;
 }
 
 .ver-edit input:not([type='checkbox']),
 .ver-edit select {
-    height: 1.95rem;
+    height: 2rem;
     min-width: 6rem;
-    padding: 0 0.4rem;
-    font-size: 0.82rem;
+    padding: 0 0.45rem;
+    font-size: 0.8rem;
 }
 
 .ver-edit input[type='checkbox'] {
@@ -1012,40 +1738,54 @@ dialog.modal .sheet {
     stroke: var(--border);
 }
 
+.chart .band {
+    fill: var(--surface-2);
+}
+
 .chart .today {
     stroke: var(--accent);
     stroke-width: 1.5;
 }
 
+.chart .today-pill {
+    fill: var(--accent);
+}
+
+.chart .today-text {
+    fill: var(--on-accent);
+    font-size: 10px;
+    font-weight: 700;
+}
+
 .legend {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.3rem 0.9rem;
+    gap: 0.3rem 1rem;
     margin: 0;
     padding: 0;
     color: var(--muted);
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     list-style: none;
 }
 
 .legend li {
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
+    gap: 0.4rem;
 }
 
 .swatch {
     display: inline-block;
     width: 0.9rem;
-    height: 0.5rem;
-    border-radius: 2px;
+    height: 0.45rem;
+    border-radius: 3px;
     background: var(--s);
 }
 
 @media (max-width: 40rem) {
     .table th,
     .table td {
-        padding-inline: 0.75rem;
+        padding-inline: 0.8rem;
     }
 
     .hide-sm {
@@ -1054,5 +1794,13 @@ dialog.modal .sheet {
 
     .edit-row {
         grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr) auto;
+    }
+
+    .stats {
+        gap: 0.75rem;
+    }
+
+    .stat {
+        padding: 0.9rem;
     }
 }

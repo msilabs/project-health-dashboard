@@ -1,5 +1,5 @@
 [
-    { "href": "/", "label": "ড্যাশবোর্ড", "icon": "grid" },
-    { "href": "/projects/", "label": "প্রজেক্ট", "icon": "folder" },
-    { "href": "/catalog/", "label": "ক্যাটালগ", "icon": "book" }
+    { "href": "/", "label": "ড্যাশবোর্ড", "icon": "grid", "count": "" },
+    { "href": "/projects/", "label": "প্রজেক্ট", "icon": "folder", "count": "projects" },
+    { "href": "/catalog/", "label": "ক্যাটালগ", "icon": "book", "count": "catalog" }
 ]

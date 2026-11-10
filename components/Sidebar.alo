@@ -1,0 +1,33 @@
+<template>
+    <aside class="sidebar" id="sidebar" aria-label="সাইডবার">
+        <a class="brand" href="/">
+            <span class="brand-mark"><Icon name="pulse" /></span>
+            <span>{{ data.site.name }}<small>ভার্সন আর সাপোর্টের হিসাব</small></span>
+        </a>
+
+        <nav class="nav-group" aria-label="প্রধান মেনু">
+            <template for="link in data.menu">
+                <a class="nav-item" href="{{ link.href }}" aria-current="{{ route.path === link.href ? 'page' : null }}"><Icon name="{{ link.icon }}" /><span>{{ link.label }}</span><span class="count" data-count="{{ link.count }}"></span></a>
+            </template>
+        </nav>
+
+        <div class="nav-group">
+            <span class="nav-label">ডেটা</span>
+            <button class="nav-item" type="button" data-action="import"><Icon name="upload" />JSON import</button>
+            <button class="nav-item" type="button" data-action="ai"><Icon name="sparkles" />AI দিয়ে প্রজেক্ট বানান</button>
+            <button class="nav-item" type="button" data-action="json"><Icon name="download" />JSON export</button>
+            <button class="nav-item" type="button" data-action="csv"><Icon name="file" />CSV export</button>
+            <button class="nav-item" type="button" data-action="undo" id="menu-undo" hidden><Icon name="undo" />শেষ বদল ফিরিয়ে আনুন</button>
+        </div>
+
+        <div class="sidebar-foot">
+            <button class="nav-item" type="button" data-action="settings"><Icon name="settings" />সেটিংস</button>
+            <div class="theme-switch" role="group" aria-label="থিম">
+                <button type="button" data-theme-set="system" aria-pressed="true" title="সিস্টেম অনুযায়ী"><Icon name="monitor" />অটো</button>
+                <button type="button" data-theme-set="light" aria-pressed="false" title="লাইট থিম"><Icon name="sun" />লাইট</button>
+                <button type="button" data-theme-set="dark" aria-pressed="false" title="ডার্ক থিম"><Icon name="moon" />ডার্ক</button>
+            </div>
+            <p class="sidebar-credit">সব ডেটা থাকে শুধু এই ব্রাউজারে। সাপোর্টের তারিখ <a href="https://endoflife.date" target="_blank" rel="noopener">endoflife.date</a> থেকে। <a href="{{ data.site.repo }}" target="_blank" rel="noopener">সোর্স কোড</a> · MIT · <a href="https://github.com/msilabs/alo" target="_blank" rel="noopener">আলো (Alo)</a> দিয়ে বানানো।</p>
+        </div>
+    </aside>
+</template>

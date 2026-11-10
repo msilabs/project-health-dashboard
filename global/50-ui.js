@@ -31,7 +31,16 @@
         external: '<path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>',
         copy: '<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/>',
         database: '<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>',
-        report: '<path d="M4 20V4M4 20h16"/><path d="M8 16v-5M12 16V8M16 16v-3"/>'
+        report: '<path d="M4 20V4M4 20h16"/><path d="M8 16v-5M12 16V8M16 16v-3"/>',
+        monitor: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>',
+        sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+        moon: '<path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/>',
+        alert: '<path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17.5v.01"/>',
+        clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+        unlink: '<path d="M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1"/><path d="M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1"/>',
+        compare: '<path d="M7 4v16M17 4v16M3 8h8M13 16h8"/>',
+        calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+        shield: '<path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6z"/><path d="m9 12 2 2 4-4"/>'
     };
 
     ui.icon = function (name) {
@@ -42,20 +51,72 @@
         return '<span class="badge s-' + status + '"><span class="dot"></span>' + esc(label || P.STATUS[status].label) + '</span>';
     };
 
-    // প্রজেক্টের একটা অংশের সারি: নাম আর ভার্সন বাঁয়ে, অবস্থা ডানে
-    ui.part = function (item, fix) {
-        var right = item.status === 'ok' ? '<span class="small muted">' + esc(item.text) + '</span>' : ui.badge(item.status, item.status === 'unknown' ? item.text : item.days !== null && item.days >= 0 ? P.num(item.days) + ' দিন বাকি' : P.STATUS[item.status].label);
-        var note = '';
-        if (item.status !== 'ok' && item.status !== 'unknown') {
-            note = item.end ? P.fmtDate(item.end) + (item.days < 0 ? '-এ শেষ' : ' পর্যন্ত সাপোর্ট') : item.text;
-            if (item.phase && item.phase !== 'ended') note += ' · ' + P.PHASE[item.phase];
+    // নামের প্রথম অক্ষর (বাংলা যুক্তাক্ষরসহ ঠিকমতো কাটার জন্য Intl.Segmenter)
+    var segmenter = typeof Intl !== 'undefined' && Intl.Segmenter ? new Intl.Segmenter('bn', { granularity: 'grapheme' }) : null;
+    function firstGrapheme(word) {
+        if (!word) return '';
+        if (segmenter) {
+            var it = segmenter.segment(word)[Symbol.iterator]().next();
+            return it.done ? '' : it.value.segment;
         }
-        if (fix) note += (note ? ' · ' : '') + fix;
+        return word.charAt(0);
+    }
+
+    ui.avatar = function (name, cls) {
+        var words = P.str(name).split(/[\s\-_.]+/).filter(Boolean);
+        var text = words.length > 1 && /^[a-z0-9]/i.test(words[0]) ? firstGrapheme(words[0]) + firstGrapheme(words[1]) : firstGrapheme(words[0] || '?');
+        return '<span class="avatar' + (cls ? ' ' + cls : '') + '" aria-hidden="true">' + esc(text.toUpperCase()) + '</span>';
+    };
+
+    // রিলিজ থেকে সাপোর্ট শেষ পর্যন্ত সময়ের কতটা পেরিয়েছে
+    ui.lifebar = function (cycle, status) {
+        var rel = P.parseDate(cycle.released);
+        var end = P.parseDate(cycle.securityUntil || cycle.supportUntil);
+        if (rel === null || end === null || end <= rel) return '';
+        var pct = Math.max(2, Math.min(100, ((P.today() - rel) / (end - rel)) * 100));
+        return '<div class="lifebar s-' + status + '" title="সাপোর্টের সময়ের ' + P.num(Math.round(pct)) + '% পেরিয়েছে"><span style="width: ' + pct.toFixed(1) + '%"></span></div>';
+    };
+
+    // প্রজেক্টের একটা অংশের সারি: নাম আর ভার্সন বাঁয়ে, অবস্থা ডানে, নিচে সাপোর্টের সময়
+    ui.part = function (item, fix) {
+        var right =
+            item.status === 'ok'
+                ? '<span class="small muted">' + (item.end ? P.fmtDate(item.end) + ' পর্যন্ত' : esc(item.text)) + '</span>'
+                : ui.badge(item.status, item.status === 'unknown' ? item.text : item.days !== null && item.days >= 0 ? P.num(item.days) + ' দিন বাকি' : P.STATUS[item.status].label);
+        var left = item.phase ? P.PHASE[item.phase] : '';
+        if (fix) left += (left ? ' · ' : '') + fix;
+        var date = item.status !== 'ok' && item.end ? (item.days < 0 ? P.fmtDate(item.end) + '-এ শেষ' : P.fmtDate(item.end) + ' পর্যন্ত') : '';
         return (
             '<div class="part"><span class="part-name"><span class="dot s-' + item.status + '"></span>' + esc(item.label) + '</span>' + right +
-            (note ? '<span class="part-note">' + note + '</span>' : '') +
+            (item.cycle ? ui.lifebar(item.cycle, item.status) : '') +
+            (left || date ? '<span class="part-note"><span>' + left + '</span><span>' + esc(date) + '</span></span>' : '') +
             '</div>'
         );
+    };
+
+    /* ---------- থিম ---------- */
+
+    ui.getTheme = function () {
+        try {
+            var t = localStorage.getItem('phd:theme');
+            return t === 'light' || t === 'dark' ? t : 'system';
+        } catch (e) {
+            return 'system';
+        }
+    };
+
+    ui.setTheme = function (mode) {
+        try {
+            if (mode === 'light' || mode === 'dark') localStorage.setItem('phd:theme', mode);
+            else localStorage.removeItem('phd:theme');
+        } catch (e) {
+            /* ব্রাউজার জায়গা না দিলে শুধু এই পেজে থাকবে */
+        }
+        if (mode === 'light' || mode === 'dark') document.documentElement.dataset.theme = mode;
+        else delete document.documentElement.dataset.theme;
+        ui.$$('[data-theme-set]').forEach(function (b) {
+            b.setAttribute('aria-pressed', String(b.dataset.themeSet === mode));
+        });
     };
 
     ui.toast = function (message, status, action) {
@@ -322,15 +383,33 @@
     };
 
     ui.initLayout = function () {
+        var app = ui.$('#app');
         var bar = ui.$('#sample-bar');
         function update() {
             var d = P.store.get();
-            if (bar) bar.hidden = !(d && d.meta.sample && d.projects.length);
+            if (!d) return;
+            if (bar) bar.hidden = !(d.meta.sample && d.projects.length);
             var undo = ui.$('#menu-undo');
             if (undo) undo.hidden = !P.store.undoInfo();
+            var counts = {
+                projects: d.projects.filter(function (p) { return p.lifecycle !== 'archived'; }).length,
+                catalog: d.catalog.tech.length + d.catalog.env.length
+            };
+            ui.$$('[data-count]').forEach(function (el) {
+                var n = counts[el.dataset.count];
+                el.textContent = n === undefined ? '' : P.num(n);
+            });
         }
         P.store.ready().then(update);
         ui.onChange(update);
+        ui.setTheme(ui.getTheme());
+
+        var mod = ui.$('#kbd-mod');
+        if (mod && !/Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent)) mod.textContent = 'Ctrl';
+
+        function closeNav() {
+            if (app) app.classList.toggle('nav-open', false);
+        }
 
         document.addEventListener('click', function (e) {
             var link = e.target.closest('[data-open-project]');
@@ -338,9 +417,17 @@
                 e.preventDefault();
                 ui.openProject(link.dataset.openProject);
             }
-            ui.$$('details.menu[open]').forEach(function (m) {
-                if (!m.contains(e.target) || e.target.closest('.menu-panel button, .menu-panel a')) m.open = false;
-            });
+            var t = e.target.closest('[data-theme-set]');
+            if (t) ui.setTheme(t.dataset.themeSet);
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+                e.preventDefault();
+                if (ui.openSearch && !document.querySelector('dialog[open]')) ui.openSearch();
+            } else if (e.key === 'Escape') {
+                closeNav();
+            }
         });
 
         var actions = {
@@ -349,6 +436,10 @@
             json: ui.exportJson,
             csv: ui.exportCsv,
             settings: function () { ui.openSettings(); },
+            search: function () { ui.openSearch(); },
+            'new-project': function () { ui.openProject(null); },
+            'nav-open': function () { if (app) app.classList.toggle('nav-open', true); },
+            'nav-close': closeNav,
             undo: function () {
                 if (P.store.undo()) ui.toast('আগের অবস্থায় ফেরানো হয়েছে।');
             },
@@ -363,7 +454,9 @@
         };
         document.addEventListener('click', function (e) {
             var b = e.target.closest('[data-action]');
-            if (b && actions[b.dataset.action]) actions[b.dataset.action]();
+            if (!b || !actions[b.dataset.action]) return;
+            if (b.closest('.sidebar')) closeNav();
+            actions[b.dataset.action]();
         });
     };
 })(PHD);

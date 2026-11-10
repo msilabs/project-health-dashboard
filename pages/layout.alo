@@ -1,26 +1,40 @@
 <head>
     <meta name="description" content="{{ data.site.description }}">
+    <meta name="color-scheme" content="light dark">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap">
+    <script>try { var t = localStorage.getItem('phd:theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}</script>
 </head>
 
 <template>
-    <Header />
-    <div class="sample-bar" id="sample-bar" hidden>
-        <span>এখন নমুনা ডেটা দেখাচ্ছে।</span>
-        <button class="link-btn" type="button" data-action="import">নিজের ডেটা import করুন</button>
-        <button class="link-btn" type="button" data-action="sample-clear">নমুনা মুছে শুরু করুন</button>
+    <div class="app" id="app">
+        <Sidebar />
+        <div class="scrim" data-action="nav-close"></div>
+        <div class="main">
+            <header class="topbar">
+                <button class="btn btn-ghost btn-icon menu-toggle" type="button" data-action="nav-open" aria-label="মেনু খুলুন"><Icon name="menu" /></button>
+                <button class="search-trigger" type="button" data-action="search"><Icon name="search" /><span>প্রজেক্ট, প্রোডাক্ট বা ভার্সন খুঁজুন…</span><kbd id="kbd-mod">⌘</kbd><kbd>K</kbd></button>
+                <span class="spacer"></span>
+                <button class="btn btn-primary" type="button" data-action="new-project"><Icon name="plus" /><span class="label">নতুন প্রজেক্ট</span></button>
+            </header>
+            <main id="main" class="page">
+                <div class="sample-bar" id="sample-bar" hidden>
+                    <Icon name="sparkles" />
+                    <span>এখন নমুনা ডেটা দেখাচ্ছে।</span>
+                    <button class="link-btn" type="button" data-action="import">নিজের ডেটা import করুন</button>
+                    <button class="link-btn" type="button" data-action="sample-clear">নমুনা মুছে শুরু করুন</button>
+                </div>
+                <slot />
+            </main>
+        </div>
     </div>
-    <main id="main" class="container page">
-        <slot />
-    </main>
-    <Footer />
     <ProjectDrawer />
     <ImportDialog />
     <SettingsDialog />
     <PromptDialog />
+    <QuickSearch />
     <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
 </template>
 

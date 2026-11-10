@@ -1,74 +1,133 @@
-/* ডিজাইন টোকেন: নিরপেক্ষ ধূসর, একটা accent, আর শুধু অবস্থার জন্য রং */
+/* ডিজাইন টোকেন। থিম: সিস্টেম অনুযায়ী, অথবা <html data-theme="light|dark"> দিয়ে নির্দিষ্ট। */
 :root {
-    --bg: #f7f7f6;
+    --bg: #f5f6f8;
+    --bg-glow: rgb(99 91 255 / 7%);
+    --sidebar: #fbfbfc;
     --surface: #ffffff;
-    --surface-2: #f3f3f2;
-    --surface-3: #e9e9e7;
-    --text: #18181b;
-    --text-2: #3f3f46;
-    --muted: #71717a;
-    --border: #e4e4e7;
-    --border-strong: #d4d4d8;
-    --accent: #4f46e5;
-    --accent-hover: #4338ca;
-    --accent-soft: #eef0ff;
+    --surface-2: #f4f5f7;
+    --surface-3: #eceef2;
+    --text: #101322;
+    --text-2: #3b4152;
+    --muted: #6b7183;
+    --border: #e6e8ee;
+    --border-strong: #d5d9e2;
+    --accent: #5b4cf5;
+    --accent-2: #7c6cff;
+    --accent-hover: #4b3ce0;
+    --accent-soft: #eeecff;
+    --accent-ring: rgb(91 76 245 / 22%);
     --on-accent: #ffffff;
 
-    --eol: #dc2626;
-    --eol-bg: #fdecec;
-    --critical: #ea580c;
-    --critical-bg: #fff0e6;
-    --warning: #b7791f;
-    --warning-bg: #fdf5e1;
-    --ok: #16a34a;
-    --ok-bg: #e9f7ee;
-    --unknown: #a1a1aa;
-    --unknown-bg: #f1f1f2;
+    --eol: #e5484d;
+    --eol-bg: #fdeeee;
+    --critical: #f76b15;
+    --critical-bg: #fff1e7;
+    --warning: #c48a0a;
+    --warning-bg: #fdf6e3;
+    --ok: #18a058;
+    --ok-bg: #e8f7ee;
+    --unknown: #9ca1b0;
+    --unknown-bg: #f1f2f5;
+
+    --shadow-xs: 0 1px 2px rgb(16 19 34 / 5%);
+    --shadow-sm: 0 1px 2px rgb(16 19 34 / 4%), 0 1px 3px rgb(16 19 34 / 6%);
+    --shadow: 0 2px 4px rgb(16 19 34 / 4%), 0 12px 32px -8px rgb(16 19 34 / 12%);
+    --shadow-lg: 0 24px 64px -12px rgb(16 19 34 / 28%);
+    --highlight: inset 0 1px 0 rgb(255 255 255 / 60%);
 
     --font-sans: 'Inter', 'Noto Sans Bengali', system-ui, -apple-system, 'Segoe UI', sans-serif;
-    --font-mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
-    --radius: 12px;
-    --radius-sm: 8px;
-    --shadow-sm: 0 1px 2px rgb(24 24 27 / 6%);
-    --shadow: 0 1px 2px rgb(24 24 27 / 5%), 0 8px 24px rgb(24 24 27 / 8%);
-    --shadow-lg: 0 24px 60px rgb(24 24 27 / 18%);
-    --page: 72rem;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+    --radius: 14px;
+    --radius-sm: 9px;
+    --sidebar-w: 15.5rem;
+    --page: 76rem;
 
     color-scheme: light;
 }
 
+/* ডার্ক টোকেন দুই জায়গায় লাগে: সিস্টেম ডার্ক হলে, আর হাতে ডার্ক বাছলে */
 @media (prefers-color-scheme: dark) {
-    :root {
-        --bg: #0c0c0e;
-        --surface: #151517;
-        --surface-2: #1c1c1f;
-        --surface-3: #27272b;
-        --text: #f4f4f5;
-        --text-2: #d4d4d8;
-        --muted: #a1a1aa;
-        --border: #27272a;
-        --border-strong: #3a3a40;
-        --accent: #8b93ff;
-        --accent-hover: #a5abff;
-        --accent-soft: rgb(139 147 255 / 14%);
-        --on-accent: #0c0c0e;
+    :root:not([data-theme='light']) {
+        --bg: #0a0b10;
+        --bg-glow: rgb(124 108 255 / 10%);
+        --sidebar: #0d0f15;
+        --surface: #12141c;
+        --surface-2: #181b25;
+        --surface-3: #212533;
+        --text: #eceef5;
+        --text-2: #c3c7d4;
+        --muted: #8a90a3;
+        --border: #222634;
+        --border-strong: #2e3345;
+        --accent: #8b7fff;
+        --accent-2: #a597ff;
+        --accent-hover: #a194ff;
+        --accent-soft: rgb(139 127 255 / 14%);
+        --accent-ring: rgb(139 127 255 / 30%);
+        --on-accent: #0a0b10;
 
-        --eol: #f87171;
-        --eol-bg: rgb(248 113 113 / 13%);
-        --critical: #fb923c;
-        --critical-bg: rgb(251 146 60 / 13%);
-        --warning: #facc15;
-        --warning-bg: rgb(250 204 21 / 11%);
-        --ok: #4ade80;
-        --ok-bg: rgb(74 222 128 / 11%);
-        --unknown: #71717a;
-        --unknown-bg: rgb(161 161 170 / 10%);
-        --shadow-sm: 0 1px 2px rgb(0 0 0 / 40%);
-        --shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 8px 24px rgb(0 0 0 / 35%);
-        --shadow-lg: 0 24px 60px rgb(0 0 0 / 55%);
+        --eol: #ff6b6f;
+        --eol-bg: rgb(255 107 111 / 12%);
+        --critical: #ff9147;
+        --critical-bg: rgb(255 145 71 / 12%);
+        --warning: #f5c84b;
+        --warning-bg: rgb(245 200 75 / 11%);
+        --ok: #3ddc84;
+        --ok-bg: rgb(61 220 132 / 10%);
+        --unknown: #6f7588;
+        --unknown-bg: rgb(140 146 165 / 10%);
+
+        --shadow-xs: 0 1px 2px rgb(0 0 0 / 40%);
+        --shadow-sm: 0 1px 2px rgb(0 0 0 / 40%), 0 1px 3px rgb(0 0 0 / 30%);
+        --shadow: 0 2px 4px rgb(0 0 0 / 30%), 0 16px 40px -10px rgb(0 0 0 / 60%);
+        --shadow-lg: 0 28px 70px -12px rgb(0 0 0 / 75%);
+        --highlight: inset 0 1px 0 rgb(255 255 255 / 4%);
 
         color-scheme: dark;
     }
+}
+
+:root[data-theme='dark'] {
+    --bg: #0a0b10;
+    --bg-glow: rgb(124 108 255 / 10%);
+    --sidebar: #0d0f15;
+    --surface: #12141c;
+    --surface-2: #181b25;
+    --surface-3: #212533;
+    --text: #eceef5;
+    --text-2: #c3c7d4;
+    --muted: #8a90a3;
+    --border: #222634;
+    --border-strong: #2e3345;
+    --accent: #8b7fff;
+    --accent-2: #a597ff;
+    --accent-hover: #a194ff;
+    --accent-soft: rgb(139 127 255 / 14%);
+    --accent-ring: rgb(139 127 255 / 30%);
+    --on-accent: #0a0b10;
+
+    --eol: #ff6b6f;
+    --eol-bg: rgb(255 107 111 / 12%);
+    --critical: #ff9147;
+    --critical-bg: rgb(255 145 71 / 12%);
+    --warning: #f5c84b;
+    --warning-bg: rgb(245 200 75 / 11%);
+    --ok: #3ddc84;
+    --ok-bg: rgb(61 220 132 / 10%);
+    --unknown: #6f7588;
+    --unknown-bg: rgb(140 146 165 / 10%);
+
+    --shadow-xs: 0 1px 2px rgb(0 0 0 / 40%);
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 40%), 0 1px 3px rgb(0 0 0 / 30%);
+    --shadow: 0 2px 4px rgb(0 0 0 / 30%), 0 16px 40px -10px rgb(0 0 0 / 60%);
+    --shadow-lg: 0 28px 70px -12px rgb(0 0 0 / 75%);
+    --highlight: inset 0 1px 0 rgb(255 255 255 / 4%);
+
+    color-scheme: dark;
+}
+
+html {
+    background: var(--bg);
 }
 
 body {
@@ -79,30 +138,33 @@ body {
     font-size: 14px;
     line-height: 1.55;
     -webkit-font-smoothing: antialiased;
-    font-feature-settings: 'cv11', 'ss01';
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'cv11', 'ss01', 'ss03';
+    text-rendering: optimizeLegibility;
 }
 
 h1,
 h2,
 h3 {
     color: var(--text);
-    line-height: 1.3;
-    letter-spacing: -0.01em;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
     text-wrap: balance;
 }
 
 h1 {
-    font-size: 1.45rem;
-    font-weight: 650;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
 }
 
 h2 {
-    font-size: 1rem;
+    font-size: 0.98rem;
     font-weight: 600;
 }
 
 h3 {
-    font-size: 0.92rem;
+    font-size: 0.9rem;
     font-weight: 600;
 }
 
@@ -129,7 +191,7 @@ a:hover {
 code,
 pre {
     font-family: var(--font-mono);
-    font-size: 0.85em;
+    font-size: 0.82em;
 }
 
 code {
@@ -149,7 +211,7 @@ pre {
     word-break: break-all;
 }
 
-.container {
-    width: min(100% - 2rem, var(--page));
-    margin-inline: auto;
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-strong) transparent;
 }

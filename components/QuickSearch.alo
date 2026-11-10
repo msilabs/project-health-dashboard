@@ -1,0 +1,133 @@
+<template>
+    <dialog class="palette" aria-label="দ্রুত খুঁজুন">
+        <div class="palette-input">
+            <Icon name="search" />
+            <input type="text" placeholder="প্রজেক্ট, প্রোডাক্ট, ভার্সন বা কাজ…" aria-label="খুঁজুন" autocomplete="off" data-q>
+            <kbd>esc</kbd>
+        </div>
+        <div class="palette-list" role="listbox" data-list></div>
+        <div class="palette-foot">
+            <span><kbd>↑</kbd> <kbd>↓</kbd> বাছুন</span>
+            <span><kbd>↵</kbd> খুলুন</span>
+        </div>
+    </dialog>
+</template>
+
+<script>
+    const P = PHD;
+    const ui = P.ui;
+    const esc = P.esc;
+    const input = $el.querySelector('[data-q]');
+    const list = $el.querySelector('[data-list]');
+    let results = [];
+    let active = 0;
+
+    const ACTIONS = [
+        { label: 'ড্যাশবোর্ড', icon: 'grid', run: function () { location.href = P.url('/'); } },
+        { label: 'প্রজেক্ট', icon: 'folder', run: function () { location.href = P.url('/projects/'); } },
+        { label: 'ক্যাটালগ', icon: 'book', run: function () { location.href = P.url('/catalog/'); } },
+        { label: 'নতুন প্রজেক্ট', icon: 'plus', run: function () { ui.openProject(null); } },
+        { label: 'JSON import', icon: 'upload', run: function () { ui.openImport('file'); } },
+        { label: 'AI দিয়ে প্রজেক্ট বানান', icon: 'sparkles', run: function () { ui.openImport('ai'); } },
+        { label: 'JSON export (ব্যাকআপ)', icon: 'download', run: function () { ui.exportJson(); } },
+        { label: 'সেটিংস', icon: 'settings', run: function () { ui.openSettings(); } },
+        { label: 'লাইট থিম', icon: 'sun', run: function () { ui.setTheme('light'); } },
+        { label: 'ডার্ক থিম', icon: 'moon', run: function () { ui.setTheme('dark'); } }
+    ];
+
+    function search(q) {
+        const data = P.store.get();
+        const needle = q.trim().toLowerCase();
+        const rows = P.analyze(data, { includeArchived: true }).rows;
+        const projects = rows.filter(function (r) {
+            if (!needle) return r.status !== 'ok' && r.status !== 'unknown';
+            const p = r.project;
+            return [p.name, p.owner, p.tags.join(' ')].concat(r.items.map(function (x) { return x.label; })).join(' ').toLowerCase().indexOf(needle) !== -1;
+        }).slice(0, needle ? 8 : 5).map(function (r) {
+            return {
+                group: needle ? 'প্রজেক্ট' : 'ঝুঁকিতে থাকা প্রজেক্ট',
+                html: ui.avatar(r.project.name) + '<span>' + esc(r.project.name) + '</span><span class="meta">' + ui.badge(r.status) + '</span>',
+                run: function () { ui.openProject(r.project.id); }
+            };
+        });
+        const products = [];
+        if (needle) {
+            P.KINDS.forEach(function (k) {
+                data.catalog[k].forEach(function (p) {
+                    if ((p.name + ' ' + p.id).toLowerCase().indexOf(needle) === -1) return;
+                    products.push({
+                        group: 'ক্যাটালগ',
+                        html: ui.avatar(p.name) + '<span>' + esc(p.name) + '</span><span class="meta small muted">' + P.KIND_LABEL[k] + ' · ' + P.num(p.versions.length) + 'টি ভার্সন</span>',
+                        run: function () { location.href = P.url('/catalog/?kind=' + k + '&q=' + encodeURIComponent(p.name)); }
+                    });
+                });
+            });
+        }
+        const actions = ACTIONS.filter(function (a) { return !needle || a.label.toLowerCase().indexOf(needle) !== -1; }).map(function (a) {
+            return { group: 'কাজ', html: '<span class="avatar">' + ui.icon(a.icon) + '</span><span>' + esc(a.label) + '</span>', run: a.run };
+        });
+        return projects.concat(products.slice(0, 6), actions);
+    }
+
+    function render() {
+        results = search(input.value);
+        active = Math.min(active, Math.max(results.length - 1, 0));
+        let group = null;
+        list.innerHTML = results.length
+            ? results.map(function (r, i) {
+                  const head = r.group !== group ? '<div class="palette-group">' + esc(r.group) + '</div>' : '';
+                  group = r.group;
+                  return head + '<button class="palette-item" type="button" role="option" data-i="' + i + '" aria-selected="' + (i === active) + '">' + r.html + '</button>';
+              }).join('')
+            : '<div class="empty small">কিছু পাওয়া যায়নি।</div>';
+    }
+
+    function choose(i) {
+        const r = results[i];
+        if (!r) return;
+        $el.close();
+        r.run();
+    }
+
+    ui.openSearch = function () {
+        input.value = '';
+        active = 0;
+        render();
+        $el.showModal();
+        input.focus();
+    };
+
+    input.addEventListener('input', function () {
+        active = 0;
+        render();
+    });
+
+    input.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            active = (active + (e.key === 'ArrowDown' ? 1 : -1) + results.length) % Math.max(results.length, 1);
+            render();
+            const sel = list.querySelector('[aria-selected="true"]');
+            if (sel) sel.scrollIntoView({ block: 'nearest' });
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            choose(active);
+        }
+    });
+
+    list.addEventListener('click', function (e) {
+        const b = e.target.closest('[data-i]');
+        if (b) choose(Number(b.dataset.i));
+    });
+
+    list.addEventListener('mousemove', function (e) {
+        const b = e.target.closest('[data-i]');
+        if (!b || Number(b.dataset.i) === active) return;
+        active = Number(b.dataset.i);
+        list.querySelectorAll('[data-i]').forEach(function (x) { x.setAttribute('aria-selected', String(Number(x.dataset.i) === active)); });
+    });
+
+    $el.addEventListener('click', function (e) {
+        if (e.target === $el) $el.close();
+    });
+</script>
