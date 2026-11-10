@@ -1,0 +1,44 @@
+<head>
+    <meta name="description" content="{{ data.site.description }}">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap">
+</head>
+
+<template>
+    <a class="skip" href="#main">মূল অংশে যান</a>
+    <Header />
+    <main id="main" class="container page">
+        <div class="banner" id="sample-banner" hidden>
+            <span>এখন নমুনা ডেটা দেখছেন। নিজের প্রজেক্ট যোগ করুন, অথবা আগে নমুনাটা মুছে দিন।</span>
+            <span class="row">
+                <a class="btn btn-small" href="/data/">নিজের ডেটা import করুন</a>
+                <button class="btn btn-small" type="button" id="sample-clear">নমুনা মুছুন</button>
+            </span>
+        </div>
+        <slot />
+    </main>
+    <Footer />
+    <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+</template>
+
+<style global>
+    .skip {
+        position: absolute;
+        left: -999px;
+    }
+
+    .skip:focus {
+        left: 1rem;
+        top: 0.5rem;
+        z-index: 60;
+        padding: 0.4rem 0.8rem;
+        border-radius: var(--radius-small);
+        background: var(--surface);
+    }
+</style>
+
+<script>
+    PHD.ui.initLayout();
+</script>

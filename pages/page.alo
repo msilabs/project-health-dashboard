@@ -1,0 +1,107 @@
+<head>
+    <title>{{ data.site.name }}</title>
+</head>
+
+<template>
+    <section class="intro">
+        <h1>প্রজেক্টের স্বাস্থ্য</h1>
+        <p id="lede">ডেটা লোড হচ্ছে…</p>
+        <p class="small muted" id="asof"></p>
+    </section>
+
+    <div class="empty" id="empty" hidden>
+        <h2>এখনো কোনো প্রজেক্ট নেই</h2>
+        <p>প্রজেক্ট যোগ করুন, আগের ব্যাকআপ import করুন, অথবা AI দিয়ে আপনার লেখা তথ্য থেকে প্রজেক্ট বানিয়ে নিন।</p>
+        <div class="row">
+            <a class="btn btn-primary" href="/projects/?new=1">প্রজেক্ট যোগ করুন</a>
+            <a class="btn" href="/data/">JSON import</a>
+            <a class="btn" href="/ai/">AI সহায়তা</a>
+        </div>
+    </div>
+
+    <div id="content" class="stack" hidden>
+        <section class="tiles" id="tiles" aria-label="অবস্থা অনুযায়ী প্রজেক্ট"></section>
+
+        <div class="grid-2">
+            <section class="card">
+                <header>
+                    <h2>সাপোর্ট শেষ বা শিগগির শেষ হচ্ছে</h2>
+                    <p class="card-note">আপনার প্রজেক্টে চলা যে ভার্সনগুলোর সাপোর্ট শেষ হয়ে গেছে, বা আগামী এক বছরে শেষ হবে।</p>
+                </header>
+                <ul class="list" id="upcoming"></ul>
+                <a class="small" href="/analysis/">পুরো বিশ্লেষণ দেখুন</a>
+            </section>
+
+            <section class="card">
+                <header>
+                    <h2>সবচেয়ে ঝুঁকিতে থাকা প্রজেক্ট</h2>
+                    <p class="card-note">অবস্থা আর সবচেয়ে কাছের শেষ তারিখ অনুযায়ী সাজানো।</p>
+                </header>
+                <ul class="list" id="risky"></ul>
+                <a class="small" href="/projects/">সব প্রজেক্ট দেখুন</a>
+            </section>
+        </div>
+
+        <section class="card" id="issues-card" hidden>
+            <header>
+                <h2>সামঞ্জস্য আর অমিল</h2>
+                <p class="card-note">টেক ভার্সনের যে রানটাইম লাগে তা সার্ভারে নেই, অথবা একই প্রোডাক্ট বিভিন্ন environment-এ ভিন্ন ভার্সনে চলছে।</p>
+            </header>
+            <ul class="list" id="issues"></ul>
+        </section>
+    </div>
+</template>
+
+<script>
+    const { ui } = PHD;
+    const P = PHD;
+
+    function render() {
+        const data = P.store.get();
+        const a = P.analyze(data);
+        const s = data.settings;
+        ui.$('#empty').hidden = a.total > 0;
+        ui.$('#content').hidden = a.total === 0;
+        ui.$('#lede').textContent = a.total ? P.summaryText(a, s) : 'প্রজেক্টের টেক আর সার্ভারের ভার্সন যোগ করলে এখানে দেখাবে কোনটার সাপোর্ট কবে শেষ হচ্ছে।';
+        ui.$('#asof').textContent =
+            'আজকের তারিখ (' + P.fmtDate(P.isoDate(P.today())) + ') ধরে হিসাব। জরুরি মানে ' + P.num(s.redDays) + ' দিনের মধ্যে, সতর্কতা মানে ' + P.num(s.yellowDays) + ' দিনের মধ্যে সাপোর্ট শেষ। আর্কাইভ করা প্রজেক্ট ধরা হয়নি।';
+        if (!a.total) return;
+
+        ui.$('#tiles').innerHTML = P.STATUS_ORDER.map(function (st) {
+            return (
+                '<a class="tile s-' + st + '" href="' + P.esc(P.url('/projects/?status=' + st)) + '">' +
+                '<span class="tile-label"><span class="dot s-' + st + '"></span>' + P.esc(P.STATUS[st].label) + '</span>' +
+                '<span class="tile-num">' + P.num(a.counts[st]) + '</span>' +
+                '<span class="tile-note">' + P.esc(P.STATUS[st].note) + '</span></a>'
+            );
+        }).join('');
+
+        const up = P.upcoming(a.rows, s.yellowDays);
+        ui.$('#upcoming').innerHTML = up.length
+            ? up.slice(0, 8).map(function (u) {
+                  const item = { status: u.status, label: u.productName + ' ' + u.version, text: u.days === null ? 'সাপোর্ট শেষ' : u.days < 0 ? P.fmtDate(u.end) + '-এ শেষ' : P.fmtDate(u.end) + ' · ' + P.num(u.days) + ' দিন বাকি', phase: null, cycle: null, version: u.version };
+                  return '<li>' + '<div>' + ui.ver(item) + '</div>' + '<span class="small muted">' + P.num(u.projects.length) + 'টি প্রজেক্ট: ' + ui.projectNames(u.projects) + '</span></li>';
+              }).join('') + (up.length > 8 ? '<li class="small muted">আরও ' + P.num(up.length - 8) + 'টি ভার্সন বিশ্লেষণ পেজে আছে।</li>' : '')
+            : '<li class="muted">এক বছরের মধ্যে কোনো ভার্সনের সাপোর্ট শেষ হচ্ছে না।</li>';
+
+        const risky = a.rows.filter(function (r) {
+            return r.status !== 'ok' && r.status !== 'unknown';
+        });
+        ui.$('#risky').innerHTML = risky.length
+            ? risky.slice(0, 6).map(function (r) {
+                  return '<li><div class="spread"><b>' + ui.projectLink(r.project) + '</b>' + ui.pill(r.status) + '</div><span class="small muted">' + P.esc(r.reason) + (r.issues.length ? ' · ' + P.num(r.issues.length) + 'টি অমিল' : '') + '</span></li>';
+              }).join('')
+            : '<li class="muted">কোনো প্রজেক্ট ঝুঁকিতে নেই।</li>';
+
+        ui.$('#issues-card').hidden = !a.issues.length;
+        const issues = a.issues.slice().sort(function (x, y) {
+            return P.statusRank(y.severity) - P.statusRank(x.severity);
+        });
+        ui.$('#issues').innerHTML = issues.slice(0, 6).map(function (i) {
+            return '<li><div class="row">' + ui.pill(i.severity, i.type === 'requires' ? 'সামঞ্জস্য' : 'অমিল') + '<b>' + ui.projectLink(i.project) + '</b></div><span class="small">' + P.esc(i.text) + '</span></li>';
+        }).join('') + (issues.length > 6 ? '<li><a class="small" href="' + P.esc(P.url('/analysis/#issues')) + '">আরও ' + P.num(issues.length - 6) + 'টি দেখুন</a></li>' : '');
+    }
+
+    P.store.ready().then(render);
+    ui.onChange(render);
+</script>

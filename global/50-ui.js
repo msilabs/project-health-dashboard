@@ -1,0 +1,192 @@
+/* DOM-এর সাধারণ সাহায্যকারী: পিল, ভার্সন চিপ, টোস্ট, ফাইল, URL কোয়েরি */
+(function (P) {
+    if (typeof document === 'undefined') return;
+    var esc = P.esc;
+    var ui = (P.ui = {});
+
+    ui.$ = function (sel, root) {
+        return (root || document).querySelector(sel);
+    };
+
+    ui.$$ = function (sel, root) {
+        return Array.prototype.slice.call((root || document).querySelectorAll(sel));
+    };
+
+    ui.pill = function (status, label) {
+        return '<span class="pill s-' + status + '"><span class="dot s-' + status + '"></span>' + esc(label || P.STATUS[status].label) + '</span>';
+    };
+
+    // প্রজেক্টের একটা অংশ, যেমন "PHP 8.2 · ৫১ দিন বাকি"
+    ui.ver = function (item, opts) {
+        opts = opts || {};
+        var title = item.label + ': ' + item.text + (item.phase ? ' · ' + P.PHASE[item.phase] : '');
+        var label = opts.short && item.cycle ? item.productName + ' ' + item.cycle.version : item.label;
+        if (!item.version && item.reason === 'no-version') label = item.productName;
+        return (
+            '<span class="ver s-' + item.status + '" title="' + esc(title) + '"><b>' + esc(label) + '</b>' +
+            (opts.text === false ? '' : '<small>' + esc(item.text) + '</small>') +
+            '</span>'
+        );
+    };
+
+    ui.toast = function (message, status, action) {
+        var box = ui.$('#toasts');
+        if (!box) return;
+        var el = document.createElement('div');
+        el.className = 'toast s-' + (status || 'ok');
+        el.innerHTML = '<span>' + esc(message) + '</span>';
+        if (action) {
+            var b = document.createElement('button');
+            b.type = 'button';
+            b.className = 'btn btn-small';
+            b.textContent = action.label;
+            b.addEventListener('click', function () {
+                action.fn();
+                el.remove();
+            });
+            el.appendChild(b);
+        }
+        box.appendChild(el);
+        setTimeout(function () {
+            el.remove();
+        }, action ? 9000 : 4500);
+    };
+
+    ui.undoToast = function (message) {
+        ui.toast(message, 'ok', {
+            label: 'ফিরিয়ে আনুন',
+            fn: function () {
+                if (P.store.undo()) ui.toast('আগের অবস্থায় ফেরানো হয়েছে।');
+            }
+        });
+    };
+
+    ui.download = function (filename, text, type) {
+        var blob = new Blob([text], { type: type || 'application/json' });
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function () {
+            URL.revokeObjectURL(a.href);
+            a.remove();
+        }, 0);
+    };
+
+    ui.copy = function (text) {
+        if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text);
+        return new Promise(function (resolve, reject) {
+            var t = document.createElement('textarea');
+            t.value = text;
+            t.style.position = 'fixed';
+            t.style.opacity = '0';
+            document.body.appendChild(t);
+            t.select();
+            var ok = document.execCommand('copy');
+            t.remove();
+            if (ok) resolve();
+            else reject(new Error('copy'));
+        });
+    };
+
+    ui.readFile = function (file) {
+        return new Promise(function (resolve, reject) {
+            var r = new FileReader();
+            r.onload = function () {
+                resolve(String(r.result));
+            };
+            r.onerror = reject;
+            r.readAsText(file);
+        });
+    };
+
+    ui.query = function () {
+        return new URLSearchParams(location.search);
+    };
+
+    // খালি মানগুলো বাদ দিয়ে URL-এ ফিল্টার রাখা, যাতে লিংক শেয়ার করা যায়
+    ui.setQuery = function (obj) {
+        var q = new URLSearchParams();
+        Object.keys(obj).forEach(function (k) {
+            if (obj[k] !== '' && obj[k] !== null && obj[k] !== undefined && obj[k] !== false) q.set(k, obj[k]);
+        });
+        var s = q.toString();
+        history.replaceState(null, '', location.pathname + (s ? '?' + s : ''));
+    };
+
+    ui.onChange = function (fn) {
+        document.addEventListener('phd:change', fn);
+    };
+
+    ui.options = function (map, selected, empty) {
+        var out = empty !== undefined ? '<option value="">' + esc(empty) + '</option>' : '';
+        Object.keys(map).forEach(function (k) {
+            out += '<option value="' + esc(k) + '"' + (String(k) === String(selected) ? ' selected' : '') + '>' + esc(map[k]) + '</option>';
+        });
+        return out;
+    };
+
+    // ক্যাটালগের প্রোডাক্ট; ক্যাটালগে না থাকা পুরনো মানও রাখা হয়, যাতে এডিটে হারিয়ে না যায়
+    ui.productOptions = function (data, kind, selected) {
+        var map = {};
+        data.catalog[kind].forEach(function (p) {
+            map[p.id] = p.name;
+        });
+        if (selected && !map[selected]) map[selected] = selected + ' (ক্যাটালগে নেই)';
+        return ui.options(map, selected, 'প্রোডাক্ট বাছুন');
+    };
+
+    ui.datalists = function (data) {
+        var out = '';
+        P.KINDS.forEach(function (kind) {
+            data.catalog[kind].forEach(function (p) {
+                out += '<datalist id="dl-' + kind + '-' + esc(p.id) + '">';
+                p.versions.forEach(function (v) {
+                    out += '<option value="' + esc(v.version) + '"></option>';
+                });
+                out += '</datalist>';
+            });
+        });
+        out += '<datalist id="dl-deployments">';
+        data.settings.deploymentNames.forEach(function (n) {
+            out += '<option value="' + esc(n) + '"></option>';
+        });
+        return out + '</datalist>';
+    };
+
+    ui.projectLink = function (p) {
+        return '<a href="' + esc(P.url('/projects/?edit=' + encodeURIComponent(p.id))) + '">' + esc(p.name) + '</a>';
+    };
+
+    ui.projectNames = function (projects, max) {
+        max = max || 4;
+        var shown = projects.slice(0, max).map(ui.projectLink).join(', ');
+        return shown + (projects.length > max ? ' আরও ' + P.num(projects.length - max) + 'টি' : '');
+    };
+
+    ui.dateInput = function (name, value) {
+        return '<input type="date" name="' + name + '" value="' + esc(value) + '">';
+    };
+
+    ui.initLayout = function () {
+        var banner = ui.$('#sample-banner');
+        function update() {
+            var d = P.store.get();
+            if (banner) banner.hidden = !(d && d.meta.sample && d.projects.length);
+        }
+        P.store.ready().then(update);
+        ui.onChange(update);
+        var clear = ui.$('#sample-clear');
+        if (clear) {
+            clear.addEventListener('click', function () {
+                if (!confirm('নমুনা প্রজেক্টগুলো মুছে যাবে। ক্যাটালগ থাকবে। চালিয়ে যাবেন?')) return;
+                var next = P.clone(P.store.get());
+                next.projects = [];
+                next.meta.sample = false;
+                P.store.apply(next, 'নমুনা মুছে ফেলা');
+                ui.undoToast('নমুনা প্রজেক্ট মুছে ফেলা হয়েছে।');
+            });
+        }
+    };
+})(PHD);
