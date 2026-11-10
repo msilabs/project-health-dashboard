@@ -3,96 +3,49 @@
 </head>
 
 <template>
-    <section class="intro">
-        <div class="spread">
+    <div class="page-head">
+        <div>
             <h1>প্রজেক্ট</h1>
-            <div class="row">
-                <button class="btn" type="button" id="csv">এই তালিকা CSV</button>
-                <button class="btn btn-primary" type="button" id="add">+ নতুন প্রজেক্ট</button>
-            </div>
+            <p id="count">ডেটা লোড হচ্ছে…</p>
         </div>
-        <p>প্রতিটা প্রজেক্টের টেক ভার্সন আর প্রতিটা environment-এ (production, staging) কী চলছে, তা এখানে রাখুন। সারিতে ক্লিক করলে এডিট করা যায়।</p>
-    </section>
+        <div class="actions">
+            <button class="btn btn-primary" type="button" id="add"><Icon name="plus" />নতুন প্রজেক্ট</button>
+        </div>
+    </div>
 
     <section class="card">
-        <div class="chips" id="status-chips" role="group" aria-label="অবস্থা অনুযায়ী ফিল্টার"></div>
-        <div class="filters">
-            <label class="field grow"><span>খুঁজুন</span><input type="search" id="f-q" placeholder="নাম, রিপো, owner, ট্যাগ বা ভার্সন"></label>
-            <label class="field"><span>Environment</span><select id="f-dep"></select></label>
-            <label class="field"><span>প্রোডাক্ট</span><select id="f-product"></select></label>
-            <label class="field"><span>ভার্সন</span><select id="f-version"></select></label>
-            <label class="field"><span>Owner</span><select id="f-owner"></select></label>
-            <label class="field"><span>ট্যাগ</span><select id="f-tag"></select></label>
-            <label class="field"><span>প্রজেক্টের ধাপ</span><select id="f-life"></select></label>
-            <button class="btn" type="button" id="f-reset">ফিল্টার মুছুন</button>
+        <div class="toolbar">
+            <label class="search"><Icon name="search" /><input type="search" id="f-q" placeholder="নাম, ট্যাগ বা ভার্সন খুঁজুন" aria-label="খুঁজুন"></label>
+            <div class="segmented" id="status" role="group" aria-label="অবস্থা"></div>
+            <span class="spacer"></span>
+            <select id="f-dep" aria-label="Environment"></select>
+            <button class="btn btn-sm" type="button" id="more" aria-expanded="false"><Icon name="filter" />ফিল্টার<span class="counter" id="more-count" hidden></span></button>
         </div>
-        <p class="small muted" id="count"></p>
+        <div class="more-filters" id="more-panel" hidden>
+            <select id="f-product" aria-label="প্রোডাক্ট"></select>
+            <select id="f-version" aria-label="ভার্সন"></select>
+            <select id="f-owner" aria-label="Owner"></select>
+            <select id="f-tag" aria-label="ট্যাগ"></select>
+            <select id="f-life" aria-label="প্রজেক্টের ধাপ"></select>
+            <button class="btn btn-ghost btn-sm" type="button" id="reset">সব ফিল্টার মুছুন</button>
+        </div>
         <div class="tablewrap">
             <table class="table">
                 <thead>
                     <tr>
                         <th>প্রজেক্ট</th>
                         <th>অবস্থা</th>
-                        <th>কারণ</th>
-                        <th>টেক</th>
-                        <th>সার্ভার (environment অনুযায়ী)</th>
-                        <th>অমিল</th>
+                        <th>মূল কারণ</th>
+                        <th class="hide-sm">স্ট্যাক</th>
                     </tr>
                 </thead>
                 <tbody id="rows"></tbody>
             </table>
         </div>
         <div class="empty" id="empty" hidden>
-            <p id="empty-text">এই ফিল্টারে কোনো প্রজেক্ট নেই।</p>
+            <p id="empty-text"></p>
         </div>
     </section>
-
-    <div id="datalists"></div>
-
-    <dialog class="modal" id="editor" aria-labelledby="ed-title">
-        <form class="modal-form" id="ed-form" novalidate>
-            <div class="modal-head">
-                <h2 id="ed-title">প্রজেক্ট</h2>
-                <button class="btn btn-icon" type="button" data-close aria-label="বন্ধ করুন">✕</button>
-            </div>
-            <div class="modal-body">
-                <div class="form-grid">
-                    <label class="field"><span>নাম *</span><input type="text" name="name" required maxlength="120"></label>
-                    <label class="field"><span>রিপো বা লিংক</span><input type="text" name="repo" placeholder="https://github.com/…"></label>
-                    <label class="field"><span>Owner বা দায়িত্বে</span><input type="text" name="owner" list="dl-owners"></label>
-                    <label class="field"><span>ট্যাগ (কমা দিয়ে)</span><input type="text" name="tags" placeholder="client, payment"></label>
-                    <label class="field"><span>প্রজেক্টের ধাপ</span><select name="lifecycle" id="ed-life"></select></label>
-                </div>
-                <label class="field"><span>নোট</span><textarea name="note" rows="2" style="min-height: 3.5rem; font-family: inherit"></textarea></label>
-
-                <fieldset>
-                    <legend>টেক (কোডে যা ব্যবহার হয়)</legend>
-                    <p class="small muted">ফ্রেমওয়ার্ক বা লাইব্রেরি, যেমন Laravel 12, React 19। ভার্সনে পুরো নম্বরও লেখা যায় (12.40.1), ক্যাটালগের সাইকেলের সাথে নিজে মিলিয়ে নেবে।</p>
-                    <div class="stack" id="ed-tech"></div>
-                    <div><button class="btn btn-small" type="button" data-add-tech>+ টেক যোগ করুন</button></div>
-                </fieldset>
-
-                <fieldset>
-                    <legend>Environment (সার্ভারে যা চলে)</legend>
-                    <p class="small muted">প্রতিটা environment-এ রানটাইম, ডাটাবেস, ওয়েব সার্ভার, OS-এর আসল ভার্সন।</p>
-                    <div class="stack" id="ed-deps"></div>
-                    <div><button class="btn btn-small" type="button" data-add-dep>+ environment যোগ করুন</button></div>
-                </fieldset>
-                <p class="notice s-critical" id="ed-error" hidden></p>
-            </div>
-            <div class="modal-foot">
-                <span class="row">
-                    <button class="btn btn-danger" type="button" id="ed-delete">মুছুন</button>
-                    <button class="btn" type="button" id="ed-copy">কপি বানান</button>
-                    <a class="btn" id="ed-plan" href="/ai/">AI দিয়ে আপগ্রেড পরিকল্পনা</a>
-                </span>
-                <span class="row">
-                    <button class="btn" type="button" data-close>বাতিল</button>
-                    <button class="btn btn-primary" type="submit">সেভ করুন</button>
-                </span>
-            </div>
-        </form>
-    </dialog>
 </template>
 
 <script>
@@ -100,13 +53,10 @@
     const ui = P.ui;
     const esc = P.esc;
     const KEYS = ['status', 'dep', 'product', 'version', 'owner', 'tag', 'life', 'q'];
-    const f = {};
+    const MORE = ['product', 'version', 'owner', 'tag', 'life'];
     const query = ui.query();
-    KEYS.forEach(function (k) {
-        f[k] = query.get(k) || '';
-    });
-    let editing = null;
-    let lastRows = [];
+    const f = {};
+    KEYS.forEach(function (k) { f[k] = query.get(k) || ''; });
 
     function versionOf(x) {
         return x.cycle ? x.cycle.version : P.cleanVersion(x.version);
@@ -123,12 +73,7 @@
             if (f.dep && !p.deployments.some(function (d) { return d.name === f.dep; })) return false;
             if (f.owner && p.owner !== f.owner) return false;
             if (f.tag && p.tags.indexOf(f.tag) === -1) return false;
-            if (parts) {
-                const hit = r.items.some(function (x) {
-                    return x.kind === parts[0] && x.product === parts[1] && (!f.version || versionOf(x) === f.version);
-                });
-                if (!hit) return false;
-            }
+            if (parts && !r.items.some(function (x) { return x.kind === parts[0] && x.product === parts[1] && (!f.version || versionOf(x) === f.version); })) return false;
             if (needle) {
                 const hay = [p.name, p.repo, p.owner, p.tags.join(' '), p.note].concat(r.items.map(function (x) { return x.label; })).join(' ').toLowerCase();
                 if (hay.indexOf(needle) === -1) return false;
@@ -138,276 +83,94 @@
         const counts = {};
         P.STATUS_ORDER.forEach(function (s) { counts[s] = 0; });
         rows.forEach(function (r) { counts[r.status]++; });
-        return {
-            all: rows,
-            rows: f.status ? rows.filter(function (r) { return r.status === f.status; }) : rows,
-            counts: counts
-        };
+        return { all: rows, rows: f.status ? rows.filter(function (r) { return r.status === f.status; }) : rows, counts: counts };
     }
 
-    function fillSelect(el, map, value, empty) {
+    function fill(sel, map, value, empty) {
         if (value && map[value] === undefined) map[value] = value;
+        const el = ui.$(sel);
         el.innerHTML = ui.options(map, value, empty);
         el.value = value;
     }
 
-    function renderFilters(data) {
+    function renderFilters(data, counts, total) {
+        ui.$('#status').innerHTML = '<button type="button" data-status="" aria-pressed="' + !f.status + '">সব <span class="count">' + P.num(total) + '</span></button>' +
+            P.STATUS_ORDER.map(function (s) {
+                return '<button type="button" data-status="' + s + '" aria-pressed="' + (f.status === s) + '"><span class="dot s-' + s + '"></span>' + P.STATUS[s].label + ' <span class="count">' + P.num(counts[s]) + '</span></button>';
+            }).join('');
+
         const deps = {};
-        data.settings.deploymentNames.concat(...data.projects.map(function (p) { return p.deployments.map(function (d) { return d.name; }); })).forEach(function (n) { deps[n] = n; });
-        fillSelect(ui.$('#f-dep'), deps, f.dep, 'সব environment');
+        data.settings.deploymentNames.forEach(function (n) { deps[n] = n; });
+        data.projects.forEach(function (p) { p.deployments.forEach(function (d) { deps[d.name] = d.name; }); });
+        fill('#f-dep', deps, f.dep, 'সব environment');
 
         const owners = {};
         const tags = {};
-        data.projects.forEach(function (p) {
-            if (p.owner) owners[p.owner] = p.owner;
-            p.tags.forEach(function (t) { tags[t] = t; });
-        });
-        fillSelect(ui.$('#f-owner'), owners, f.owner, 'সবাই');
-        fillSelect(ui.$('#f-tag'), tags, f.tag, 'সব ট্যাগ');
-        fillSelect(ui.$('#f-life'), { all: 'আর্কাইভসহ সব', active: P.LIFECYCLES.active, maintenance: P.LIFECYCLES.maintenance, archived: P.LIFECYCLES.archived }, f.life, 'সক্রিয় ও রক্ষণাবেক্ষণ');
-
         const used = { tech: {}, env: {} };
         const versions = {};
         P.analyze(data, { includeArchived: true }).rows.forEach(function (r) {
+            if (r.project.owner) owners[r.project.owner] = r.project.owner;
+            r.project.tags.forEach(function (t) { tags[t] = t; });
             r.items.forEach(function (x) {
                 used[x.kind][x.product] = x.productName;
-                const key = x.kind + '|' + x.product;
-                if (x.version) (versions[key] = versions[key] || {})[versionOf(x)] = true;
+                if (x.version) (versions[x.kind + '|' + x.product] = versions[x.kind + '|' + x.product] || {})[versionOf(x)] = true;
             });
         });
+        fill('#f-owner', owners, f.owner, 'সব owner');
+        fill('#f-tag', tags, f.tag, 'সব ট্যাগ');
+        fill('#f-life', { all: 'আর্কাইভসহ সব', active: P.LIFECYCLES.active, maintenance: P.LIFECYCLES.maintenance, archived: P.LIFECYCLES.archived }, f.life, 'সক্রিয় ও রক্ষণাবেক্ষণ');
         let html = '<option value="">সব প্রোডাক্ট</option>';
         P.KINDS.forEach(function (kind) {
             const ids = Object.keys(used[kind]).sort(function (a, b) { return used[kind][a].localeCompare(used[kind][b]); });
-            if (!ids.length) return;
-            html += '<optgroup label="' + P.KIND_LABEL[kind] + '">' + ids.map(function (id) {
-                const v = kind + '|' + id;
-                return '<option value="' + esc(v) + '"' + (v === f.product ? ' selected' : '') + '>' + esc(used[kind][id]) + '</option>';
-            }).join('') + '</optgroup>';
+            if (ids.length) html += '<optgroup label="' + P.KIND_LABEL[kind] + '">' + ids.map(function (id) { return '<option value="' + esc(kind + '|' + id) + '">' + esc(used[kind][id]) + '</option>'; }).join('') + '</optgroup>';
         });
         ui.$('#f-product').innerHTML = html;
         ui.$('#f-product').value = f.product;
-
         const vmap = {};
         P.sortVersionsDesc(Object.keys(versions[f.product] || {})).forEach(function (v) { vmap[v] = v; });
-        fillSelect(ui.$('#f-version'), vmap, f.version, 'সব ভার্সন');
+        fill('#f-version', vmap, f.version, 'সব ভার্সন');
         ui.$('#f-version').disabled = !f.product;
         ui.$('#f-q').value = f.q;
+
+        const active = MORE.filter(function (k) { return f[k]; }).length;
+        ui.$('#more-count').hidden = !active;
+        ui.$('#more-count').textContent = P.num(active);
+        if (active) ui.$('#more-panel').hidden = false;
+        ui.$('#more').setAttribute('aria-expanded', String(!ui.$('#more-panel').hidden));
     }
 
-    function renderChips(counts, total) {
-        const all = '<button class="btn btn-small" type="button" data-status="" aria-pressed="' + (!f.status) + '">সব <span class="muted">' + P.num(total) + '</span></button>';
-        ui.$('#status-chips').innerHTML = all + P.STATUS_ORDER.map(function (s) {
-            return '<button class="btn btn-small" type="button" data-status="' + s + '" aria-pressed="' + (f.status === s) + '"><span class="dot s-' + s + '"></span>' + P.STATUS[s].label + ' <span class="muted">' + P.num(counts[s]) + '</span></button>';
-        }).join('');
+    function stack(r) {
+        const labels = r.items.filter(function (x) { return x.version; }).map(function (x) { return x.label; });
+        if (!labels.length) return '<span class="muted">—</span>';
+        return '<span class="small muted">' + esc(labels.slice(0, 3).join(', ')) + (labels.length > 3 ? ' +' + P.num(labels.length - 3) : '') + '</span>';
     }
 
     function rowHtml(r) {
         const p = r.project;
-        const meta = [p.owner, p.lifecycle !== 'active' ? P.LIFECYCLES[p.lifecycle] : '', p.tags.join(', ')].filter(Boolean).join(' · ');
-        const tech = r.items.filter(function (x) { return x.kind === 'tech'; });
-        const deps = p.deployments.filter(function (d) { return !f.dep || d.name === f.dep; });
-        const depHtml = deps.map(function (d) {
-            const items = r.items.filter(function (x) { return x.kind === 'env' && x.deployment === d.name; });
-            return '<div><span class="dep-label">' + esc(d.name) + '</span><div class="cell-list">' + (items.length ? items.map(function (x) { return ui.ver(x, { text: false }); }).join('') : '<span class="small muted">কিছু লেখা নেই</span>') + '</div></div>';
-        }).join('');
-        const issues = r.issues.length
-            ? '<span class="pill s-' + (r.issues.some(function (i) { return i.severity === 'critical'; }) ? 'critical' : 'warning') + '" title="' + esc(r.issues.map(function (i) { return i.text; }).join('\n')) + '">' + P.num(r.issues.length) + 'টি</span>'
-            : '<span class="muted">—</span>';
+        const sub = [p.owner].concat(p.tags).filter(Boolean);
         return (
             '<tr class="clickable" data-id="' + esc(p.id) + '">' +
-            '<td><div class="cell-title"><b>' + esc(p.name) + '</b>' + (meta ? '<span class="small muted">' + esc(meta) + '</span>' : '') + '</div></td>' +
-            '<td>' + ui.pill(r.status) + '</td>' +
-            '<td class="small">' + esc(r.reason) + (r.unknownCount && r.status !== 'unknown' ? '<br><span class="muted">' + P.num(r.unknownCount) + 'টি অংশ অজানা</span>' : '') + '</td>' +
-            '<td><div class="cell-list">' + (tech.length ? tech.map(function (x) { return ui.ver(x, { text: false }); }).join('') : '<span class="small muted">—</span>') + '</div></td>' +
-            '<td><div class="stack" style="gap: 0.4rem">' + (depHtml || '<span class="small muted">—</span>') + '</div></td>' +
-            '<td>' + issues + '</td>' +
+            '<td><div class="cell-title"><b>' + esc(p.name) + '</b>' + (sub.length || p.lifecycle !== 'active' ? '<span class="small muted">' + esc(sub.join(' · ')) + (p.lifecycle !== 'active' ? ' <span class="tag">' + esc(P.LIFECYCLES[p.lifecycle]) + '</span>' : '') + '</span>' : '') + '</div></td>' +
+            '<td>' + ui.badge(r.status) + '</td>' +
+            '<td class="small">' + esc(r.reason) + (r.issues.length ? '<br><span class="muted">' + P.num(r.issues.length) + 'টি অমিল</span>' : '') + '</td>' +
+            '<td class="hide-sm">' + stack(r) + '</td>' +
             '</tr>'
         );
     }
 
     function render() {
         const data = P.store.get();
-        renderFilters(data);
         const c = compute(data);
-        lastRows = c.rows;
-        renderChips(c.counts, c.all.length);
+        renderFilters(data, c.counts, c.all.length);
         ui.$('#rows').innerHTML = c.rows.map(rowHtml).join('');
         ui.$('#empty').hidden = c.rows.length > 0;
-        ui.$('#empty-text').textContent = data.projects.length ? 'এই ফিল্টারে কোনো প্রজেক্ট নেই।' : 'এখনো কোনো প্রজেক্ট নেই। উপরের "নতুন প্রজেক্ট" বোতাম দিয়ে যোগ করুন, অথবা ডেটা পেজ থেকে import করুন।';
-        ui.$('#count').textContent = P.num(c.rows.length) + 'টি প্রজেক্ট দেখানো হচ্ছে' + (f.dep ? '। অবস্থা হিসাব হয়েছে শুধু ' + f.dep + '-এর সার্ভার আর টেক ধরে।' : '।');
-        ui.$('#datalists').innerHTML = ui.datalists(data) + '<datalist id="dl-owners">' + P.unique(data.projects.map(function (p) { return p.owner; }).filter(Boolean)).map(function (o) { return '<option value="' + esc(o) + '"></option>'; }).join('') + '</datalist>';
-        ui.setQuery(f);
+        ui.$('#empty-text').textContent = data.projects.length ? 'এই ফিল্টারে কোনো প্রজেক্ট নেই।' : 'এখনো কোনো প্রজেক্ট নেই। "নতুন প্রজেক্ট" দিয়ে যোগ করুন, বা ডেটা মেনু থেকে import করুন।';
+        ui.$('#count').textContent = P.num(c.rows.length) + 'টি প্রজেক্ট' + (f.dep ? ' · অবস্থা হিসাব হয়েছে শুধু ' + f.dep + '-এর সার্ভার ধরে' : '');
+        const q = Object.assign({}, f);
+        const open = ui.query();
+        if (open.get('open')) q.open = open.get('open');
+        ui.setQuery(q);
     }
-
-    /* ---------- এডিটর ---------- */
-
-    const dialog = ui.$('#editor');
-    const form = ui.$('#ed-form');
-
-    function itemRow(kind, ref) {
-        const data = P.store.get();
-        ref = ref || { product: '', version: '' };
-        return (
-            '<div class="item-row" data-kind="' + kind + '">' +
-            '<select data-k="product" aria-label="প্রোডাক্ট">' + ui.productOptions(data, kind, ref.product) + '</select>' +
-            '<input type="text" data-k="version" value="' + esc(ref.version) + '" list="dl-' + kind + '-' + esc(ref.product) + '" placeholder="ভার্সন" aria-label="ভার্সন">' +
-            '<button class="btn btn-small btn-icon" type="button" data-remove aria-label="সরান">✕</button>' +
-            '</div>'
-        );
-    }
-
-    function depBlock(d) {
-        d = d || { name: '', url: '', host: '', stack: [] };
-        const rows = (d.stack.length ? d.stack : [null]).map(function (r) { return itemRow('env', r); }).join('');
-        return (
-            '<div class="dep-block" data-dep>' +
-            '<div class="form-grid">' +
-            '<label class="field"><span>Environment</span><input type="text" data-k="name" list="dl-deployments" value="' + esc(d.name) + '" placeholder="production"></label>' +
-            '<label class="field"><span>URL</span><input type="text" data-k="url" value="' + esc(d.url) + '" placeholder="https://…"></label>' +
-            '<label class="field"><span>হোস্ট বা সার্ভার</span><input type="text" data-k="host" value="' + esc(d.host) + '" placeholder="AWS, cPanel, VPS…"></label>' +
-            '</div>' +
-            '<div class="stack" data-stack>' + rows + '</div>' +
-            '<div class="spread"><button class="btn btn-small" type="button" data-add-env>+ সফটওয়্যার যোগ করুন</button><button class="btn btn-small btn-danger" type="button" data-remove-dep>এই environment সরান</button></div>' +
-            '</div>'
-        );
-    }
-
-    function nextDeploymentName() {
-        const taken = ui.$$('[data-dep] [data-k="name"]', form).map(function (i) { return i.value.trim(); });
-        return P.store.get().settings.deploymentNames.filter(function (n) { return taken.indexOf(n) === -1; })[0] || '';
-    }
-
-    function openEditor(project, isCopy) {
-        const data = P.store.get();
-        editing = project && !isCopy ? project.id : null;
-        const p = project ? P.clone(project) : { name: '', repo: '', owner: '', tags: [], lifecycle: 'active', note: '', tech: [], deployments: [{ name: data.settings.deploymentNames[0] || 'production', url: '', host: '', stack: [] }] };
-        if (isCopy) p.name = p.name + ' (কপি)';
-        ui.$('#ed-title').textContent = editing ? 'প্রজেক্ট এডিট' : 'নতুন প্রজেক্ট';
-        form.elements.name.value = p.name;
-        form.elements.repo.value = p.repo;
-        form.elements.owner.value = p.owner;
-        form.elements.tags.value = p.tags.join(', ');
-        ui.$('#ed-life').innerHTML = ui.options(P.LIFECYCLES, p.lifecycle);
-        form.elements.note.value = p.note;
-        ui.$('#ed-tech').innerHTML = (p.tech.length ? p.tech : [null]).map(function (r) { return itemRow('tech', r); }).join('');
-        ui.$('#ed-deps').innerHTML = p.deployments.map(depBlock).join('');
-        ui.$('#ed-delete').hidden = !editing;
-        ui.$('#ed-copy').hidden = !editing;
-        ui.$('#ed-plan').hidden = !editing;
-        if (editing) ui.$('#ed-plan').href = P.url('/ai/?task=plan&project=' + encodeURIComponent(editing));
-        ui.$('#ed-error').hidden = true;
-        if (!dialog.open) dialog.showModal();
-        form.elements.name.focus();
-    }
-
-    function readRows(container) {
-        return ui.$$('.item-row', container).map(function (row) {
-            return { product: ui.$('[data-k="product"]', row).value, version: ui.$('[data-k="version"]', row).value.trim() };
-        }).filter(function (r) { return r.product; });
-    }
-
-    function collect() {
-        const el = form.elements;
-        return {
-            name: el.name.value.trim(),
-            repo: el.repo.value.trim(),
-            owner: el.owner.value.trim(),
-            tags: el.tags.value,
-            lifecycle: el.lifecycle.value,
-            note: el.note.value.trim(),
-            tech: readRows(ui.$('#ed-tech')),
-            deployments: ui.$$('[data-dep]', form).map(function (b) {
-                return {
-                    name: ui.$('[data-k="name"]', b).value.trim(),
-                    url: ui.$('[data-k="url"]', b).value.trim(),
-                    host: ui.$('[data-k="host"]', b).value.trim(),
-                    stack: readRows(ui.$('[data-stack]', b))
-                };
-            })
-        };
-    }
-
-    function showError(msg) {
-        const e = ui.$('#ed-error');
-        e.textContent = msg;
-        e.hidden = false;
-    }
-
-    function closeEditor() {
-        dialog.close();
-        editing = null;
-        ui.setQuery(f);
-    }
-
-    form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        const input = collect();
-        if (!input.name) return showError('প্রজেক্টের নাম লিখুন।');
-        const names = input.deployments.map(function (d) { return d.name || 'production'; });
-        if (P.unique(names).length !== names.length) return showError('একই নামের দুটো environment আছে। নাম আলাদা করুন।');
-        const data = P.store.get();
-        let id = editing;
-        if (!id) {
-            const base = P.slug(input.name) || P.uid('project');
-            id = base;
-            let n = 2;
-            while (data.projects.some(function (p) { return p.id === id; })) id = base + '-' + n++;
-        }
-        const project = P.normalizeProject(Object.assign({}, input, { id: id, updatedAt: P.isoDate(P.today()) }));
-        const wasNew = !editing;
-        P.store.update(function (next) {
-            const i = next.projects.findIndex(function (p) { return p.id === id; });
-            if (i === -1) next.projects.push(project);
-            else next.projects[i] = project;
-        });
-        closeEditor();
-        ui.toast(wasNew ? '"' + project.name + '" যোগ হয়েছে।' : 'সেভ হয়েছে।');
-    });
-
-    dialog.addEventListener('click', function (e) {
-        const t = e.target.closest('button');
-        if (e.target === dialog) return closeEditor();
-        if (!t) return;
-        if (t.hasAttribute('data-close')) closeEditor();
-        else if (t.hasAttribute('data-remove')) t.closest('.item-row').remove();
-        else if (t.hasAttribute('data-add-tech')) ui.$('#ed-tech').insertAdjacentHTML('beforeend', itemRow('tech'));
-        else if (t.hasAttribute('data-add-env')) t.closest('[data-dep]').querySelector('[data-stack]').insertAdjacentHTML('beforeend', itemRow('env'));
-        else if (t.hasAttribute('data-add-dep')) ui.$('#ed-deps').insertAdjacentHTML('beforeend', depBlock({ name: nextDeploymentName(), url: '', host: '', stack: [] }));
-        else if (t.hasAttribute('data-remove-dep')) {
-            if (confirm('এই environment আর তার সব সফটওয়্যার সরানো হবে।')) t.closest('[data-dep]').remove();
-        }
-    });
-
-    dialog.addEventListener('change', function (e) {
-        if (e.target.matches('select[data-k="product"]')) {
-            const row = e.target.closest('.item-row');
-            ui.$('[data-k="version"]', row).setAttribute('list', 'dl-' + row.dataset.kind + '-' + e.target.value);
-        }
-    });
-
-    dialog.addEventListener('cancel', function () {
-        editing = null;
-        ui.setQuery(f);
-    });
-
-    ui.$('#ed-delete').addEventListener('click', function () {
-        const data = P.store.get();
-        const p = data.projects.find(function (x) { return x.id === editing; });
-        if (!p || !confirm('"' + p.name + '" মুছে ফেলবেন?')) return;
-        const next = P.clone(data);
-        next.projects = next.projects.filter(function (x) { return x.id !== p.id; });
-        P.store.apply(next, 'প্রজেক্ট মুছে ফেলা');
-        closeEditor();
-        ui.undoToast('"' + p.name + '" মুছে ফেলা হয়েছে।');
-    });
-
-    ui.$('#ed-copy').addEventListener('click', function () {
-        const tags = form.elements.tags.value.split(',').map(function (t) { return t.trim(); }).filter(Boolean);
-        const current = Object.assign({}, collect(), { tags: tags });
-        openEditor(current, true);
-    });
-
-    /* ---------- ফিল্টার ---------- */
 
     function set(k, v) {
         f[k] = v;
@@ -415,7 +178,7 @@
         render();
     }
 
-    ui.$('#status-chips').addEventListener('click', function (e) {
+    ui.$('#status').addEventListener('click', function (e) {
         const b = e.target.closest('[data-status]');
         if (b) set('status', b.dataset.status);
     });
@@ -427,35 +190,26 @@
         clearTimeout(typing);
         typing = setTimeout(function () { set('q', e.target.value); }, 150);
     });
-    ui.$('#f-reset').addEventListener('click', function () {
+    ui.$('#more').addEventListener('click', function () {
+        const panel = ui.$('#more-panel');
+        panel.hidden = !panel.hidden;
+        ui.$('#more').setAttribute('aria-expanded', String(!panel.hidden));
+    });
+    ui.$('#reset').addEventListener('click', function () {
         KEYS.forEach(function (k) { f[k] = ''; });
+        ui.$('#more-panel').hidden = true;
         render();
     });
-
     ui.$('#rows').addEventListener('click', function (e) {
-        if (e.target.closest('a')) return;
         const tr = e.target.closest('tr[data-id]');
-        if (!tr) return;
-        const p = P.store.get().projects.find(function (x) { return x.id === tr.dataset.id; });
-        if (p) {
-            openEditor(p);
-            history.replaceState(null, '', location.pathname + location.search + (location.search ? '&' : '?') + 'edit=' + encodeURIComponent(p.id));
-        }
+        if (tr) ui.openProject(tr.dataset.id);
     });
-
-    ui.$('#add').addEventListener('click', function () { openEditor(null); });
-    ui.$('#csv').addEventListener('click', function () {
-        ui.download('projects-' + P.isoDate(P.today()) + '.csv', ui.rowsToCsv(lastRows), 'text/csv;charset=utf-8');
-    });
+    ui.$('#add').addEventListener('click', function () { ui.openProject(null); });
 
     P.store.ready().then(function () {
         render();
-        const editId = query.get('edit');
-        const p = editId && P.store.get().projects.find(function (x) { return x.id === editId; });
-        if (p) openEditor(p);
-        else if (query.get('new')) openEditor(null);
+        if (query.get('open')) ui.openProject(query.get('open'));
+        else if (query.get('new')) ui.openProject(null);
     });
-    ui.onChange(function () {
-        if (!dialog.open) render();
-    });
+    ui.onChange(render);
 </script>
