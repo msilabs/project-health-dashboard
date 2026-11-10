@@ -165,6 +165,50 @@
         return shown + (projects.length > max ? ' আরও ' + P.num(projects.length - max) + 'টি' : '');
     };
 
+    // প্রতিটা প্রজেক্টের প্রতিটা অংশ এক সারিতে; Excel-এ বাংলা ঠিক দেখাতে শুরুতে BOM
+    ui.rowsToCsv = function (rows) {
+        var head = ['project', 'lifecycle', 'owner', 'tags', 'project_status', 'kind', 'environment', 'product', 'version', 'cycle', 'status', 'phase', 'support_until', 'security_until', 'days_left', 'note'];
+        var lines = [head];
+        rows.forEach(function (r) {
+            var p = r.project;
+            var items = r.items.length ? r.items : [null];
+            items.forEach(function (x) {
+                lines.push([
+                    p.name,
+                    p.lifecycle,
+                    p.owner,
+                    p.tags.join('; '),
+                    r.status,
+                    x ? x.kind : '',
+                    x && x.deployment ? x.deployment : '',
+                    x ? x.productName : '',
+                    x ? x.version : '',
+                    x && x.cycle ? x.cycle.version : '',
+                    x ? x.status : '',
+                    x && x.phase ? x.phase : '',
+                    x && x.cycle ? x.cycle.supportUntil : '',
+                    x && x.cycle ? x.cycle.securityUntil : '',
+                    x && x.days !== null ? x.days : '',
+                    x ? x.text : ''
+                ]);
+            });
+        });
+        return (
+            '﻿' +
+            lines
+                .map(function (cols) {
+                    return cols
+                        .map(function (c) {
+                            var s = String(c === null || c === undefined ? '' : c);
+                            if (/^[=+\-@]/.test(s)) s = "'" + s;
+                            return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+                        })
+                        .join(',');
+                })
+                .join('\r\n')
+        );
+    };
+
     ui.dateInput = function (name, value) {
         return '<input type="date" name="' + name + '" value="' + esc(value) + '">';
     };
