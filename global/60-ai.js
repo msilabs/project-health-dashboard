@@ -1,6 +1,6 @@
 /* AI (ChatGPT, Claude, Gemini) দিয়ে কাজ: API key ছাড়া, প্রম্পট কপি আর উত্তর পেস্ট করে।
    তিনটা কাজ: তথ্য থেকে প্রজেক্ট, একটা প্রজেক্টের আপগ্রেড পরিকল্পনা, আর ম্যানেজমেন্ট রিপোর্ট।
-   AI-কে কখনো URL, হোস্ট, owner, রিপো বা নোট পাঠানো হয় না। */
+   AI-কে কখনো রিপো, দায়িত্বে থাকা নাম বা নোট পাঠানো হয় না। */
 (function (P) {
     P.AI_TASKS = {
         projects: { label: 'তথ্য থেকে প্রজেক্ট', returnsJson: true },
@@ -64,7 +64,7 @@
                 '- Use only facts from my text. Never guess a version. If a version is not stated, use "".',
                 '- Use the product ids from the catalog lists below whenever the product matches. If a product is not listed, use a short lowercase id such as "vite".',
                 '- "tech" = frameworks and libraries used in the code (composer.json, package.json, requirements.txt …). Write the installed or locked version if given, otherwise the minimum of the constraint: "^11.0" -> "11.0", "v13.39.0" -> "13.39.0".',
-                '- "deployments" = where the project runs (' + data.settings.deploymentNames.join(', ') + ' …). "stack" lists the server software actually running there: runtime, database, web server, OS, cache.',
+                '- "deployments" = where the project runs (' + P.DEPLOYMENT_NAMES.join(', ') + ' …). "stack" lists the server software actually running there: runtime, database, web server, OS, cache.',
                 '- A runtime constraint in composer.json ("php": "^8.2") or package.json "engines" is a requirement, not what the server runs. Do not put it in "stack"; mention it in "note" instead, unless my text says the server runs that version.',
                 NO_SECRETS,
                 '- If the same project appears more than once, merge it into one object.',
@@ -73,10 +73,10 @@
                 '- Reply with ONLY one JSON object inside a single ```json code block. No explanation before or after.',
                 '- Use exactly this structure:',
                 '{ "projects": [ { "name": "", "tags": [], "lifecycle": "active", "tech": [{ "product": "laravel", "version": "11.0" }], "deployments": [{ "name": "production", "stack": [{ "product": "php", "version": "8.2" }] }], "note": "" } ] }',
-                '- "lifecycle" is one of: active, maintenance, archived.',
+                '- "lifecycle" is one of: active, archived.',
                 '',
                 'Tech catalog ids: ' + catalogIds(data, 'tech'),
-                'Environment catalog ids: ' + catalogIds(data, 'env'),
+                'Server software catalog ids: ' + catalogIds(data, 'env'),
                 '',
                 'MY INFORMATION:',
                 fence(input)

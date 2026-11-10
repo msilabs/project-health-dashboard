@@ -6,10 +6,7 @@
     <div class="page-head">
         <div>
             <h1>প্রজেক্ট</h1>
-            <p id="count">ডেটা লোড হচ্ছে…</p>
-        </div>
-        <div class="actions">
-            <button class="btn" type="button" data-action="csv"><Icon name="file" />CSV</button>
+            <p id="count">&nbsp;</p>
         </div>
     </div>
 
@@ -18,26 +15,19 @@
             <label class="search"><Icon name="search" /><input type="search" id="f-q" placeholder="নাম, ট্যাগ বা ভার্সন খুঁজুন" aria-label="খুঁজুন"></label>
             <div class="segmented" id="status" role="group" aria-label="অবস্থা"></div>
             <span class="spacer"></span>
-            <select id="f-dep" aria-label="Environment"></select>
-            <button class="btn btn-sm" type="button" id="more" aria-expanded="false"><Icon name="filter" />ফিল্টার<span class="counter" id="more-count" hidden></span></button>
+            <span id="chips" class="row"></span>
+            <select id="f-dep" aria-label="এনভায়রনমেন্ট"></select>
+            <label class="check"><input type="checkbox" id="f-archived">আর্কাইভ দেখান</label>
         </div>
-        <div class="more-filters" id="more-panel" hidden>
-            <select id="f-product" aria-label="প্রোডাক্ট"></select>
-            <select id="f-version" aria-label="ভার্সন"></select>
-            <select id="f-owner" aria-label="Owner"></select>
-            <select id="f-tag" aria-label="ট্যাগ"></select>
-            <select id="f-life" aria-label="প্রজেক্টের ধাপ"></select>
-            <button class="btn btn-ghost btn-sm" type="button" id="reset">সব ফিল্টার মুছুন</button>
-        </div>
-        <div class="tablewrap">
+        <div class="skeleton" id="skeleton" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+        <div class="tablewrap" id="tablewrap" hidden>
             <table class="table">
                 <thead>
                     <tr>
                         <th>প্রজেক্ট</th>
                         <th>অবস্থা</th>
                         <th>মূল কারণ</th>
-                        <th class="hide-sm">Environment</th>
-                        <th class="hide-sm">হালনাগাদ</th>
+                        <th class="hide-sm">এনভায়রনমেন্ট</th>
                         <th class="hide-sm" aria-label="খুলুন"></th>
                     </tr>
                 </thead>
@@ -54,8 +44,8 @@
     const P = PHD;
     const ui = P.ui;
     const esc = P.esc;
-    const KEYS = ['status', 'dep', 'product', 'version', 'owner', 'tag', 'life', 'q'];
-    const MORE = ['product', 'version', 'owner', 'tag', 'life'];
+    // product আর version আসে ক্যাটালগের লিংক থেকে; এখানে শুধু chip হিসেবে দেখায়
+    const KEYS = ['status', 'dep', 'product', 'version', 'archived', 'q'];
     const query = ui.query();
     const f = {};
     KEYS.forEach(function (k) { f[k] = query.get(k) || ''; });
@@ -70,11 +60,8 @@
         const parts = f.product ? f.product.split('|') : null;
         const rows = a.rows.filter(function (r) {
             const p = r.project;
-            if (!f.life && p.lifecycle === 'archived') return false;
-            if (f.life && f.life !== 'all' && p.lifecycle !== f.life) return false;
+            if (!f.archived && p.lifecycle === 'archived') return false;
             if (f.dep && !p.deployments.some(function (d) { return d.name === f.dep; })) return false;
-            if (f.owner && p.owner !== f.owner) return false;
-            if (f.tag && p.tags.indexOf(f.tag) === -1) return false;
             if (parts && !r.items.some(function (x) { return x.kind === parts[0] && x.product === parts[1] && (!f.version || versionOf(x) === f.version); })) return false;
             if (needle) {
                 const hay = [p.name, p.repo, p.owner, p.tags.join(' '), p.note].concat(r.items.map(function (x) { return x.label; })).join(' ').toLowerCase();
@@ -102,43 +89,19 @@
             }).join('');
 
         const deps = {};
-        data.settings.deploymentNames.forEach(function (n) { deps[n] = n; });
-        data.projects.forEach(function (p) { p.deployments.forEach(function (d) { deps[d.name] = d.name; }); });
-        fill('#f-dep', deps, f.dep, 'সব environment');
-
-        const owners = {};
-        const tags = {};
-        const used = { tech: {}, env: {} };
-        const versions = {};
-        P.analyze(data, { includeArchived: true }).rows.forEach(function (r) {
-            if (r.project.owner) owners[r.project.owner] = r.project.owner;
-            r.project.tags.forEach(function (t) { tags[t] = t; });
-            r.items.forEach(function (x) {
-                used[x.kind][x.product] = x.productName;
-                if (x.version) (versions[x.kind + '|' + x.product] = versions[x.kind + '|' + x.product] || {})[versionOf(x)] = true;
-            });
-        });
-        fill('#f-owner', owners, f.owner, 'সব owner');
-        fill('#f-tag', tags, f.tag, 'সব ট্যাগ');
-        fill('#f-life', { all: 'আর্কাইভসহ সব', active: P.LIFECYCLES.active, maintenance: P.LIFECYCLES.maintenance, archived: P.LIFECYCLES.archived }, f.life, 'সক্রিয় ও রক্ষণাবেক্ষণ');
-        let html = '<option value="">সব প্রোডাক্ট</option>';
-        P.KINDS.forEach(function (kind) {
-            const ids = Object.keys(used[kind]).sort(function (a, b) { return used[kind][a].localeCompare(used[kind][b]); });
-            if (ids.length) html += '<optgroup label="' + P.KIND_LABEL[kind] + '">' + ids.map(function (id) { return '<option value="' + esc(kind + '|' + id) + '">' + esc(used[kind][id]) + '</option>'; }).join('') + '</optgroup>';
-        });
-        ui.$('#f-product').innerHTML = html;
-        ui.$('#f-product').value = f.product;
-        const vmap = {};
-        P.sortVersionsDesc(Object.keys(versions[f.product] || {})).forEach(function (v) { vmap[v] = v; });
-        fill('#f-version', vmap, f.version, 'সব ভার্সন');
-        ui.$('#f-version').disabled = !f.product;
+        P.deploymentNames(data).forEach(function (n) { deps[n] = n; });
+        fill('#f-dep', deps, f.dep, 'সব এনভায়রনমেন্ট');
+        ui.$('#f-archived').checked = !!f.archived;
         ui.$('#f-q').value = f.q;
 
-        const active = MORE.filter(function (k) { return f[k]; }).length;
-        ui.$('#more-count').hidden = !active;
-        ui.$('#more-count').textContent = P.num(active);
-        if (active) ui.$('#more-panel').hidden = false;
-        ui.$('#more').setAttribute('aria-expanded', String(!ui.$('#more-panel').hidden));
+        let chip = '';
+        if (f.product) {
+            const parts = f.product.split('|');
+            const product = P.KINDS.indexOf(parts[0]) !== -1 ? P.findProduct(data, parts[0], parts[1]) : null;
+            const label = (product ? product.name : parts[1]) + (f.version ? ' ' + f.version : '');
+            chip = '<span class="chip">' + esc(label) + '<button type="button" data-clear-product aria-label="এই ফিল্টার সরান">' + ui.icon('x') + '</button></span>';
+        }
+        ui.$('#chips').innerHTML = chip;
     }
 
     // প্রতিটা environment-এর সবচেয়ে খারাপ অবস্থা; টেকের জন্য আলাদা একটা
@@ -153,7 +116,7 @@
             let worst = 'unknown';
             g.items.forEach(function (x) { if (P.statusRank(x.status) > P.statusRank(worst)) worst = x.status; });
             const tip = g.items.map(function (x) { return x.label + ': ' + x.text; }).join('\n');
-            return '<span class="env-pill s-' + worst + '" title="' + esc(tip) + '"><span class="dot"></span>' + esc(g.name) + '</span>';
+            return '<span class="env-pill s-' + worst + '" data-tip="' + esc(tip) + '"><span class="dot"></span>' + esc(g.name) + '</span>';
         }).join('') + '</div>';
     }
 
@@ -162,11 +125,10 @@
         const sub = [p.owner].concat(p.tags).filter(Boolean).join(' · ');
         return (
             '<tr class="clickable" data-id="' + esc(p.id) + '">' +
-            '<td><div class="who">' + ui.avatar(p.name) + '<div><b>' + esc(p.name) + (p.lifecycle !== 'active' ? ' <span class="tag">' + esc(P.LIFECYCLES[p.lifecycle]) + '</span>' : '') + '</b>' + (sub ? '<span>' + esc(sub) + '</span>' : '') + '</div></div></td>' +
+            '<td><div class="who">' + ui.avatar(p.name) + '<div><b>' + esc(p.name) + (p.lifecycle === 'archived' ? ' <span class="tag">' + esc(P.LIFECYCLES.archived) + '</span>' : '') + '</b>' + (sub ? '<span>' + esc(sub) + '</span>' : '') + '</div></div></td>' +
             '<td>' + ui.badge(r.status) + '</td>' +
             '<td class="small">' + esc(r.reason) + (r.issues.length ? '<br><span class="muted">' + P.num(r.issues.length) + 'টি অমিল</span>' : '') + '</td>' +
             '<td class="hide-sm">' + envPills(r) + '</td>' +
-            '<td class="hide-sm small muted num">' + (p.updatedAt ? P.fmtDate(p.updatedAt) : '—') + '</td>' +
             '<td class="hide-sm arrow">' + ui.icon('chevron') + '</td>' +
             '</tr>'
         );
@@ -177,8 +139,10 @@
         const c = compute(data);
         renderFilters(data, c.counts, c.all.length);
         ui.$('#rows').innerHTML = c.rows.map(rowHtml).join('');
+        ui.$('#skeleton').hidden = true;
+        ui.$('#tablewrap').hidden = c.rows.length === 0;
         ui.$('#empty').hidden = c.rows.length > 0;
-        ui.$('#empty-text').textContent = data.projects.length ? 'এই ফিল্টারে কোনো প্রজেক্ট নেই।' : 'এখনো কোনো প্রজেক্ট নেই। "নতুন প্রজেক্ট" দিয়ে যোগ করুন, বা ডেটা মেনু থেকে import করুন।';
+        ui.$('#empty-text').textContent = data.projects.length ? 'এই ফিল্টারে কোনো প্রজেক্ট নেই।' : 'এখনো কোনো প্রজেক্ট নেই। উপরের "নতুন প্রজেক্ট" দিয়ে যোগ করুন, বা সাইডবারের "ডেটা" থেকে import করুন।';
         ui.$('#count').textContent = P.num(c.rows.length) + 'টি প্রজেক্ট' + (f.dep ? ' · অবস্থা হিসাব হয়েছে শুধু ' + f.dep + '-এর সার্ভার ধরে' : '');
         const q = Object.assign({}, f);
         const open = ui.query();
@@ -188,7 +152,6 @@
 
     function set(k, v) {
         f[k] = v;
-        if (k === 'product') f.version = '';
         render();
     }
 
@@ -196,22 +159,17 @@
         const b = e.target.closest('[data-status]');
         if (b) set('status', b.dataset.status);
     });
-    [['#f-dep', 'dep'], ['#f-product', 'product'], ['#f-version', 'version'], ['#f-owner', 'owner'], ['#f-tag', 'tag'], ['#f-life', 'life']].forEach(function (pair) {
-        ui.$(pair[0]).addEventListener('change', function (e) { set(pair[1], e.target.value); });
-    });
+    ui.$('#f-dep').addEventListener('change', function (e) { set('dep', e.target.value); });
+    ui.$('#f-archived').addEventListener('change', function (e) { set('archived', e.target.checked ? '1' : ''); });
     let typing;
     ui.$('#f-q').addEventListener('input', function (e) {
         clearTimeout(typing);
         typing = setTimeout(function () { set('q', e.target.value); }, 150);
     });
-    ui.$('#more').addEventListener('click', function () {
-        const panel = ui.$('#more-panel');
-        panel.hidden = !panel.hidden;
-        ui.$('#more').setAttribute('aria-expanded', String(!panel.hidden));
-    });
-    ui.$('#reset').addEventListener('click', function () {
-        KEYS.forEach(function (k) { f[k] = ''; });
-        ui.$('#more-panel').hidden = true;
+    ui.$('#chips').addEventListener('click', function (e) {
+        if (!e.target.closest('[data-clear-product]')) return;
+        f.product = '';
+        f.version = '';
         render();
     });
     ui.$('#rows').addEventListener('click', function (e) {

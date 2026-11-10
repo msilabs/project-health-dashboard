@@ -27,9 +27,9 @@
         { label: 'প্রজেক্ট', icon: 'folder', run: function () { location.href = P.url('/projects/'); } },
         { label: 'ক্যাটালগ', icon: 'book', run: function () { location.href = P.url('/catalog/'); } },
         { label: 'নতুন প্রজেক্ট', icon: 'plus', run: function () { ui.openProject(null); } },
-        { label: 'JSON import', icon: 'upload', run: function () { ui.openImport('file'); } },
+        { label: 'ডেটা import', icon: 'upload', run: function () { ui.openImport('file'); } },
         { label: 'AI দিয়ে প্রজেক্ট বানান', icon: 'sparkles', run: function () { ui.openImport('ai'); } },
-        { label: 'JSON export (ব্যাকআপ)', icon: 'download', run: function () { ui.exportJson(); } },
+        { label: 'ডেটা export (ব্যাকআপ, CSV)', icon: 'download', run: function () { ui.openImport('export'); } },
         { label: 'সেটিংস', icon: 'settings', run: function () { ui.openSettings(); } },
         { label: 'লাইট থিম', icon: 'sun', run: function () { ui.setTheme('light'); } },
         { label: 'ডার্ক থিম', icon: 'moon', run: function () { ui.setTheme('dark'); } }

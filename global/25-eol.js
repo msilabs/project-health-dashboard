@@ -58,14 +58,12 @@
             return true;
         });
         var versions = releases.slice(0, limit).map(P.versionFromEndOfLife).filter(Boolean);
-        var links = result.links || {};
         return P.normalizeProduct(
             {
                 id: opts.id || result.name,
                 name: result.label || result.name,
                 category: (CATEGORY[kind] || {})[result.category] || '',
                 eolSlug: result.name,
-                url: links.html || '',
                 versions: versions
             },
             kind

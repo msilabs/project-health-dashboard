@@ -6,23 +6,33 @@
                 <button class="btn btn-ghost btn-sm btn-icon" type="button" data-close aria-label="বন্ধ করুন"><Icon name="x" /></button>
             </div>
             <div class="sheet-body">
-                <div class="form-grid">
-                    <label class="field"><span>জরুরি</span><input type="number" name="redDays" min="0" max="3650"><small>যত দিনের মধ্যে সাপোর্ট শেষ হলে</small></label>
-                    <label class="field"><span>সতর্কতা</span><input type="number" name="yellowDays" min="0" max="3650"><small>যত দিনের মধ্যে সাপোর্ট শেষ হলে</small></label>
-                </div>
-                <label class="field"><span>Environment-এর নাম</span><input type="text" name="deploymentNames"><small>কমা দিয়ে আলাদা করুন। প্রজেক্ট যোগ করার সময় এগুলো প্রস্তাব করবে।</small></label>
                 <div class="section">
-                    <span class="section-title">নতুন করে শুরু</span>
-                    <p class="small muted">এগুলোর পরও "শেষ বদল ফিরিয়ে আনুন" দিয়ে একবার ফেরা যায়। তবু আগে JSON export করে রাখা ভালো।</p>
-                    <div class="row">
-                        <button class="btn btn-sm" type="button" data-reset="sample">নমুনা ডেটা দেখুন</button>
-                        <button class="btn btn-sm btn-danger" type="button" data-reset="projects">সব প্রজেক্ট মুছুন</button>
-                        <button class="btn btn-sm btn-danger" type="button" data-reset="all">সব মুছে শুরুর অবস্থায়</button>
+                    <span class="section-title">থিম</span>
+                    <div class="theme-switch" role="group" aria-label="থিম">
+                        <button type="button" data-theme-set="system" aria-pressed="true"><Icon name="monitor" />অটো</button>
+                        <button type="button" data-theme-set="light" aria-pressed="false"><Icon name="sun" />লাইট</button>
+                        <button type="button" data-theme-set="dark" aria-pressed="false"><Icon name="moon" />ডার্ক</button>
                     </div>
                 </div>
+                <div class="section">
+                    <span class="section-title">কখন সতর্ক করবে</span>
+                    <div class="form-grid">
+                        <label class="field"><span>জরুরি</span><input type="number" name="redDays" min="0" max="3650"><small>যত দিনের মধ্যে সাপোর্ট শেষ হলে</small></label>
+                        <label class="field"><span>সতর্কতা</span><input type="number" name="yellowDays" min="0" max="3650"><small>যত দিনের মধ্যে সাপোর্ট শেষ হলে</small></label>
+                    </div>
+                </div>
+                <div class="section">
+                    <span class="section-title">নতুন করে শুরু</span>
+                    <p class="small muted">এর পরও "শেষ বদল ফিরিয়ে আনুন" দিয়ে একবার ফেরা যায়। তবু আগে JSON export করে রাখা ভালো।</p>
+                    <div class="row">
+                        <button class="btn btn-sm" type="button" data-reset="sample">নমুনা ডেটা দেখুন</button>
+                        <button class="btn btn-sm btn-danger" type="button" data-reset="all">সব মুছুন</button>
+                    </div>
+                </div>
+                <p class="small muted credit">সব ডেটা থাকে শুধু এই ব্রাউজারে। সাপোর্টের তারিখ <a href="https://endoflife.date" target="_blank" rel="noopener">endoflife.date</a> থেকে। <a href="{{ data.site.repo }}" target="_blank" rel="noopener">সোর্স কোড</a> · MIT · <a href="https://github.com/msilabs/alo" target="_blank" rel="noopener">আলো (Alo)</a> দিয়ে বানানো।</p>
             </div>
             <div class="sheet-foot">
-                <span class="small muted">সব ডেটা থাকে শুধু এই ব্রাউজারে।</span>
+                <span></span>
                 <span class="row">
                     <button class="btn" type="button" data-close>বাতিল</button>
                     <button class="btn btn-primary" type="submit">সেভ করুন</button>
@@ -42,45 +52,46 @@
         const s = P.store.get().settings;
         form.elements.redDays.value = s.redDays;
         form.elements.yellowDays.value = s.yellowDays;
-        form.elements.deploymentNames.value = s.deploymentNames.join(', ');
+        ui.setTheme(ui.getTheme());
         $el.showModal();
     };
 
     form.addEventListener('submit', function (e) {
         e.preventDefault();
         const el = form.elements;
-        const s = P.normalizeSettings({ redDays: el.redDays.value, yellowDays: el.yellowDays.value, deploymentNames: el.deploymentNames.value });
+        const s = P.normalizeSettings({ redDays: el.redDays.value, yellowDays: el.yellowDays.value });
         P.store.update(function (next) { next.settings = s; });
         $el.close();
         ui.toast('সেটিংস সেভ হয়েছে।');
     });
 
     const RESETS = {
-        sample: { ask: 'এখনকার প্রজেক্টগুলোর বদলে নমুনা প্রজেক্ট বসবে।', label: 'নমুনা ডেটা বসানো', done: 'নমুনা ডেটা বসানো হয়েছে।' },
-        projects: { ask: 'সব প্রজেক্ট মুছে যাবে। ক্যাটালগ আর সেটিংস থাকবে।', label: 'সব প্রজেক্ট মুছে ফেলা', done: 'সব প্রজেক্ট মুছে ফেলা হয়েছে।' },
-        all: { ask: 'প্রজেক্ট, ক্যাটালগ আর সেটিংস সব মুছে সাইটের শুরুর ক্যাটালগে ফিরবে।', label: 'সব কিছু মুছে ফেলা', done: 'শুরুর অবস্থায় ফেরা হয়েছে।' }
+        sample: { ask: 'এখনকার প্রজেক্টগুলোর বদলে নমুনা প্রজেক্ট বসবে।', ok: 'নমুনা বসান', label: 'নমুনা ডেটা বসানো', done: 'নমুনা ডেটা বসানো হয়েছে।' },
+        all: { ask: 'সব প্রজেক্ট আর সেটিংস মুছে যাবে, ক্যাটালগ সাইটের শুরুর অবস্থায় ফিরবে।', ok: 'সব মুছুন', label: 'সব কিছু মুছে ফেলা', done: 'শুরুর অবস্থায় ফেরা হয়েছে।' }
     };
 
     $el.addEventListener('click', function (e) {
         const b = e.target.closest('[data-reset]');
         if (!b) return;
-        const r = RESETS[b.dataset.reset];
-        if (!confirm(r.ask)) return;
-        P.store.seed().then(function (seed) {
-            let next = P.clone(P.store.get());
-            if (b.dataset.reset === 'sample') {
-                next.projects = seed.projects;
-                next.meta.sample = true;
-            } else if (b.dataset.reset === 'projects') {
-                next.projects = [];
-                next.meta.sample = false;
-            } else {
-                next = P.emptyData();
-                next.catalog = seed.catalog;
-            }
-            P.store.apply(next, r.label);
-            $el.close();
-            ui.undoToast(r.done);
+        const kind = b.dataset.reset;
+        const r = RESETS[kind];
+        ui.confirm(r.ask, r.ok).then(function (yes) {
+            if (!yes) return;
+            return P.store.seed().then(function (seed) {
+                let next;
+                if (kind === 'sample') {
+                    next = P.clone(P.store.get());
+                    next.projects = seed.projects;
+                    next.meta.sample = true;
+                } else {
+                    next = P.emptyData();
+                    next.catalog = seed.catalog;
+                    next.meta.catalogSeed = seed.meta.catalogSeed;
+                }
+                P.store.apply(next, r.label);
+                $el.close();
+                ui.undoToast(r.done);
+            });
         });
     });
 </script>

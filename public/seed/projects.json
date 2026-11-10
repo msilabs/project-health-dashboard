@@ -4,12 +4,7 @@
     },
     "settings": {
         "redDays": 90,
-        "yellowDays": 365,
-        "deploymentNames": [
-            "production",
-            "staging",
-            "development"
-        ]
+        "yellowDays": 365
     },
     "projects": [
         {
@@ -40,8 +35,6 @@
             "deployments": [
                 {
                     "name": "production",
-                    "url": "https://shop.example.com",
-                    "host": "DigitalOcean",
                     "stack": [
                         {
                             "product": "php",
@@ -67,8 +60,6 @@
                 },
                 {
                     "name": "staging",
-                    "url": "https://staging.shop.example.com",
-                    "host": "DigitalOcean",
                     "stack": [
                         {
                             "product": "php",
@@ -103,7 +94,7 @@
             "tags": [
                 "client"
             ],
-            "lifecycle": "maintenance",
+            "lifecycle": "active",
             "note": "",
             "tech": [
                 {
@@ -114,8 +105,6 @@
             "deployments": [
                 {
                     "name": "production",
-                    "url": "",
-                    "host": "cPanel",
                     "stack": [
                         {
                             "product": "php",
@@ -157,8 +146,6 @@
             "deployments": [
                 {
                     "name": "production",
-                    "url": "https://learn.example.com",
-                    "host": "AWS EC2",
                     "stack": [
                         {
                             "product": "php",
@@ -208,8 +195,6 @@
             "deployments": [
                 {
                     "name": "production",
-                    "url": "https://example.com",
-                    "host": "VPS",
                     "stack": [
                         {
                             "product": "nodejs",
@@ -248,8 +233,6 @@
             "deployments": [
                 {
                     "name": "production",
-                    "url": "https://api.example.com",
-                    "host": "AWS ECS",
                     "stack": [
                         {
                             "product": "nodejs",
@@ -271,8 +254,6 @@
                 },
                 {
                     "name": "staging",
-                    "url": "",
-                    "host": "AWS ECS",
                     "stack": [
                         {
                             "product": "nodejs",
@@ -322,8 +303,6 @@
             "deployments": [
                 {
                     "name": "production",
-                    "url": "",
-                    "host": "Netlify",
                     "stack": [
                         {
                             "product": "nodejs",
@@ -357,8 +336,6 @@
             "deployments": [
                 {
                     "name": "production",
-                    "url": "https://care.example.com",
-                    "host": "Hetzner",
                     "stack": [
                         {
                             "product": "php",
@@ -401,8 +378,6 @@
             "deployments": [
                 {
                     "name": "production",
-                    "url": "",
-                    "host": "VPS",
                     "stack": [
                         {
                             "product": "python",
@@ -440,8 +415,6 @@
             "deployments": [
                 {
                     "name": "production",
-                    "url": "https://launch.example.com",
-                    "host": "GitHub Pages",
                     "stack": []
                 }
             ],
@@ -489,8 +462,6 @@
             "deployments": [
                 {
                     "name": "production",
-                    "url": "",
-                    "host": "cPanel",
                     "stack": [
                         {
                             "product": "php",

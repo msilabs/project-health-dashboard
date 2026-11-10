@@ -74,7 +74,7 @@
         var end = P.parseDate(cycle.securityUntil || cycle.supportUntil);
         if (rel === null || end === null || end <= rel) return '';
         var pct = Math.max(2, Math.min(100, ((P.today() - rel) / (end - rel)) * 100));
-        return '<div class="lifebar s-' + status + '" title="সাপোর্টের সময়ের ' + P.num(Math.round(pct)) + '% পেরিয়েছে"><span style="width: ' + pct.toFixed(1) + '%"></span></div>';
+        return '<div class="lifebar s-' + status + '" data-tip="সাপোর্টের সময়ের ' + P.num(Math.round(pct)) + '% পেরিয়েছে"><span style="width: ' + pct.toFixed(1) + '%"></span></div>';
     };
 
     // প্রজেক্টের একটা অংশের সারি: নাম আর ভার্সন বাঁয়ে, অবস্থা ডানে, নিচে সাপোর্টের সময়
@@ -217,19 +217,25 @@
         return out;
     };
 
-    // ক্যাটালগের প্রোডাক্ট; ক্যাটালগে না থাকা পুরনো মানও রাখা হয়, যাতে এডিটে হারিয়ে না যায়
-    ui.productOptions = function (data, kind, selected) {
-        var map = {};
-        data.catalog[kind].forEach(function (p) {
-            map[p.id] = p.name;
-        });
-        if (selected && !map[selected]) map[selected] = selected + ' (ক্যাটালগে নেই)';
-        return ui.options(map, selected, 'প্রোডাক্ট বাছুন');
+    // ফর্মে লেখা নাম বা id থেকে ক্যাটালগের প্রোডাক্ট; না মিললে null
+    ui.findProductByText = function (data, kind, text) {
+        var id = P.slug(text);
+        var name = P.str(text).toLowerCase();
+        return (
+            data.catalog[kind].filter(function (p) {
+                return p.id === id || p.name.toLowerCase() === name;
+            })[0] || null
+        );
     };
 
     ui.datalists = function (data) {
         var out = '';
         P.KINDS.forEach(function (kind) {
+            out += '<datalist id="dl-products-' + kind + '">';
+            data.catalog[kind].forEach(function (p) {
+                out += '<option value="' + esc(p.name) + '"></option>';
+            });
+            out += '</datalist>';
             data.catalog[kind].forEach(function (p) {
                 out += '<datalist id="dl-' + kind + '-' + esc(p.id) + '">';
                 p.versions.forEach(function (v) {
@@ -239,7 +245,7 @@
             });
         });
         out += '<datalist id="dl-deployments">';
-        data.settings.deploymentNames.forEach(function (n) {
+        P.deploymentNames(data).forEach(function (n) {
             out += '<option value="' + esc(n) + '"></option>';
         });
         out += '</datalist><datalist id="dl-owners">';
@@ -287,8 +293,8 @@
             part('প্রজেক্ট', d.projects) +
             part('টেক প্রোডাক্ট', d.tech) +
             part('টেক ভার্সন', d.techVersions) +
-            part('এনভায়রনমেন্ট প্রোডাক্ট', d.env) +
-            part('এনভায়রনমেন্ট ভার্সন', d.envVersions) +
+            part('সার্ভার প্রোডাক্ট', d.env) +
+            part('সার্ভার ভার্সন', d.envVersions) +
             (d.settings ? '<li>সেটিংস বদলাবে</li>' : '');
         var old = {};
         before.projects.forEach(function (p) {
@@ -309,7 +315,7 @@
                 (touched.length > 8 ? ' এবং আরও ' + P.num(touched.length - 8) + 'টি' : '') +
                 '</li>';
         }
-        return { html: html ? '<ul style="margin: 0; padding-left: 1.1rem">' + html + '</ul>' : '<p>কিছুই বদলাবে না।</p>', empty: !html };
+        return { html: html ? '<ul class="plain-list">' + html + '</ul>' : '<p>কিছুই বদলাবে না।</p>', empty: !html };
     };
 
     ui.importError = function (err) {
@@ -372,6 +378,78 @@
         ui.download('project-health-' + P.isoDate(P.today()) + '.csv', ui.rowsToCsv(P.analyze(P.store.get(), { includeArchived: true }).rows), 'text/csv;charset=utf-8');
     };
 
+    // নিজের confirm: Promise ফেরত দেয়, হ্যাঁ হলে true। খোলা dialog-এর উপরেও খোলে।
+    ui.confirm = function (message, okLabel) {
+        return new Promise(function (resolve) {
+            var d = document.createElement('dialog');
+            d.className = 'modal confirm';
+            d.innerHTML =
+                '<div class="confirm-body"><span class="chip-icon s-eol">' + ui.icon('alert') + '</span><p>' + esc(message) + '</p></div>' +
+                '<div class="sheet-foot"><span></span><span class="row"><button class="btn" type="button" data-no>বাতিল</button>' +
+                '<button class="btn btn-primary btn-danger-solid" type="button" data-yes>' + esc(okLabel || 'হ্যাঁ, করুন') + '</button></span></div>';
+            document.body.appendChild(d);
+            d.addEventListener('click', function (e) {
+                if (e.target.closest('[data-yes]')) d.close('yes');
+                else if (e.target === d || e.target.closest('[data-no]')) d.close('');
+            });
+            d.addEventListener('close', function () {
+                d.remove();
+                resolve(d.returnValue === 'yes');
+            });
+            d.showModal();
+            d.querySelector('[data-no]').focus();
+        });
+    };
+
+    // data-tip="…" থাকা যেকোনো এলিমেন্টের জন্য ছোট tooltip; মাউসে hover, টাচে ট্যাপ
+    function initTips() {
+        var tip = document.createElement('div');
+        tip.className = 'tip';
+        tip.hidden = true;
+        var current = null;
+
+        function place(x, y) {
+            var pad = 8;
+            var w = tip.offsetWidth;
+            var h = tip.offsetHeight;
+            var left = Math.min(Math.max(pad, x + 12), window.innerWidth - w - pad);
+            var top = y + 16 + h > window.innerHeight - pad ? y - h - 10 : y + 16;
+            tip.style.left = left + 'px';
+            tip.style.top = Math.max(pad, top) + 'px';
+        }
+
+        function show(el, x, y) {
+            current = el;
+            tip.textContent = el.getAttribute('data-tip');
+            // খোলা dialog-এর ভেতরে না রাখলে tooltip তার নিচে চাপা পড়ে
+            var host = el.closest('dialog[open]') || document.body;
+            if (tip.parentNode !== host) host.appendChild(tip);
+            tip.hidden = false;
+            place(x, y);
+        }
+
+        function hide() {
+            current = null;
+            tip.hidden = true;
+        }
+
+        document.addEventListener('pointermove', function (e) {
+            if (e.pointerType === 'touch') return;
+            var el = e.target.closest ? e.target.closest('[data-tip]') : null;
+            if (!el) return current && hide();
+            if (el !== current) show(el, e.clientX, e.clientY);
+            else place(e.clientX, e.clientY);
+        });
+        document.addEventListener('pointerdown', function (e) {
+            if (e.pointerType !== 'touch') return hide();
+            var el = e.target.closest ? e.target.closest('[data-tip]') : null;
+            if (el && el !== current) show(el, e.clientX, e.clientY);
+            else hide();
+        });
+        document.addEventListener('scroll', hide, true);
+        document.addEventListener('keydown', hide);
+    }
+
     // dialog-এর বাইরে ক্লিক বা ✕ চাপলে বন্ধ
     ui.bindDialog = function (dialog, onClose) {
         dialog.addEventListener('click', function (e) {
@@ -389,8 +467,6 @@
             var d = P.store.get();
             if (!d) return;
             if (bar) bar.hidden = !(d.meta.sample && d.projects.length);
-            var undo = ui.$('#menu-undo');
-            if (undo) undo.hidden = !P.store.undoInfo();
             var counts = {
                 projects: d.projects.filter(function (p) { return p.lifecycle !== 'archived'; }).length,
                 catalog: d.catalog.tech.length + d.catalog.env.length
@@ -403,6 +479,7 @@
         P.store.ready().then(update);
         ui.onChange(update);
         ui.setTheme(ui.getTheme());
+        initTips();
 
         var mod = ui.$('#kbd-mod');
         if (mod && !/Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent)) mod.textContent = 'Ctrl';
@@ -431,6 +508,7 @@
         });
 
         var actions = {
+            data: function () { ui.openImport('file'); },
             import: function () { ui.openImport('file'); },
             ai: function () { ui.openImport('ai'); },
             json: ui.exportJson,
@@ -444,7 +522,6 @@
                 if (P.store.undo()) ui.toast('আগের অবস্থায় ফেরানো হয়েছে।');
             },
             'sample-clear': function () {
-                if (!confirm('নমুনা প্রজেক্টগুলো মুছে যাবে। ক্যাটালগ থাকবে।')) return;
                 var next = P.clone(P.store.get());
                 next.projects = [];
                 next.meta.sample = false;

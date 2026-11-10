@@ -2,16 +2,16 @@
     <dialog class="drawer" aria-labelledby="pd-title">
         <form class="sheet" novalidate>
             <div class="sheet-head">
-                <div class="who" style="align-items: flex-start">
+                <div class="who top">
                     <span data-avatar></span>
-                    <div class="stack" style="gap: 0.4rem; min-width: 0">
+                    <div class="stack stack-sm">
                         <h2 id="pd-title"></h2>
                         <div class="row small muted" data-meta></div>
                     </div>
                 </div>
                 <button class="btn btn-ghost btn-sm btn-icon" type="button" data-close aria-label="বন্ধ করুন"><Icon name="x" /></button>
             </div>
-            <div class="sheet-body" data-body tabindex="-1" style="outline: none"></div>
+            <div class="sheet-body" data-body tabindex="-1"></div>
             <div class="sheet-foot" data-foot></div>
             <div data-lists hidden></div>
         </form>
@@ -35,7 +35,7 @@
     function meta(p, r) {
         const bits = [r ? ui.badge(r.status) : ''];
         if (p.owner) bits.push('<span>' + esc(p.owner) + '</span>');
-        if (p.lifecycle !== 'active') bits.push('<span class="tag">' + esc(P.LIFECYCLES[p.lifecycle]) + '</span>');
+        if (p.lifecycle === 'archived') bits.push('<span class="tag">' + esc(P.LIFECYCLES[p.lifecycle]) + '</span>');
         p.tags.forEach(function (t) { bits.push('<span class="tag">' + esc(t) + '</span>'); });
         return bits.join('');
     }
@@ -52,12 +52,7 @@
         $el.querySelector('#pd-title').textContent = p.name;
         $el.querySelector('[data-avatar]').innerHTML = ui.avatar(p.name, 'lg');
         $el.querySelector('[data-meta]').innerHTML = meta(p, r);
-        const bad = r.items.filter(function (x) { return x.status === 'eol' || x.status === 'critical' || x.status === 'warning'; }).length;
-        let html = '<div class="mini-stats">' +
-            '<div><span>টেক</span><b>' + P.num(r.items.filter(function (x) { return x.kind === 'tech'; }).length) + '</b></div>' +
-            '<div><span>Environment</span><b>' + P.num(p.deployments.length) + '</b></div>' +
-            '<div><span>ঝুঁকির অংশ</span><b' + (bad ? ' style="color: var(--' + r.status + ')"' : '') + '>' + P.num(bad + r.issues.length) + '</b></div>' +
-            '</div>';
+        let html = '';
         if (r.issues.length) {
             html += '<div class="section"><span class="section-title">সামঞ্জস্য আর অমিল</span>' + r.issues.map(function (i) {
                 return '<div class="notice s-' + i.severity + '">' + esc(i.text) + '</div>';
@@ -66,15 +61,14 @@
         html += '<div class="section"><span class="section-title">টেক</span>' + partsHtml(r.items.filter(function (x) { return x.kind === 'tech'; })) + '</div>';
         p.deployments.forEach(function (d) {
             const items = r.items.filter(function (x) { return x.kind === 'env' && x.deployment === d.name; });
-            const where = [d.host, d.url ? '<a href="' + esc(d.url) + '" target="_blank" rel="noopener">' + esc(d.url.replace(/^https?:\/\//, '')) + '</a>' : ''].filter(Boolean).join(' · ');
-            html += '<div class="section"><span class="section-title"><span>' + esc(d.name) + '</span><span style="font-weight: 400">' + where + '</span></span>' + partsHtml(items) + '</div>';
+            html += '<div class="section"><span class="section-title">' + esc(d.name) + '</span>' + partsHtml(items) + '</div>';
         });
-        if (!p.deployments.length) html += '<div class="section"><span class="section-title">Environment</span><p class="small muted">কোনো environment যোগ করা হয়নি।</p></div>';
+        if (!p.deployments.length) html += '<div class="section"><span class="section-title">এনভায়রনমেন্ট</span><p class="small muted">কোনো এনভায়রনমেন্ট যোগ করা হয়নি।</p></div>';
         const info = [];
         if (p.repo) info.push('<a href="' + esc(p.repo) + '" target="_blank" rel="noopener">' + esc(p.repo.replace(/^https?:\/\//, '')) + '</a>');
         if (p.note) info.push('<span>' + esc(p.note) + '</span>');
         if (p.updatedAt) info.push('<span class="muted">শেষ হালনাগাদ: ' + P.fmtDate(p.updatedAt) + '</span>');
-        if (info.length) html += '<div class="section"><span class="section-title">তথ্য</span><div class="stack small" style="gap: 0.3rem">' + info.join('') + '</div></div>';
+        if (info.length) html += '<div class="section"><span class="section-title">তথ্য</span><div class="stack stack-sm small">' + info.join('') + '</div></div>';
         body.innerHTML = html;
         foot.innerHTML =
             '<button class="btn btn-ghost btn-sm" type="button" data-plan>' + ui.icon('sparkles') + 'AI দিয়ে আপগ্রেড পরিকল্পনা</button>' +
@@ -83,26 +77,64 @@
 
     /* ---------- এডিট মোড ---------- */
 
+    function productName(kind, id) {
+        const product = P.findProduct(P.store.get(), kind, id);
+        return product ? product.name : id;
+    }
+
     function itemRow(kind, ref) {
         ref = ref || { product: '', version: '' };
         return (
             '<div class="edit-row" data-kind="' + kind + '">' +
-            '<select data-k="product" aria-label="প্রোডাক্ট">' + ui.productOptions(P.store.get(), kind, ref.product) + '</select>' +
-            '<input type="text" data-k="version" value="' + esc(ref.version) + '" list="dl-' + kind + '-' + esc(ref.product) + '" placeholder="ভার্সন" aria-label="ভার্সন">' +
+            '<input type="text" data-k="product" value="' + esc(productName(kind, ref.product)) + '" list="dl-products-' + kind + '" placeholder="' + (kind === 'tech' ? 'যেমন Laravel' : 'যেমন PHP') + '" aria-label="প্রোডাক্ট" autocomplete="off">' +
+            '<input type="text" data-k="version" value="' + esc(ref.version) + '" list="dl-' + kind + '-' + esc(ref.product) + '" placeholder="ভার্সন" aria-label="ভার্সন" autocomplete="off">' +
             '<button class="btn btn-ghost btn-sm btn-icon" type="button" data-remove aria-label="সরান">' + ui.icon('x') + '</button>' +
+            '<div class="edit-hint" data-hint hidden></div>' +
             '</div>'
         );
     }
 
+    // লেখা প্রোডাক্ট ক্যাটালগে না থাকলে সারির নিচে জানায়, আর endoflife.date থেকে আনার বোতাম দেয়
+    function checkRow(row) {
+        const text = row.querySelector('[data-k="product"]').value.trim();
+        const hint = row.querySelector('[data-hint]');
+        const product = text ? ui.findProductByText(P.store.get(), row.dataset.kind, text) : null;
+        row.querySelector('[data-k="version"]').setAttribute('list', 'dl-' + row.dataset.kind + '-' + (product ? product.id : ''));
+        hint.hidden = !text || !!product;
+        if (!hint.hidden) hint.innerHTML = 'ক্যাটালগে নেই, তাই অবস্থা অজানা দেখাবে। <button class="link-btn" type="button" data-fetch>endoflife.date থেকে তারিখ আনুন</button>';
+    }
+
+    function fetchProduct(row, btn) {
+        const input = row.querySelector('[data-k="product"]');
+        const hint = row.querySelector('[data-hint]');
+        const kind = row.dataset.kind;
+        const slug = P.slug(input.value);
+        if (!slug) return;
+        btn.disabled = true;
+        btn.textContent = 'আনা হচ্ছে…';
+        P.fetchEndOfLife(slug).then(function (result) {
+            const product = P.productFromEndOfLife(result, kind, { id: slug });
+            P.store.update(function (next) {
+                if (!P.findProduct(next, kind, product.id)) next.catalog[kind].push(product);
+            });
+            $el.querySelector('[data-lists]').innerHTML = ui.datalists(P.store.get());
+            input.value = product.name;
+            checkRow(row);
+            ui.toast(product.name + ' ক্যাটালগে যোগ হয়েছে, ' + P.num(product.versions.length) + 'টি ভার্সনের তারিখসহ।');
+        }).catch(function (err) {
+            hint.textContent = err.message === 'not-found'
+                ? 'endoflife.date-এ এই নামে কিছু নেই। সেভ করা যাবে; পরে ক্যাটালগ পেজে তারিখ লিখে দিতে পারবেন।'
+                : 'আনা গেল না। ইন্টারনেট সংযোগ দেখে আবার চেষ্টা করুন।';
+        });
+    }
+
     function envBlock(d) {
-        d = d || { name: '', url: '', host: '', stack: [] };
+        d = d || { name: '', stack: [] };
         return (
             '<div class="env-block" data-dep>' +
-            '<div class="env-head"><input type="text" data-k="name" list="dl-deployments" value="' + esc(d.name) + '" placeholder="production" aria-label="Environment-এর নাম">' +
+            '<div class="env-head"><input type="text" data-k="name" list="dl-deployments" value="' + esc(d.name) + '" placeholder="production" aria-label="এনভায়রনমেন্টের নাম">' +
             '<button class="btn btn-ghost btn-sm btn-danger" type="button" data-remove-dep>সরান</button></div>' +
-            '<div class="form-grid"><input type="text" data-k="host" value="' + esc(d.host) + '" placeholder="হোস্ট (AWS, cPanel…)" aria-label="হোস্ট">' +
-            '<input type="text" data-k="url" value="' + esc(d.url) + '" placeholder="URL" aria-label="URL"></div>' +
-            '<div class="stack" style="gap: 0.4rem" data-stack>' + (d.stack.length ? d.stack : [null]).map(function (r) { return itemRow('env', r); }).join('') + '</div>' +
+            '<div class="stack stack-sm" data-stack>' + (d.stack.length ? d.stack : [null]).map(function (r) { return itemRow('env', r); }).join('') + '</div>' +
             '<div><button class="btn btn-ghost btn-sm" type="button" data-add-env>' + ui.icon('plus') + 'সফটওয়্যার</button></div>' +
             '</div>'
         );
@@ -114,31 +146,37 @@
         $el.querySelector('[data-avatar]').innerHTML = '';
         $el.querySelector('[data-meta]').innerHTML = '';
         $el.querySelector('[data-lists]').innerHTML = ui.datalists(data);
+        const hasMore = p.owner || p.tags.length || p.repo || p.note || p.lifecycle === 'archived';
         body.innerHTML =
-            '<div class="form-grid">' +
             '<label class="field"><span>নাম *</span><input type="text" name="name" value="' + esc(p.name) + '" maxlength="120"></label>' +
-            '<label class="field"><span>Owner</span><input type="text" name="owner" value="' + esc(p.owner) + '" list="dl-owners"></label>' +
+            '<div class="section"><span class="section-title">টেক <span class="hint">কোডে যা ব্যবহার হয়</span></span>' +
+            '<div class="stack stack-sm" data-tech>' + (p.tech.length ? p.tech : [null]).map(function (r) { return itemRow('tech', r); }).join('') + '</div>' +
+            '<div><button class="btn btn-ghost btn-sm" type="button" data-add-tech>' + ui.icon('plus') + 'টেক</button></div></div>' +
+            '<div class="section"><span class="section-title">এনভায়রনমেন্ট <span class="hint">সার্ভারে যা চলে</span></span>' +
+            '<div class="stack" data-deps>' + p.deployments.map(envBlock).join('') + '</div>' +
+            '<div><button class="btn btn-ghost btn-sm" type="button" data-add-dep>' + ui.icon('plus') + 'এনভায়রনমেন্ট</button></div></div>' +
+            '<details class="fold"' + (hasMore ? ' open' : '') + '><summary>আরও তথ্য</summary>' +
+            '<div class="form-grid">' +
+            '<label class="field"><span>দায়িত্বে</span><input type="text" name="owner" value="' + esc(p.owner) + '" list="dl-owners"></label>' +
             '<label class="field"><span>ট্যাগ</span><input type="text" name="tags" value="' + esc(p.tags.join(', ')) + '" placeholder="client, payment"></label>' +
-            '<label class="field"><span>ধাপ</span><select name="lifecycle">' + ui.options(P.LIFECYCLES, p.lifecycle) + '</select></label>' +
             '</div>' +
             '<label class="field"><span>রিপো বা লিংক</span><input type="text" name="repo" value="' + esc(p.repo) + '" placeholder="https://github.com/…"></label>' +
-            '<div class="section"><span class="section-title">টেক <span style="font-weight: 400">কোডে যা ব্যবহার হয়</span></span>' +
-            '<div class="stack" style="gap: 0.4rem" data-tech>' + (p.tech.length ? p.tech : [null]).map(function (r) { return itemRow('tech', r); }).join('') + '</div>' +
-            '<div><button class="btn btn-ghost btn-sm" type="button" data-add-tech>' + ui.icon('plus') + 'টেক</button></div></div>' +
-            '<div class="section"><span class="section-title">Environment <span style="font-weight: 400">সার্ভারে যা চলে</span></span>' +
-            '<div class="stack" data-deps>' + p.deployments.map(envBlock).join('') + '</div>' +
-            '<div><button class="btn btn-ghost btn-sm" type="button" data-add-dep>' + ui.icon('plus') + 'Environment</button></div></div>' +
-            '<label class="field"><span>নোট</span><textarea name="note" rows="2" style="min-height: 3.5rem; font-family: inherit; font-size: 0.88rem">' + esc(p.note) + '</textarea></label>' +
+            '<label class="field"><span>নোট</span><textarea class="prose" name="note" rows="2">' + esc(p.note) + '</textarea></label>' +
+            '<label class="check"><input type="checkbox" name="archived"' + (p.lifecycle === 'archived' ? ' checked' : '') + '>আর্কাইভ করা (ড্যাশবোর্ডের হিসাবে ধরা হবে না)</label>' +
+            '</details>' +
             '<p class="notice s-eol" data-error hidden></p>';
         foot.innerHTML =
             (current ? '<button class="btn btn-ghost btn-sm btn-danger" type="button" data-delete>' + ui.icon('trash') + 'মুছুন</button>' : '<span></span>') +
             '<span class="row"><button class="btn" type="button" data-cancel>বাতিল</button><button class="btn btn-primary" type="submit">সেভ করুন</button></span>';
+        ui.$$('.edit-row', body).forEach(checkRow);
         form.elements.name.focus();
     }
 
     function readRows(container) {
         return Array.prototype.map.call(container.querySelectorAll('.edit-row'), function (row) {
-            return { product: row.querySelector('[data-k="product"]').value, version: row.querySelector('[data-k="version"]').value.trim() };
+            const text = row.querySelector('[data-k="product"]').value.trim();
+            const product = ui.findProductByText(P.store.get(), row.dataset.kind, text);
+            return { product: product ? product.id : P.slug(text), version: row.querySelector('[data-k="version"]').value.trim() };
         }).filter(function (r) { return r.product; });
     }
 
@@ -149,14 +187,12 @@
             repo: el.repo.value.trim(),
             owner: el.owner.value.trim(),
             tags: el.tags.value,
-            lifecycle: el.lifecycle.value,
+            lifecycle: el.archived.checked ? 'archived' : 'active',
             note: el.note.value.trim(),
             tech: readRows(body.querySelector('[data-tech]')),
             deployments: Array.prototype.map.call(body.querySelectorAll('[data-dep]'), function (b) {
                 return {
                     name: b.querySelector('[data-k="name"]').value.trim(),
-                    host: b.querySelector('[data-k="host"]').value.trim(),
-                    url: b.querySelector('[data-k="url"]').value.trim(),
                     stack: readRows(b.querySelector('[data-stack]'))
                 };
             })
@@ -172,7 +208,7 @@
 
     function render() {
         if (editing) {
-            const blank = { name: '', repo: '', owner: '', tags: [], lifecycle: 'active', note: '', tech: [], deployments: [{ name: P.store.get().settings.deploymentNames[0] || 'production', url: '', host: '', stack: [] }] };
+            const blank = { name: '', repo: '', owner: '', tags: [], lifecycle: 'active', note: '', tech: [], deployments: [{ name: P.DEPLOYMENT_NAMES[0], stack: [] }] };
             renderEdit(current ? find(current) || blank : blank);
         } else {
             const p = find(current);
@@ -208,7 +244,7 @@
         const input = collect();
         if (!input.name) return showError('প্রজেক্টের নাম লিখুন।');
         const names = input.deployments.map(function (d) { return d.name || 'production'; });
-        if (P.unique(names).length !== names.length) return showError('একই নামের দুটো environment আছে। নাম আলাদা করুন।');
+        if (P.unique(names).length !== names.length) return showError('একই নামের দুটো এনভায়রনমেন্ট আছে। নাম আলাদা করুন।');
         const data = P.store.get();
         let id = current;
         if (!id) {
@@ -244,7 +280,7 @@
             ui.showPrompt('আপগ্রেড পরিকল্পনা', P.aiPrompts.plan(P.store.get(), '', { project: current }), find(current).name + '-এর কোন অংশ আগে আর কীভাবে আপগ্রেড করতে হবে, AI ধাপে ধাপে লিখে দেবে।');
         } else if (t.hasAttribute('data-delete')) {
             const p = find(current);
-            if (!p || !confirm('"' + p.name + '" মুছে ফেলবেন?')) return;
+            if (!p) return;
             const next = P.clone(P.store.get());
             next.projects = next.projects.filter(function (x) { return x.id !== p.id; });
             P.store.apply(next, 'প্রজেক্ট মুছে ফেলা');
@@ -258,18 +294,17 @@
             t.closest('[data-dep]').querySelector('[data-stack]').insertAdjacentHTML('beforeend', itemRow('env'));
         } else if (t.hasAttribute('data-add-dep')) {
             const taken = Array.prototype.map.call(body.querySelectorAll('[data-dep] [data-k="name"]'), function (i) { return i.value.trim(); });
-            const name = P.store.get().settings.deploymentNames.filter(function (n) { return taken.indexOf(n) === -1; })[0] || '';
-            body.querySelector('[data-deps]').insertAdjacentHTML('beforeend', envBlock({ name: name, url: '', host: '', stack: [] }));
+            const name = P.deploymentNames(P.store.get()).filter(function (n) { return taken.indexOf(n) === -1; })[0] || '';
+            body.querySelector('[data-deps]').insertAdjacentHTML('beforeend', envBlock({ name: name, stack: [] }));
         } else if (t.hasAttribute('data-remove-dep')) {
-            if (confirm('এই environment আর তার সব সফটওয়্যার সরানো হবে।')) t.closest('[data-dep]').remove();
+            t.closest('[data-dep]').remove();
+        } else if (t.hasAttribute('data-fetch')) {
+            fetchProduct(t.closest('.edit-row'), t);
         }
     });
 
-    $el.addEventListener('change', function (e) {
-        if (e.target.matches('select[data-k="product"]')) {
-            const row = e.target.closest('.edit-row');
-            row.querySelector('[data-k="version"]').setAttribute('list', 'dl-' + row.dataset.kind + '-' + e.target.value);
-        }
+    $el.addEventListener('input', function (e) {
+        if (e.target.matches('input[data-k="product"]')) checkRow(e.target.closest('.edit-row'));
     });
 
     ui.onChange(function (e) {

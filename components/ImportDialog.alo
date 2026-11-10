@@ -2,11 +2,12 @@
     <dialog class="modal wide" aria-labelledby="import-title">
         <div class="sheet">
             <div class="sheet-head">
-                <div class="stack" style="gap: 0.6rem">
-                    <h2 id="import-title">ডেটা import</h2>
+                <div class="stack stack-sm">
+                    <h2 id="import-title">ডেটা</h2>
                     <div class="segmented" role="tablist">
-                        <button type="button" data-tab="file" aria-pressed="true"><Icon name="upload" />ফাইল বা লেখা</button>
+                        <button type="button" data-tab="file" aria-pressed="true"><Icon name="upload" />Import</button>
                         <button type="button" data-tab="ai" aria-pressed="false"><Icon name="sparkles" />AI দিয়ে বানান</button>
+                        <button type="button" data-tab="export" aria-pressed="false"><Icon name="download" />Export</button>
                     </div>
                 </div>
                 <button class="btn btn-ghost btn-sm btn-icon" type="button" data-close aria-label="বন্ধ করুন"><Icon name="x" /></button>
@@ -22,25 +23,41 @@
                     </label>
                     <label class="field"><span>অথবা লেখা পেস্ট করুন</span><textarea rows="5" data-paste placeholder='{ "projects": [ … ] }'></textarea></label>
                     <div class="spread">
-                        <div class="row">
-                            <label class="check"><input type="radio" name="import-mode" value="merge" checked>মিলিয়ে নিন</label>
-                            <label class="check"><input type="radio" name="import-mode" value="replace">পুরো বদলে দিন</label>
-                        </div>
+                        <span class="small muted">একই নামের প্রজেক্ট হালনাগাদ হয়, বাকি সব থাকে।</span>
                         <button class="btn" type="button" data-check-paste>যাচাই করুন</button>
                     </div>
-                    <p class="small muted">মিলিয়ে নিলে একই id-র তথ্য হালনাগাদ হয়, বাকি সব থাকে। বদলে দিলে ফাইলে যে অংশ আছে (প্রজেক্ট, ক্যাটালগ বা সেটিংস), সেটা পুরো বদলায়।</p>
+                    <details class="fold">
+                        <summary>আরও অপশন</summary>
+                        <label class="check"><input type="checkbox" data-replace>মিলিয়ে না নিয়ে পুরো বদলে দিন</label>
+                        <p class="small muted">ফাইলে যে অংশ আছে (প্রজেক্ট, ক্যাটালগ বা সেটিংস), সেটা পুরো বদলে যাবে। এখনকার যা ফাইলে নেই, তা মুছে যাবে।</p>
+                    </details>
+                </div>
+
+                <div class="stack" data-pane="export" hidden>
+                    <div class="choice">
+                        <div><b>JSON ব্যাকআপ</b><span class="small muted">সব প্রজেক্ট, ক্যাটালগ আর সেটিংস। পরে এখানেই import করা যায়, টিমের সাথে শেয়ারও।</span></div>
+                        <button class="btn btn-primary" type="button" data-action="json"><Icon name="download" />JSON</button>
+                    </div>
+                    <div class="choice">
+                        <div><b>CSV</b><span class="small muted">প্রতিটা প্রজেক্টের প্রতিটা অংশ এক সারিতে, স্প্রেডশিটে খোলার জন্য।</span></div>
+                        <button class="btn" type="button" data-action="csv"><Icon name="file" />CSV</button>
+                    </div>
+                    <div class="choice" data-undo hidden>
+                        <div><b>শেষ বদল ফিরিয়ে আনুন</b><span class="small muted" data-undo-label></span></div>
+                        <button class="btn" type="button" data-undo-run><Icon name="undo" />ফিরিয়ে আনুন</button>
+                    </div>
                 </div>
 
                 <div class="steps" data-pane="ai" hidden>
                     <div class="step">
                         <b>তথ্য পেস্ট করুন</b>
                         <textarea rows="6" data-ai-input placeholder="composer.json, package.json, সার্ভারে php -v / mysql --version এর আউটপুট, বা স্প্রেডশিটের সারি…"></textarea>
-                        <details>
-                            <summary class="small">তথ্য জোগাড়ের কমান্ড</summary>
-                            <div class="stack" style="margin-top: 0.6rem">
+                        <details class="fold">
+                            <summary>তথ্য জোগাড়ের কমান্ড</summary>
+                            <div class="stack">
                                 <span class="small muted">প্রজেক্টের ফোল্ডারগুলো যেখানে আছে, সেখানে চালান (.env পড়ে না):</span>
                                 <pre data-cmd="repos">for d in */; do echo "### $d"; for f in composer.json package.json .nvmrc .node-version requirements.txt; do [ -f "$d$f" ] &amp;&amp; { echo "--- $f"; head -c 3000 "$d$f"; echo; }; done; done</pre>
-                                <span class="small muted">সার্ভারে চালান, আর উপরে লিখে দিন কোন প্রজেক্টের কোন environment (যেমন "shop production:"):</span>
+                                <span class="small muted">সার্ভারে চালান, আর উপরে লিখে দিন কোন প্রজেক্টের কোন এনভায়রনমেন্ট (যেমন "shop production:"):</span>
                                 <pre data-cmd="server">php -v | head -1; node -v; mysql --version; psql --version; nginx -v 2&gt;&amp;1; redis-server --version; (lsb_release -ds || head -2 /etc/os-release) 2&gt;/dev/null</pre>
                             </div>
                         </details>
@@ -65,14 +82,14 @@
                 <p class="notice s-eol" data-error hidden></p>
                 <div class="notice s-warning" data-warnings hidden></div>
                 <div class="notice" data-preview hidden>
-                    <div class="stack" style="gap: 0.4rem">
+                    <div class="stack stack-sm">
                         <b data-preview-title>যা বদলাবে</b>
                         <div data-preview-body></div>
                     </div>
                 </div>
             </div>
 
-            <div class="sheet-foot">
+            <div class="sheet-foot" data-foot>
                 <span class="small muted">বসানোর পর এক ক্লিকে আগের অবস্থায় ফেরা যায়।</span>
                 <span class="row">
                     <button class="btn" type="button" data-close>বাতিল</button>
@@ -103,6 +120,12 @@
         tab = t;
         $el.querySelectorAll('[data-tab]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.tab === t)); });
         $el.querySelectorAll('[data-pane]').forEach(function (p) { p.hidden = p.dataset.pane !== t; });
+        q('[data-foot]').hidden = t === 'export';
+        if (t === 'export') {
+            const u = P.store.undoInfo();
+            q('[data-undo]').hidden = !u;
+            if (u) q('[data-undo-label]').textContent = u.label + '-এর আগের অবস্থায় ফিরবে।';
+        }
         reset();
     }
 
@@ -128,7 +151,7 @@
     function readFileText(text, source) {
         try {
             const incoming = P.normalizeData(P.extractJson(text));
-            const mode = $el.querySelector('input[name="import-mode"]:checked').value;
+            const mode = q('[data-replace]').checked ? 'replace' : 'merge';
             const parts = [];
             if (incoming.has.projects) parts.push(P.num(incoming.projects.length) + 'টি প্রজেক্ট');
             if (incoming.has.tech || incoming.has.env) parts.push('ক্যাটালগ');
@@ -186,7 +209,11 @@
         takeFile(e.dataTransfer.files[0]);
     });
     q('[data-check-paste]').addEventListener('click', function () { readFileText(q('[data-paste]').value, 'পেস্ট করা লেখা'); });
-    $el.querySelectorAll('input[name="import-mode"]').forEach(function (r) { r.addEventListener('change', reset); });
+    q('[data-replace]').addEventListener('change', reset);
+    q('[data-undo-run]').addEventListener('click', function () {
+        if (P.store.undo()) ui.toast('আগের অবস্থায় ফেরানো হয়েছে।');
+        $el.close();
+    });
 
     q('[data-copy-prompt]').addEventListener('click', function () {
         if (!q('[data-ai-input]').value.trim()) return ui.toast('আগে আপনার তথ্য পেস্ট করুন।', 'warning');
@@ -201,6 +228,7 @@
         P.store.apply(pending, tab === 'ai' ? 'AI দিয়ে প্রজেক্ট বসানো' : 'JSON import');
         q('[data-paste]').value = '';
         q('[data-ai-reply]').value = '';
+        q('[data-replace]').checked = false;
         reset();
         $el.close();
         ui.undoToast('ডেটা বসানো হয়েছে।');

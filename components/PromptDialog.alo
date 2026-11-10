@@ -9,13 +9,13 @@
                 <button class="btn btn-ghost btn-sm btn-icon" type="button" data-close aria-label="বন্ধ করুন"><Icon name="x" /></button>
             </div>
             <div class="sheet-body">
-                <ol class="small" style="margin: 0; padding-left: 1.1rem; display: grid; gap: 0.25rem">
+                <ol class="small plain-list">
                     <li>প্রম্পট কপি করুন।</li>
                     <li>ChatGPT, Claude বা Gemini খুলে পেস্ট করুন।</li>
                     <li>উত্তরটা নিজের কাছে রাখুন বা শেয়ার করুন; এখানে কিছু বসাতে হবে না।</li>
                 </ol>
                 <textarea rows="12" readonly aria-label="প্রম্পট" data-text></textarea>
-                <p class="small muted">প্রম্পটে প্রজেক্টের URL, হোস্ট, রিপো, owner বা নোট থাকে না।</p>
+                <p class="small muted">প্রম্পটে প্রজেক্টের রিপো, দায়িত্বে থাকা নাম বা নোট থাকে না।</p>
             </div>
             <div class="sheet-foot">
                 <div class="row">

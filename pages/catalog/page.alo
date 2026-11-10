@@ -16,7 +16,7 @@
 
     <div class="notice" id="refresh-preview" hidden>
         <div class="spread">
-            <div class="stack" style="gap: 0.3rem">
+            <div class="stack stack-sm">
                 <b>endoflife.date-এর তারিখ মিলিয়ে নিলে</b>
                 <div id="refresh-body"></div>
             </div>
@@ -35,6 +35,7 @@
             <select id="category" aria-label="ধরন"></select>
             <label class="check"><input type="checkbox" id="used">শুধু ব্যবহৃত</label>
         </div>
+        <div class="skeleton" id="skeleton" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
         <div id="list"></div>
     </section>
 
@@ -48,13 +49,12 @@
                 <div class="form-grid">
                     <label class="field"><span>নাম *</span><input type="text" name="name" maxlength="60"></label>
                     <label class="field"><span>ধরন</span><select name="category"></select></label>
-                    <label class="field"><span>id</span><input type="text" name="id" maxlength="60" placeholder="নাম থেকে নিজে বসবে"><small>প্রজেক্টে এই নামে লেখা থাকে</small></label>
                     <label class="field"><span>endoflife.date-এর নাম</span><input type="text" name="eolSlug" placeholder="যেমন php, laravel"><small>endoflife.date/<b>php</b> লিংকের শেষ অংশ</small></label>
                 </div>
                 <div><button class="btn btn-sm" type="button" id="fetch"><Icon name="refresh" />endoflife.date থেকে তারিখ আনুন</button></div>
                 <div class="section">
                     <div class="section-title"><span>ভার্সন</span><button class="btn btn-ghost btn-sm" type="button" id="add-version"><Icon name="plus" />ভার্সন</button></div>
-                    <div class="tablewrap" style="border: 1px solid var(--border); border-radius: var(--radius-sm)">
+                    <div class="tablewrap bordered">
                         <table class="table ver-edit">
                             <thead>
                                 <tr><th>ভার্সন</th><th>সক্রিয় সাপোর্ট পর্যন্ত</th><th>সিকিউরিটি সাপোর্ট পর্যন্ত</th><th></th></tr>
@@ -62,7 +62,7 @@
                             <tbody id="versions"></tbody>
                         </table>
                     </div>
-                    <p class="small muted">সাইকেল লিখুন, যেমন 8.3 বা 12। "সক্রিয় সাপোর্ট" মানে বাগ ফিক্স আর নতুন ফিচার, "সিকিউরিটি সাপোর্ট" মানে শুধু নিরাপত্তা আপডেট। রিলিজের তারিখ, LTS, কী লাগে আর নোট "আরও" খুলে লিখুন।</p>
+                    <p class="small muted">সাইকেল লিখুন, যেমন 8.3 বা 12। "সক্রিয় সাপোর্ট" মানে বাগ ফিক্স আর নতুন ফিচার, "সিকিউরিটি সাপোর্ট" মানে শুধু নিরাপত্তা আপডেট। রিলিজের তারিখ, LTS আর কী লাগে "আরও" খুলে লিখুন।</p>
                 </div>
                 <p class="notice s-eol" id="ed-error" hidden></p>
             </div>
@@ -82,7 +82,8 @@
     const ui = P.ui;
     const esc = P.esc;
     const query = ui.query();
-    const f = { kind: query.get('kind') === 'env' ? 'env' : 'tech', q: query.get('q') || '', category: '', used: false };
+    // used: null মানে এখনো ঠিক হয়নি; কোনো প্রজেক্টে কিছু ব্যবহার হলে শুরুতে শুধু সেগুলোই দেখায়
+    const f = { kind: query.get('kind') === 'env' ? 'env' : 'tech', q: query.get('q') || '', category: '', used: query.get('q') ? false : null };
     const dialog = ui.$('#editor');
     const form = dialog.querySelector('form');
     const openOld = {};
@@ -115,6 +116,9 @@
         ui.setQuery({ kind: f.kind === 'tech' ? '' : f.kind, q: f.q.trim() });
 
         const usage = P.usage(P.analyze(data, { includeArchived: true }).rows);
+        if (f.used === null) f.used = Object.keys(usage).length > 0;
+        ui.$('#used').checked = f.used;
+        ui.$('#skeleton').hidden = true;
         const needle = f.q.trim().toLowerCase();
         const html = data.catalog[f.kind].map(function (product) {
             if (f.category && product.category !== f.category) return '';
@@ -137,10 +141,10 @@
                 ? '<div class="tablewrap"><table class="table"><thead><tr><th>ভার্সন</th><th>সক্রিয় সাপোর্ট</th><th>সিকিউরিটি সাপোর্ট</th><th>অবস্থা</th><th>ব্যবহার</th></tr></thead><tbody>' +
                   visible.map(function (r) {
                       const v = r.v;
-                      const extra = [v.lts ? 'LTS' : '', v.released ? 'রিলিজ ' + P.fmtDate(v.released) : '', v.requires.length ? 'লাগে ' + P.formatRequires(v.requires) : '', v.note].filter(Boolean).join(' · ');
+                      const extra = [v.lts ? 'LTS' : '', v.released ? 'রিলিজ ' + P.fmtDate(v.released) : '', v.requires.length ? 'লাগে ' + P.formatRequires(v.requires) : ''].filter(Boolean).join(' · ');
                       return '<tr><td><b>' + esc(v.version) + '</b>' + (extra ? '<br><span class="small muted">' + esc(extra) + '</span>' : '') + '</td>' +
                           '<td>' + dateCell(v.supportUntil) + '</td>' +
-                          '<td>' + dateCell(v.securityUntil, v.state ? P.VERSION_STATES[v.state] : '') + (v.approx ? ' <span class="small muted">(আনুমানিক)</span>' : '') + '</td>' +
+                          '<td>' + dateCell(v.securityUntil, v.state ? P.VERSION_STATES[v.state] : '') + '</td>' +
                           '<td>' + ui.badge(r.s.status, r.s.status === 'ok' && r.s.phase === 'security' ? 'শুধু সিকিউরিটি' : null) + '</td>' +
                           '<td class="small">' + projectsLink(product.id, v.version, r.n) + '</td></tr>';
                   }).join('') + '</tbody></table></div>'
@@ -152,7 +156,7 @@
                 '<span class="small hide-sm">' + projectsLink(product.id, '', Object.keys(projectIds).length) + '</span>' +
                 (worst ? ui.badge(worst) : '<span class="small muted">' + P.num(product.versions.length) + 'টি ভার্সন</span>') +
                 '</summary>' +
-                '<div class="product-body stack" style="gap: 0.6rem">' + table +
+                '<div class="product-body stack stack-sm">' + table +
                 '<div class="spread small"><span class="row">' +
                 (hidden || showOld ? '<button class="link-btn" type="button" data-old="' + esc(product.id) + '">' + (showOld ? 'পুরনো ভার্সন লুকান' : 'শেষ হওয়া আরও ' + P.num(hidden) + 'টি ভার্সন দেখান') + '</button>' : '') +
                 (product.eolSlug ? '<a href="https://endoflife.date/' + esc(product.eolSlug) + '" target="_blank" rel="noopener">endoflife.date/' + esc(product.eolSlug) + '</a>' : '') +
@@ -160,27 +164,25 @@
                 '</div></details>'
             );
         }).join('');
-        ui.$('#list').innerHTML = html || '<div class="empty"><p>এই ফিল্টারে কোনো প্রোডাক্ট নেই।</p></div>';
+        ui.$('#list').innerHTML = html || '<div class="empty"><p>' + (f.used && !needle && !f.category ? 'এই ট্যাবের কোনো প্রোডাক্ট এখনো কোনো প্রজেক্টে নেই। সব দেখতে "শুধু ব্যবহৃত" থেকে টিক তুলে দিন।' : 'এই ফিল্টারে কোনো প্রোডাক্ট নেই।') + '</p></div>';
     }
 
     /* ---------- এডিটর ---------- */
 
     function versionRows(v) {
-        v = v || { version: '', released: '', supportUntil: '', securityUntil: '', lts: false, state: '', approx: false, requires: [], note: '' };
+        v = v || { version: '', released: '', supportUntil: '', securityUntil: '', lts: false, state: '', requires: [] };
         return (
             '<tr data-row>' +
-            '<td><input type="text" data-k="version" value="' + esc(v.version) + '" placeholder="8.3" style="min-width: 4.5rem"></td>' +
+            '<td><input type="text" data-k="version" value="' + esc(v.version) + '" placeholder="8.3"></td>' +
             '<td><input type="date" data-k="supportUntil" value="' + esc(v.supportUntil) + '"></td>' +
             '<td><input type="date" data-k="securityUntil" value="' + esc(v.securityUntil) + '"></td>' +
-            '<td style="white-space: nowrap"><button class="btn btn-ghost btn-sm" type="button" data-more>আরও</button><button class="btn btn-ghost btn-sm btn-icon" type="button" data-remove aria-label="ভার্সন সরান">' + ui.icon('x') + '</button></td>' +
+            '<td class="num"><button class="btn btn-ghost btn-sm" type="button" data-more>আরও</button><button class="btn btn-ghost btn-sm btn-icon" type="button" data-remove aria-label="ভার্সন সরান">' + ui.icon('x') + '</button></td>' +
             '</tr>' +
             '<tr class="more" data-more-row hidden><td colspan="4"><div class="form-grid">' +
             '<label class="field"><span>রিলিজ</span><input type="date" data-k="released" value="' + esc(v.released) + '"></label>' +
             '<label class="field"><span>তারিখ না থাকলে</span><select data-k="state">' + ui.options(P.VERSION_STATES, v.state) + '</select></label>' +
             '<label class="field"><span>যা লাগে</span><input type="text" data-k="requires" value="' + esc(P.formatRequires(v.requires)) + '" placeholder="php 8.2-8.5, nodejs 20+"></label>' +
-            '<label class="field"><span>নোট</span><input type="text" data-k="note" value="' + esc(v.note) + '"></label>' +
             '<label class="check"><input type="checkbox" data-k="lts"' + (v.lts ? ' checked' : '') + '>LTS</label>' +
-            '<label class="check"><input type="checkbox" data-k="approx"' + (v.approx ? ' checked' : '') + '>তারিখ আনুমানিক</label>' +
             '</div></td></tr>'
         );
     }
@@ -192,11 +194,10 @@
     function collect() {
         const el = form.elements;
         return {
-            id: P.slug(el.id.value || el.name.value),
+            id: editing || P.slug(el.name.value),
             name: el.name.value.trim(),
             category: el.category.value,
             eolSlug: el.eolSlug.value.trim(),
-            url: editing ? (P.findProduct(P.store.get(), f.kind, editing) || {}).url || '' : '',
             versions: ui.$$('[data-row]', dialog).map(function (tr) {
                 const more = tr.nextElementSibling;
                 const get = function (k) { return tr.querySelector('[data-k="' + k + '"]') || more.querySelector('[data-k="' + k + '"]'); };
@@ -207,9 +208,7 @@
                     securityUntil: get('securityUntil').value,
                     state: get('state').value,
                     lts: get('lts').checked,
-                    approx: get('approx').checked,
-                    requires: get('requires').value,
-                    note: get('note').value.trim()
+                    requires: get('requires').value
                 };
             }).filter(function (v) { return v.version; })
         };
@@ -226,8 +225,6 @@
         const p = product || { id: '', name: name || '', category: Object.keys(P.CATEGORIES[f.kind])[0], eolSlug: '', versions: [] };
         ui.$('#ed-title').textContent = editing ? p.name : 'নতুন প্রোডাক্ট · ' + P.KIND_LABEL[f.kind];
         form.elements.name.value = p.name;
-        form.elements.id.value = p.id;
-        form.elements.id.disabled = !!editing;
         form.elements.category.innerHTML = ui.options(categories(P.store.get(), f.kind), p.category);
         form.elements.eolSlug.value = p.eolSlug || (name ? P.slug(name) : '');
         fillVersions(p.versions);
@@ -250,14 +247,14 @@
         e.preventDefault();
         const input = collect();
         if (!input.name) return error('প্রোডাক্টের নাম লিখুন।');
-        if (!input.id) return error('id বানানো গেল না। নামে অন্তত একটা অক্ষর বা সংখ্যা রাখুন।');
+        if (!input.id) return error('নামে অন্তত একটা অক্ষর বা সংখ্যা রাখুন।');
         const seen = {};
         for (const v of input.versions) {
             if (seen[v.version]) return error('ভার্সন ' + v.version + ' দুবার আছে।');
             seen[v.version] = true;
             if (v.supportUntil && v.securityUntil && v.securityUntil < v.supportUntil) return error(v.version + ': সিকিউরিটি সাপোর্টের তারিখ সক্রিয় সাপোর্টের আগে হতে পারে না।');
         }
-        if (!editing && P.findProduct(P.store.get(), f.kind, input.id)) return error('"' + input.id + '" id-র প্রোডাক্ট আগেই আছে।');
+        if (!editing && P.findProduct(P.store.get(), f.kind, input.id)) return error('"' + input.name + '" নামের প্রোডাক্ট আগেই আছে।');
         const product = P.normalizeProduct(Object.assign(input, { id: editing || input.id }), f.kind);
         P.store.update(function (next) {
             const list = next.catalog[f.kind];
@@ -294,7 +291,7 @@
         btn.disabled = true;
         error('');
         P.fetchEndOfLife(slug).then(function (result) {
-            const id = editing || P.slug(form.elements.id.value || form.elements.name.value || slug);
+            const id = editing || P.slug(form.elements.name.value || slug);
             const current = P.normalizeProduct(Object.assign(collect(), { id: id }), f.kind);
             const fresh = P.productFromEndOfLife(result, f.kind, { id: id });
             const merged = current ? P.mergeProduct(current, fresh) : fresh;
@@ -316,12 +313,17 @@
             const refs = f.kind === 'tech' ? p.tech : p.deployments.reduce(function (a, d) { return a.concat(d.stack); }, []);
             return refs.some(function (r) { return r.product === product.id; });
         }).length;
-        if (!confirm(usedBy ? '"' + product.name + '" ' + usedBy + 'টি প্রজেক্টে আছে; মুছলে সেখানে "ক্যাটালগে নেই" দেখাবে। তবু মুছবেন?' : '"' + product.name + '" মুছবেন?')) return;
-        const next = P.clone(data);
-        next.catalog[f.kind] = next.catalog[f.kind].filter(function (p) { return p.id !== product.id; });
-        P.store.apply(next, 'প্রোডাক্ট মুছে ফেলা');
-        dialog.close();
-        ui.undoToast('"' + product.name + '" মুছে ফেলা হয়েছে।');
+        const kind = f.kind;
+        // ব্যবহার না থাকলে সরাসরি মোছে; ফিরিয়ে আনার বোতাম টোস্টে থাকে
+        const ask = usedBy ? ui.confirm('"' + product.name + '" ' + P.num(usedBy) + 'টি প্রজেক্টে আছে। মুছলে সেখানে "ক্যাটালগে নেই" দেখাবে।', 'তবু মুছুন') : Promise.resolve(true);
+        ask.then(function (yes) {
+            if (!yes) return;
+            const next = P.clone(P.store.get());
+            next.catalog[kind] = next.catalog[kind].filter(function (p) { return p.id !== product.id; });
+            P.store.apply(next, 'প্রোডাক্ট মুছে ফেলা');
+            dialog.close();
+            ui.undoToast('"' + product.name + '" মুছে ফেলা হয়েছে।');
+        });
     });
 
     /* ---------- সব প্রোডাক্ট হালনাগাদ ---------- */

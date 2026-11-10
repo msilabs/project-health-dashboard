@@ -7,7 +7,6 @@
       "name": "Angular",
       "category": "framework",
       "eolSlug": "angular",
-      "url": "https://endoflife.date/angular",
       "versions": [
         {
           "version": "22",
@@ -16,9 +15,7 @@
           "securityUntil": "2028-06-30",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "21",
@@ -27,9 +24,7 @@
           "securityUntil": "2027-06-30",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "20",
@@ -38,9 +33,7 @@
           "securityUntil": "2026-11-28",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "19",
@@ -49,9 +42,7 @@
           "securityUntil": "2026-05-19",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "18",
@@ -60,9 +51,7 @@
           "securityUntil": "2025-11-21",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "17",
@@ -71,9 +60,7 @@
           "securityUntil": "2025-05-15",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "16",
@@ -82,9 +69,7 @@
           "securityUntil": "2024-11-08",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "15",
@@ -93,9 +78,7 @@
           "securityUntil": "2024-05-18",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "14",
@@ -104,9 +87,7 @@
           "securityUntil": "2023-11-18",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "13",
@@ -115,9 +96,7 @@
           "securityUntil": "2023-05-04",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "12",
@@ -126,9 +105,7 @@
           "securityUntil": "2022-11-12",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "11",
@@ -137,9 +114,7 @@
           "securityUntil": "2022-05-11",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "10",
@@ -148,9 +123,7 @@
           "securityUntil": "2021-12-24",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "9",
@@ -159,9 +132,7 @@
           "securityUntil": "2021-08-06",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         }
       ]
     },
@@ -170,7 +141,6 @@
       "name": "CakePHP",
       "category": "framework",
       "eolSlug": "cakephp",
-      "url": "https://endoflife.date/cakephp",
       "versions": [
         {
           "version": "5.4",
@@ -179,15 +149,13 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
           "requires": [
             {
               "product": "php",
               "min": "8.2",
               "max": "8.5"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "5.3",
@@ -196,15 +164,13 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
           "requires": [
             {
               "product": "php",
               "min": "8.2",
               "max": "8.5"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "5.2",
@@ -213,15 +179,13 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
           "requires": [
             {
               "product": "php",
               "min": "8.1",
               "max": "8.5"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "5.1",
@@ -230,15 +194,13 @@
           "securityUntil": "2026-07-19",
           "lts": false,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "php",
               "min": "8.1",
               "max": "8.5"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "5.0",
@@ -247,15 +209,13 @@
           "securityUntil": "2026-01-09",
           "lts": false,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "php",
               "min": "8.1",
               "max": "8.3"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "4.6",
@@ -264,15 +224,13 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
           "requires": [
             {
               "product": "php",
               "min": "7.4",
               "max": "8.3"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "4.5",
@@ -281,15 +239,13 @@
           "securityUntil": "2026-09-09",
           "lts": false,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "php",
               "min": "7.4",
               "max": "8.3"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "4.4",
@@ -298,15 +254,13 @@
           "securityUntil": "2026-09-09",
           "lts": false,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "php",
               "min": "7.4",
               "max": "8.2"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "4.3",
@@ -315,15 +269,13 @@
           "securityUntil": "2026-09-09",
           "lts": false,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "php",
               "min": "7.2",
               "max": "8.1"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "4.2",
@@ -332,15 +284,13 @@
           "securityUntil": "2023-10-14",
           "lts": false,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "php",
               "min": "7.2",
               "max": "8.1"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "4.1",
@@ -349,15 +299,13 @@
           "securityUntil": "",
           "lts": false,
           "state": "ended",
-          "approx": false,
           "requires": [
             {
               "product": "php",
               "min": "7.2",
               "max": "7.4"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "4.0",
@@ -366,15 +314,13 @@
           "securityUntil": "",
           "lts": false,
           "state": "ended",
-          "approx": false,
           "requires": [
             {
               "product": "php",
               "min": "7.2",
               "max": "7.4"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "3.10",
@@ -383,15 +329,13 @@
           "securityUntil": "2022-12-15",
           "lts": false,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "php",
               "min": "5.6",
               "max": "7.4"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "3.9",
@@ -400,15 +344,13 @@
           "securityUntil": "",
           "lts": false,
           "state": "ended",
-          "approx": false,
           "requires": [
             {
               "product": "php",
               "min": "5.6",
               "max": "7.4"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "2.10",
@@ -417,15 +359,13 @@
           "securityUntil": "2021-06-15",
           "lts": false,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "php",
               "min": "5.4",
               "max": "7.4"
             }
-          ],
-          "note": ""
+          ]
         }
       ]
     },
@@ -434,7 +374,6 @@
       "name": "Django",
       "category": "framework",
       "eolSlug": "django",
-      "url": "https://endoflife.date/django",
       "versions": [
         {
           "version": "6.1",
@@ -443,15 +382,13 @@
           "securityUntil": "2027-12-31",
           "lts": false,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "python",
               "min": "3.12",
               "max": "3.15"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "6.0",
@@ -460,15 +397,13 @@
           "securityUntil": "2027-04-30",
           "lts": false,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "python",
               "min": "3.12",
               "max": "3.14"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "5.2",
@@ -477,15 +412,13 @@
           "securityUntil": "2028-04-30",
           "lts": true,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "python",
               "min": "3.10",
               "max": "3.14"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "5.1",
@@ -494,15 +427,13 @@
           "securityUntil": "2025-12-03",
           "lts": false,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "python",
               "min": "3.10",
               "max": "3.13"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "5.0",
@@ -511,15 +442,13 @@
           "securityUntil": "2025-04-02",
           "lts": false,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "python",
               "min": "3.10",
               "max": "3.12"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "4.2",
@@ -528,15 +457,13 @@
           "securityUntil": "2026-04-07",
           "lts": true,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "python",
               "min": "3.8",
               "max": "3.12"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "4.1",
@@ -545,15 +472,13 @@
           "securityUntil": "2023-12-01",
           "lts": false,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "python",
               "min": "3.8",
               "max": "3.11"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "4.0",
@@ -562,15 +487,13 @@
           "securityUntil": "2023-04-01",
           "lts": false,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "python",
               "min": "3.8",
               "max": "3.10"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "3.2",
@@ -579,15 +502,13 @@
           "securityUntil": "2024-04-01",
           "lts": true,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "python",
               "min": "3.6",
               "max": "3.10"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "3.1",
@@ -596,15 +517,13 @@
           "securityUntil": "2021-12-07",
           "lts": false,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "python",
               "min": "3.6",
               "max": "3.9"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "3.0",
@@ -613,15 +532,13 @@
           "securityUntil": "2021-04-06",
           "lts": false,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "python",
               "min": "3.6",
               "max": "3.9"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "2.2",
@@ -630,15 +547,13 @@
           "securityUntil": "2022-04-11",
           "lts": true,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "python",
               "min": "3.5",
               "max": "3.9"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "2.1",
@@ -647,15 +562,13 @@
           "securityUntil": "2019-12-02",
           "lts": false,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "python",
               "min": "3.5",
               "max": "3.7"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "2.0",
@@ -664,15 +577,13 @@
           "securityUntil": "2019-04-01",
           "lts": false,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "python",
               "min": "3.4",
               "max": "3.7"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "1.11",
@@ -681,15 +592,13 @@
           "securityUntil": "2020-04-01",
           "lts": true,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "python",
               "min": "2.7",
               "max": "3.7"
             }
-          ],
-          "note": ""
+          ]
         }
       ]
     },
@@ -698,7 +607,6 @@
       "name": "Electron",
       "category": "framework",
       "eolSlug": "electron",
-      "url": "https://endoflife.date/electron",
       "versions": [
         {
           "version": "45",
@@ -707,9 +615,7 @@
           "securityUntil": "2027-04-27",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "44",
@@ -718,9 +624,7 @@
           "securityUntil": "2027-03-02",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "43",
@@ -729,9 +633,7 @@
           "securityUntil": "2027-01-05",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "42",
@@ -740,9 +642,7 @@
           "securityUntil": "2026-10-20",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "41",
@@ -751,9 +651,7 @@
           "securityUntil": "2026-08-24",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "40",
@@ -762,9 +660,7 @@
           "securityUntil": "2026-07-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "39",
@@ -773,9 +669,7 @@
           "securityUntil": "2026-05-05",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "38",
@@ -784,9 +678,7 @@
           "securityUntil": "2026-03-10",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "37",
@@ -795,9 +687,7 @@
           "securityUntil": "2026-01-15",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "36",
@@ -806,9 +696,7 @@
           "securityUntil": "2025-10-27",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "35",
@@ -817,9 +705,7 @@
           "securityUntil": "2025-09-02",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "34",
@@ -828,9 +714,7 @@
           "securityUntil": "2025-06-23",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "33",
@@ -839,9 +723,7 @@
           "securityUntil": "2025-04-28",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "32",
@@ -850,9 +732,7 @@
           "securityUntil": "2025-03-03",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "31",
@@ -861,9 +741,7 @@
           "securityUntil": "2025-01-14",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "30",
@@ -872,9 +750,7 @@
           "securityUntil": "2024-10-14",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "29",
@@ -883,9 +759,7 @@
           "securityUntil": "2024-08-19",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "28",
@@ -894,9 +768,7 @@
           "securityUntil": "2024-06-10",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "27",
@@ -905,9 +777,7 @@
           "securityUntil": "2024-04-16",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "26",
@@ -916,9 +786,7 @@
           "securityUntil": "2024-02-19",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "25",
@@ -927,9 +795,7 @@
           "securityUntil": "2023-12-05",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "24",
@@ -938,9 +804,7 @@
           "securityUntil": "2023-10-11",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "23",
@@ -949,9 +813,7 @@
           "securityUntil": "2023-08-16",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "22",
@@ -960,9 +822,7 @@
           "securityUntil": "2023-10-09",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "21",
@@ -971,9 +831,7 @@
           "securityUntil": "2023-04-04",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "20",
@@ -982,9 +840,7 @@
           "securityUntil": "2023-02-08",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "19",
@@ -993,9 +849,7 @@
           "securityUntil": "2022-11-30",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "18",
@@ -1004,9 +858,7 @@
           "securityUntil": "2022-09-27",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "17",
@@ -1015,9 +867,7 @@
           "securityUntil": "2022-08-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "16",
@@ -1026,9 +876,7 @@
           "securityUntil": "2022-05-24",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "15",
@@ -1037,9 +885,7 @@
           "securityUntil": "2022-05-24",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "14",
@@ -1048,9 +894,7 @@
           "securityUntil": "2022-03-29",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "13",
@@ -1059,9 +903,7 @@
           "securityUntil": "2022-02-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "12",
@@ -1070,9 +912,7 @@
           "securityUntil": "2021-11-15",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "11",
@@ -1081,9 +921,7 @@
           "securityUntil": "2021-08-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "10",
@@ -1092,9 +930,7 @@
           "securityUntil": "2021-05-24",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "9",
@@ -1103,9 +939,7 @@
           "securityUntil": "2021-03-03",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "8",
@@ -1114,9 +948,7 @@
           "securityUntil": "2020-11-18",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "7",
@@ -1125,9 +957,7 @@
           "securityUntil": "2020-08-25",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "6",
@@ -1136,9 +966,7 @@
           "securityUntil": "2020-05-18",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         }
       ]
     },
@@ -1147,7 +975,6 @@
       "name": "Express",
       "category": "framework",
       "eolSlug": "express",
-      "url": "https://endoflife.date/express",
       "versions": [
         {
           "version": "5",
@@ -1156,9 +983,7 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "4",
@@ -1167,9 +992,7 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         }
       ]
     },
@@ -1178,7 +1001,6 @@
       "name": "Laravel",
       "category": "framework",
       "eolSlug": "laravel",
-      "url": "https://endoflife.date/laravel",
       "versions": [
         {
           "version": "13",
@@ -1187,15 +1009,13 @@
           "securityUntil": "2028-03-17",
           "lts": false,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "php",
               "min": "8.3",
               "max": "8.5"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "12",
@@ -1204,15 +1024,13 @@
           "securityUntil": "2027-02-24",
           "lts": false,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "php",
               "min": "8.2",
               "max": "8.5"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "11",
@@ -1221,15 +1039,13 @@
           "securityUntil": "2026-03-12",
           "lts": false,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "php",
               "min": "8.2",
               "max": "8.4"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "10",
@@ -1238,15 +1054,13 @@
           "securityUntil": "2025-02-04",
           "lts": false,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "php",
               "min": "8.1",
               "max": "8.3"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "9",
@@ -1255,15 +1069,13 @@
           "securityUntil": "2024-02-06",
           "lts": false,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "php",
               "min": "8.0",
               "max": "8.2"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "8",
@@ -1272,15 +1084,13 @@
           "securityUntil": "2023-01-24",
           "lts": false,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "php",
               "min": "7.3",
               "max": "8.1"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "7",
@@ -1289,15 +1099,13 @@
           "securityUntil": "2021-03-03",
           "lts": false,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "php",
               "min": "7.2",
               "max": "8.0"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "6",
@@ -1306,15 +1114,13 @@
           "securityUntil": "2022-09-06",
           "lts": true,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "php",
               "min": "7.2",
               "max": "8.0"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "5.8",
@@ -1323,15 +1129,13 @@
           "securityUntil": "2020-02-26",
           "lts": false,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "php",
               "min": "7.1",
               "max": "7.3"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "5.5",
@@ -1340,15 +1144,13 @@
           "securityUntil": "2020-08-30",
           "lts": true,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "php",
               "min": "7.0",
               "max": "7.1"
             }
-          ],
-          "note": ""
+          ]
         }
       ]
     },
@@ -1357,7 +1159,6 @@
       "name": "Livewire",
       "category": "framework",
       "eolSlug": "livewire",
-      "url": "https://endoflife.date/livewire",
       "versions": [
         {
           "version": "4",
@@ -1366,7 +1167,6 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
           "requires": [
             {
               "product": "php",
@@ -1378,8 +1178,7 @@
               "min": "10",
               "max": "13"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "3",
@@ -1388,7 +1187,6 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
           "requires": [
             {
               "product": "php",
@@ -1400,8 +1198,7 @@
               "min": "10",
               "max": "13"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "2",
@@ -1410,7 +1207,6 @@
           "securityUntil": "2023-08-20",
           "lts": false,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "php",
@@ -1422,8 +1218,7 @@
               "min": "7",
               "max": "10"
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "1",
@@ -1432,7 +1227,6 @@
           "securityUntil": "2020-09-08",
           "lts": false,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "php",
@@ -1444,8 +1238,7 @@
               "min": "5.6",
               "max": "8"
             }
-          ],
-          "note": ""
+          ]
         }
       ]
     },
@@ -1454,7 +1247,6 @@
       "name": "NestJS",
       "category": "framework",
       "eolSlug": "nestjs",
-      "url": "https://endoflife.date/nestjs",
       "versions": [
         {
           "version": "12",
@@ -1463,9 +1255,7 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "11",
@@ -1474,15 +1264,13 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
           "requires": [
             {
               "product": "nodejs",
               "min": "20",
               "max": ""
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "10",
@@ -1491,15 +1279,13 @@
           "securityUntil": "",
           "lts": false,
           "state": "ended",
-          "approx": false,
           "requires": [
             {
               "product": "nodejs",
               "min": "16",
               "max": ""
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "9",
@@ -1508,9 +1294,7 @@
           "securityUntil": "",
           "lts": false,
           "state": "ended",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "8",
@@ -1519,9 +1303,7 @@
           "securityUntil": "",
           "lts": false,
           "state": "ended",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "7",
@@ -1530,9 +1312,7 @@
           "securityUntil": "",
           "lts": false,
           "state": "ended",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         }
       ]
     },
@@ -1541,7 +1321,6 @@
       "name": "Next.js",
       "category": "framework",
       "eolSlug": "nextjs",
-      "url": "https://endoflife.date/nextjs",
       "versions": [
         {
           "version": "16",
@@ -1550,15 +1329,13 @@
           "securityUntil": "",
           "lts": true,
           "state": "supported",
-          "approx": false,
           "requires": [
             {
               "product": "nodejs",
               "min": "20.9",
               "max": ""
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "15",
@@ -1567,15 +1344,13 @@
           "securityUntil": "2027-01-31",
           "lts": true,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "nodejs",
               "min": "18.18",
               "max": ""
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "14",
@@ -1584,15 +1359,13 @@
           "securityUntil": "2025-10-26",
           "lts": true,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "nodejs",
               "min": "18.17",
               "max": ""
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "13",
@@ -1601,15 +1374,13 @@
           "securityUntil": "2024-12-21",
           "lts": false,
           "state": "",
-          "approx": false,
           "requires": [
             {
               "product": "nodejs",
               "min": "16.14",
               "max": ""
             }
-          ],
-          "note": ""
+          ]
         },
         {
           "version": "12",
@@ -1618,9 +1389,7 @@
           "securityUntil": "2022-11-21",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "11",
@@ -1629,9 +1398,7 @@
           "securityUntil": "2022-01-27",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "10",
@@ -1640,9 +1407,7 @@
           "securityUntil": "2021-06-15",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "9",
@@ -1651,9 +1416,7 @@
           "securityUntil": "2020-10-27",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         }
       ]
     },
@@ -1662,7 +1425,6 @@
       "name": "Nuxt",
       "category": "framework",
       "eolSlug": "nuxt",
-      "url": "https://endoflife.date/nuxt",
       "versions": [
         {
           "version": "4",
@@ -1671,9 +1433,7 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "3",
@@ -1682,9 +1442,7 @@
           "securityUntil": "2026-07-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "2",
@@ -1693,9 +1451,7 @@
           "securityUntil": "2024-06-30",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "1",
@@ -1704,9 +1460,7 @@
           "securityUntil": "2019-09-21",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         }
       ]
     },
@@ -1715,7 +1469,6 @@
       "name": "React",
       "category": "framework",
       "eolSlug": "react",
-      "url": "https://endoflife.date/react",
       "versions": [
         {
           "version": "19",
@@ -1724,9 +1477,7 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "18",
@@ -1735,9 +1486,7 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "17",
@@ -1746,9 +1495,7 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "16",
@@ -1757,9 +1504,7 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "15",
@@ -1768,9 +1513,7 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         }
       ]
     },
@@ -1779,7 +1522,6 @@
       "name": "React Native",
       "category": "mobile",
       "eolSlug": "react-native",
-      "url": "https://endoflife.date/react-native",
       "versions": [
         {
           "version": "0.88",
@@ -1788,9 +1530,7 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "0.87",
@@ -1799,9 +1539,7 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "0.86",
@@ -1810,9 +1548,7 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "0.85",
@@ -1821,9 +1557,7 @@
           "securityUntil": "2026-10-12",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "0.84",
@@ -1832,9 +1566,7 @@
           "securityUntil": "2026-08-11",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "0.83",
@@ -1843,9 +1575,7 @@
           "securityUntil": "2026-06-09",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "0.82",
@@ -1854,9 +1584,7 @@
           "securityUntil": "2026-04-07",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "0.81",
@@ -1865,9 +1593,7 @@
           "securityUntil": "2026-02-11",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "0.80",
@@ -1876,9 +1602,7 @@
           "securityUntil": "2025-12-10",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "0.79",
@@ -1887,9 +1611,7 @@
           "securityUntil": "2025-10-08",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "0.78",
@@ -1898,9 +1620,7 @@
           "securityUntil": "2025-08-12",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "0.77",
@@ -1909,9 +1629,7 @@
           "securityUntil": "2025-06-12",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "0.76",
@@ -1920,9 +1638,7 @@
           "securityUntil": "2025-04-08",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "0.75",
@@ -1931,9 +1647,7 @@
           "securityUntil": "2025-02-19",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "0.74",
@@ -1942,9 +1656,7 @@
           "securityUntil": "2025-01-27",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "0.73",
@@ -1953,9 +1665,7 @@
           "securityUntil": "2024-10-23",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "0.72",
@@ -1964,9 +1674,7 @@
           "securityUntil": "2024-08-14",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "0.71",
@@ -1975,9 +1683,7 @@
           "securityUntil": "2024-04-23",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "0.70",
@@ -1986,9 +1692,7 @@
           "securityUntil": "2023-12-07",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "0.69",
@@ -1997,9 +1701,7 @@
           "securityUntil": "2023-06-22",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "0.68",
@@ -2008,9 +1710,7 @@
           "securityUntil": "2023-01-13",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "0.67",
@@ -2019,9 +1719,7 @@
           "securityUntil": "2022-11-06",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "0.66",
@@ -2030,9 +1728,7 @@
           "securityUntil": "2022-06-23",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "0.65",
@@ -2041,9 +1737,7 @@
           "securityUntil": "2022-03-30",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "0.64",
@@ -2052,9 +1746,7 @@
           "securityUntil": "2022-01-19",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "0.63",
@@ -2063,9 +1755,7 @@
           "securityUntil": "2021-10-02",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "0.62",
@@ -2074,9 +1764,7 @@
           "securityUntil": "2021-08-18",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "0.61",
@@ -2085,9 +1773,7 @@
           "securityUntil": "2021-03-13",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "0.60",
@@ -2096,9 +1782,7 @@
           "securityUntil": "2020-07-09",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         }
       ]
     },
@@ -2107,7 +1791,6 @@
       "name": "Ruby on Rails",
       "category": "framework",
       "eolSlug": "rails",
-      "url": "https://endoflife.date/rails",
       "versions": [
         {
           "version": "8.1",
@@ -2116,9 +1799,7 @@
           "securityUntil": "2027-10-10",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "8.0",
@@ -2127,9 +1808,7 @@
           "securityUntil": "2026-11-07",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "7.2",
@@ -2138,9 +1817,7 @@
           "securityUntil": "2026-08-09",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "7.1",
@@ -2149,9 +1826,7 @@
           "securityUntil": "2025-10-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "7.0",
@@ -2160,9 +1835,7 @@
           "securityUntil": "2025-04-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "6.1",
@@ -2171,9 +1844,7 @@
           "securityUntil": "2024-10-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "6.0",
@@ -2182,9 +1853,7 @@
           "securityUntil": "2023-06-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "5.2",
@@ -2193,9 +1862,7 @@
           "securityUntil": "2022-06-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "5.1",
@@ -2204,9 +1871,7 @@
           "securityUntil": "2019-08-25",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         }
       ]
     },
@@ -2215,7 +1880,6 @@
       "name": "Symfony",
       "category": "framework",
       "eolSlug": "symfony",
-      "url": "https://endoflife.date/symfony",
       "versions": [
         {
           "version": "8.1",
@@ -2224,9 +1888,7 @@
           "securityUntil": "2027-01-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "8.0",
@@ -2235,9 +1897,7 @@
           "securityUntil": "2026-07-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "7.4",
@@ -2246,9 +1906,7 @@
           "securityUntil": "2029-11-30",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "7.3",
@@ -2257,9 +1915,7 @@
           "securityUntil": "2026-01-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "7.2",
@@ -2268,9 +1924,7 @@
           "securityUntil": "2025-07-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "7.1",
@@ -2279,9 +1933,7 @@
           "securityUntil": "2025-01-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "7.0",
@@ -2290,9 +1942,7 @@
           "securityUntil": "2024-07-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "6.4",
@@ -2301,9 +1951,7 @@
           "securityUntil": "2027-11-30",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "6.3",
@@ -2312,9 +1960,7 @@
           "securityUntil": "2024-01-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "6.2",
@@ -2323,9 +1969,7 @@
           "securityUntil": "2023-07-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "6.1",
@@ -2334,9 +1978,7 @@
           "securityUntil": "2023-01-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "6.0",
@@ -2345,9 +1987,7 @@
           "securityUntil": "2023-01-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "5.4",
@@ -2356,9 +1996,7 @@
           "securityUntil": "2029-02-28",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "5.3",
@@ -2367,9 +2005,7 @@
           "securityUntil": "2022-01-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "5.2",
@@ -2378,9 +2014,7 @@
           "securityUntil": "2021-07-21",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "5.1",
@@ -2389,9 +2023,7 @@
           "securityUntil": "2021-01-21",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "5.0",
@@ -2400,9 +2032,7 @@
           "securityUntil": "2020-07-21",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "4.4",
@@ -2411,9 +2041,7 @@
           "securityUntil": "2023-11-21",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "4.3",
@@ -2422,9 +2050,7 @@
           "securityUntil": "2020-07-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "4.2",
@@ -2433,9 +2059,7 @@
           "securityUntil": "2020-01-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "3.4",
@@ -2444,9 +2068,7 @@
           "securityUntil": "2021-11-01",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         }
       ]
     },
@@ -2455,7 +2077,6 @@
       "name": "Tailwind CSS",
       "category": "library",
       "eolSlug": "tailwind-css",
-      "url": "https://endoflife.date/tailwind-css",
       "versions": [
         {
           "version": "4.3",
@@ -2464,9 +2085,7 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "4.2",
@@ -2475,9 +2094,7 @@
           "securityUntil": "2026-05-08",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "4.1",
@@ -2486,9 +2103,7 @@
           "securityUntil": "2026-02-18",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "4.0",
@@ -2497,9 +2112,7 @@
           "securityUntil": "2025-04-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "3.4",
@@ -2508,9 +2121,7 @@
           "securityUntil": "2027-02-28",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "3.3",
@@ -2519,9 +2130,7 @@
           "securityUntil": "2023-12-18",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "3.2",
@@ -2530,9 +2139,7 @@
           "securityUntil": "2023-03-28",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "3.1",
@@ -2541,9 +2148,7 @@
           "securityUntil": "2022-10-19",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "3.0",
@@ -2552,9 +2157,7 @@
           "securityUntil": "2022-06-08",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "2.2",
@@ -2563,9 +2166,7 @@
           "securityUntil": "2021-12-09",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "2.1",
@@ -2574,9 +2175,7 @@
           "securityUntil": "2021-06-17",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "2.0",
@@ -2585,9 +2184,7 @@
           "securityUntil": "2021-04-05",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "1.9",
@@ -2596,9 +2193,7 @@
           "securityUntil": "2020-11-18",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "1.8",
@@ -2607,9 +2202,7 @@
           "securityUntil": "2020-10-12",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "1.7",
@@ -2618,9 +2211,7 @@
           "securityUntil": "2020-09-04",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "1.6",
@@ -2629,9 +2220,7 @@
           "securityUntil": "2020-08-18",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "1.5",
@@ -2640,9 +2229,7 @@
           "securityUntil": "2020-07-28",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "1.4",
@@ -2651,9 +2238,7 @@
           "securityUntil": "2020-07-15",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "1.3",
@@ -2662,9 +2247,7 @@
           "securityUntil": "2020-04-29",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "1.2",
@@ -2673,9 +2256,7 @@
           "securityUntil": "2020-04-20",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "1.1",
@@ -2684,9 +2265,7 @@
           "securityUntil": "2020-02-05",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         }
       ]
     },
@@ -2695,7 +2274,6 @@
       "name": "Vue",
       "category": "framework",
       "eolSlug": "vue",
-      "url": "https://endoflife.date/vue",
       "versions": [
         {
           "version": "3.5",
@@ -2704,9 +2282,7 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "3.4",
@@ -2715,9 +2291,7 @@
           "securityUntil": "2024-09-03",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "3.3",
@@ -2726,9 +2300,7 @@
           "securityUntil": "2023-12-29",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "3.2",
@@ -2737,9 +2309,7 @@
           "securityUntil": "2023-05-11",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "3.1",
@@ -2748,9 +2318,7 @@
           "securityUntil": "2021-08-09",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "3.0",
@@ -2759,9 +2327,7 @@
           "securityUntil": "2021-06-07",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "2.7",
@@ -2770,9 +2336,7 @@
           "securityUntil": "2023-12-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "2.6",
@@ -2781,9 +2345,7 @@
           "securityUntil": "2022-07-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "2.5",
@@ -2792,9 +2354,7 @@
           "securityUntil": "2019-02-04",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         }
       ]
     }
@@ -2805,7 +2365,6 @@
       "name": "AlmaLinux OS",
       "category": "os",
       "eolSlug": "almalinux",
-      "url": "https://endoflife.date/almalinux",
       "versions": [
         {
           "version": "10",
@@ -2814,9 +2373,7 @@
           "securityUntil": "2035-05-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "9",
@@ -2825,9 +2382,7 @@
           "securityUntil": "2032-05-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "8",
@@ -2836,9 +2391,7 @@
           "securityUntil": "2029-05-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         }
       ]
     },
@@ -2847,7 +2400,6 @@
       "name": "Apache HTTP Server",
       "category": "server",
       "eolSlug": "apache-http-server",
-      "url": "https://endoflife.date/apache-http-server",
       "versions": [
         {
           "version": "2.4",
@@ -2856,9 +2408,7 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         }
       ]
     },
@@ -2867,7 +2417,6 @@
       "name": "Bun",
       "category": "runtime",
       "eolSlug": "bun",
-      "url": "https://endoflife.date/bun",
       "versions": [
         {
           "version": "1",
@@ -2876,9 +2425,7 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         }
       ]
     },
@@ -2887,7 +2434,6 @@
       "name": "Composer",
       "category": "tool",
       "eolSlug": "composer",
-      "url": "https://endoflife.date/composer",
       "versions": [
         {
           "version": "2.11",
@@ -2896,9 +2442,7 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "2.10",
@@ -2907,9 +2451,7 @@
           "securityUntil": "2026-10-29",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "2.9",
@@ -2918,9 +2460,7 @@
           "securityUntil": "2026-05-28",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "2.8",
@@ -2929,9 +2469,7 @@
           "securityUntil": "2025-11-13",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "2.7",
@@ -2940,9 +2478,7 @@
           "securityUntil": "2024-10-02",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "2.6",
@@ -2951,9 +2487,7 @@
           "securityUntil": "2024-02-08",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "2.5",
@@ -2962,9 +2496,7 @@
           "securityUntil": "2023-09-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "2.4",
@@ -2973,9 +2505,7 @@
           "securityUntil": "2022-12-20",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "2.3",
@@ -2984,9 +2514,7 @@
           "securityUntil": "2022-08-16",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "2.2",
@@ -2995,9 +2523,7 @@
           "securityUntil": "2026-12-31",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "2.1",
@@ -3006,9 +2532,7 @@
           "securityUntil": "2021-12-22",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "2.0",
@@ -3017,9 +2541,7 @@
           "securityUntil": "2021-06-03",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "1",
@@ -3028,9 +2550,7 @@
           "securityUntil": "2026-05-30",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         }
       ]
     },
@@ -3039,7 +2559,6 @@
       "name": "Debian",
       "category": "os",
       "eolSlug": "debian",
-      "url": "https://endoflife.date/debian",
       "versions": [
         {
           "version": "13",
@@ -3048,9 +2567,7 @@
           "securityUntil": "2030-06-30",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "12",
@@ -3059,9 +2576,7 @@
           "securityUntil": "2028-06-30",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "11",
@@ -3070,9 +2585,7 @@
           "securityUntil": "2026-08-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "10",
@@ -3081,9 +2594,7 @@
           "securityUntil": "2024-06-30",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "9",
@@ -3092,9 +2603,7 @@
           "securityUntil": "2022-07-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "8",
@@ -3103,9 +2612,7 @@
           "securityUntil": "2020-06-30",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         }
       ]
     },
@@ -3114,7 +2621,6 @@
       "name": "Docker Engine",
       "category": "container",
       "eolSlug": "docker-engine",
-      "url": "https://endoflife.date/docker-engine",
       "versions": [
         {
           "version": "29",
@@ -3123,9 +2629,7 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "28",
@@ -3134,9 +2638,7 @@
           "securityUntil": "2026-05-13",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "27",
@@ -3145,9 +2647,7 @@
           "securityUntil": "2025-05-03",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "26.1",
@@ -3156,9 +2656,7 @@
           "securityUntil": "2025-02-17",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "26.0",
@@ -3167,9 +2665,7 @@
           "securityUntil": "2024-06-08",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "25.0",
@@ -3178,9 +2674,7 @@
           "securityUntil": "2026-12-04",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "24.0",
@@ -3189,9 +2683,7 @@
           "securityUntil": "2024-06-08",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "23.0",
@@ -3200,9 +2692,7 @@
           "securityUntil": "2025-05-19",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "20.10",
@@ -3211,9 +2701,7 @@
           "securityUntil": "2023-12-10",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "19.03",
@@ -3222,9 +2710,7 @@
           "securityUntil": "2021-01-08",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "18.09",
@@ -3233,9 +2719,7 @@
           "securityUntil": "2019-08-22",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         }
       ]
     },
@@ -3244,7 +2728,6 @@
       "name": "MariaDB",
       "category": "database",
       "eolSlug": "mariadb",
-      "url": "https://endoflife.date/mariadb",
       "versions": [
         {
           "version": "13.0",
@@ -3253,9 +2736,7 @@
           "securityUntil": "2026-12-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "12.3",
@@ -3264,9 +2745,7 @@
           "securityUntil": "2029-06-12",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "12.2",
@@ -3275,9 +2754,7 @@
           "securityUntil": "2026-05-28",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "12.1",
@@ -3286,9 +2763,7 @@
           "securityUntil": "2026-02-13",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "12.0",
@@ -3297,9 +2772,7 @@
           "securityUntil": "2025-11-18",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "11.8",
@@ -3308,9 +2781,7 @@
           "securityUntil": "2028-06-04",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "11.7",
@@ -3319,9 +2790,7 @@
           "securityUntil": "2025-05-12",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "11.6",
@@ -3330,9 +2799,7 @@
           "securityUntil": "2025-02-13",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "11.5",
@@ -3341,9 +2808,7 @@
           "securityUntil": "2024-11-21",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "11.4",
@@ -3352,9 +2817,7 @@
           "securityUntil": "2029-05-29",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "11.3",
@@ -3363,9 +2826,7 @@
           "securityUntil": "2024-05-29",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "11.2",
@@ -3374,9 +2835,7 @@
           "securityUntil": "2024-11-21",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "11.1",
@@ -3385,9 +2844,7 @@
           "securityUntil": "2024-08-21",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "11.0",
@@ -3396,9 +2853,7 @@
           "securityUntil": "2024-06-06",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "10.11",
@@ -3407,9 +2862,7 @@
           "securityUntil": "2028-02-16",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "10.10",
@@ -3418,9 +2871,7 @@
           "securityUntil": "2023-11-17",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "10.9",
@@ -3429,9 +2880,7 @@
           "securityUntil": "2023-08-22",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "10.8",
@@ -3440,9 +2889,7 @@
           "securityUntil": "2023-05-20",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "10.7",
@@ -3451,9 +2898,7 @@
           "securityUntil": "2023-02-09",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "10.6",
@@ -3462,9 +2907,7 @@
           "securityUntil": "2026-07-06",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "10.5",
@@ -3473,9 +2916,7 @@
           "securityUntil": "2025-06-24",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "10.4",
@@ -3484,9 +2925,7 @@
           "securityUntil": "2024-06-18",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "10.3",
@@ -3495,9 +2934,7 @@
           "securityUntil": "2023-05-25",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "10.2",
@@ -3506,9 +2943,7 @@
           "securityUntil": "2022-05-23",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "10.1",
@@ -3517,9 +2952,7 @@
           "securityUntil": "2020-10-17",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "5.5",
@@ -3528,9 +2961,7 @@
           "securityUntil": "2020-04-11",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         }
       ]
     },
@@ -3539,7 +2970,6 @@
       "name": "MongoDB Server",
       "category": "database",
       "eolSlug": "mongodb",
-      "url": "https://endoflife.date/mongodb",
       "versions": [
         {
           "version": "9.0",
@@ -3548,9 +2978,7 @@
           "securityUntil": "2031-10-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "8.3",
@@ -3559,9 +2987,7 @@
           "securityUntil": "2029-10-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "8.2",
@@ -3570,9 +2996,7 @@
           "securityUntil": "2026-07-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "8.1",
@@ -3581,9 +3005,7 @@
           "securityUntil": "2025-09-30",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "8.0",
@@ -3592,9 +3014,7 @@
           "securityUntil": "2029-10-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "7.3",
@@ -3603,9 +3023,7 @@
           "securityUntil": "2024-10-02",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "7.2",
@@ -3614,9 +3032,7 @@
           "securityUntil": "2024-03-27",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "7.1",
@@ -3625,9 +3041,7 @@
           "securityUntil": "2024-01-23",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "7.0",
@@ -3636,9 +3050,7 @@
           "securityUntil": "2027-08-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "6.3",
@@ -3647,9 +3059,7 @@
           "securityUntil": "2023-08-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "6.2",
@@ -3658,9 +3068,7 @@
           "securityUntil": "2023-04-24",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "6.1",
@@ -3669,9 +3077,7 @@
           "securityUntil": "2023-02-09",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "6.0",
@@ -3680,9 +3086,7 @@
           "securityUntil": "2025-07-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "5.3",
@@ -3691,9 +3095,7 @@
           "securityUntil": "2022-07-19",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "5.2",
@@ -3702,9 +3104,7 @@
           "securityUntil": "2022-03-23",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "5.1",
@@ -3713,9 +3113,7 @@
           "securityUntil": "2022-01-19",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "5.0",
@@ -3724,9 +3122,7 @@
           "securityUntil": "2024-10-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "4.4",
@@ -3735,9 +3131,7 @@
           "securityUntil": "2024-02-29",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "4.2",
@@ -3746,9 +3140,7 @@
           "securityUntil": "2023-04-30",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "4.0",
@@ -3757,9 +3149,7 @@
           "securityUntil": "2022-04-30",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "3.6",
@@ -3768,9 +3158,7 @@
           "securityUntil": "2021-04-30",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "3.4",
@@ -3779,9 +3167,7 @@
           "securityUntil": "2020-01-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         }
       ]
     },
@@ -3790,7 +3176,6 @@
       "name": "MySQL",
       "category": "database",
       "eolSlug": "mysql",
-      "url": "https://endoflife.date/mysql",
       "versions": [
         {
           "version": "26.10",
@@ -3799,9 +3184,7 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "26.7",
@@ -3810,9 +3193,7 @@
           "securityUntil": "2026-10-20",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "9.7",
@@ -3821,9 +3202,7 @@
           "securityUntil": "2034-04-30",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "9.6",
@@ -3832,9 +3211,7 @@
           "securityUntil": "2026-04-21",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "9.5",
@@ -3843,9 +3220,7 @@
           "securityUntil": "2026-01-20",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "9.4",
@@ -3854,9 +3229,7 @@
           "securityUntil": "2025-10-21",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "9.3",
@@ -3865,9 +3238,7 @@
           "securityUntil": "2025-07-22",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "9.2",
@@ -3876,9 +3247,7 @@
           "securityUntil": "2025-04-15",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "9.1",
@@ -3887,9 +3256,7 @@
           "securityUntil": "2025-01-21",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "9.0",
@@ -3898,9 +3265,7 @@
           "securityUntil": "2024-10-15",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "8.4",
@@ -3909,9 +3274,7 @@
           "securityUntil": "2032-04-30",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "8.3",
@@ -3920,9 +3283,7 @@
           "securityUntil": "2024-04-30",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "8.2",
@@ -3931,9 +3292,7 @@
           "securityUntil": "2024-01-16",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "8.1",
@@ -3942,9 +3301,7 @@
           "securityUntil": "2023-10-25",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "8.0",
@@ -3953,9 +3310,7 @@
           "securityUntil": "2026-04-30",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "5.7",
@@ -3964,9 +3319,7 @@
           "securityUntil": "2023-10-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "5.6",
@@ -3975,9 +3328,7 @@
           "securityUntil": "2021-02-28",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         }
       ]
     },
@@ -3986,7 +3337,6 @@
       "name": "nginx",
       "category": "server",
       "eolSlug": "nginx",
-      "url": "https://endoflife.date/nginx",
       "versions": [
         {
           "version": "1.31",
@@ -3995,9 +3345,7 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "1.30",
@@ -4006,9 +3354,7 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "1.29",
@@ -4017,9 +3363,7 @@
           "securityUntil": "2026-05-13",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "1.28",
@@ -4028,9 +3372,7 @@
           "securityUntil": "2026-04-14",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "1.27",
@@ -4039,9 +3381,7 @@
           "securityUntil": "2025-06-24",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "1.26",
@@ -4050,9 +3390,7 @@
           "securityUntil": "2025-04-23",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "1.25",
@@ -4061,9 +3399,7 @@
           "securityUntil": "2024-05-29",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "1.24",
@@ -4072,9 +3408,7 @@
           "securityUntil": "2024-04-23",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "1.23",
@@ -4083,9 +3417,7 @@
           "securityUntil": "2023-05-23",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "1.22",
@@ -4094,9 +3426,7 @@
           "securityUntil": "2023-04-11",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "1.21",
@@ -4105,9 +3435,7 @@
           "securityUntil": "2022-06-21",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "1.20",
@@ -4116,9 +3444,7 @@
           "securityUntil": "2022-05-24",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "1.19",
@@ -4127,9 +3453,7 @@
           "securityUntil": "2021-05-25",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "1.18",
@@ -4138,9 +3462,7 @@
           "securityUntil": "2021-04-20",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "1.17",
@@ -4149,9 +3471,7 @@
           "securityUntil": "2020-05-26",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "1.16",
@@ -4160,9 +3480,7 @@
           "securityUntil": "2020-04-20",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         }
       ]
     },
@@ -4171,7 +3489,6 @@
       "name": "Node.js",
       "category": "runtime",
       "eolSlug": "nodejs",
-      "url": "https://endoflife.date/nodejs",
       "versions": [
         {
           "version": "26",
@@ -4180,9 +3497,7 @@
           "securityUntil": "2029-04-30",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "25",
@@ -4191,9 +3506,7 @@
           "securityUntil": "2026-06-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "24",
@@ -4202,9 +3515,7 @@
           "securityUntil": "2028-04-30",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "23",
@@ -4213,9 +3524,7 @@
           "securityUntil": "2025-06-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "22",
@@ -4224,9 +3533,7 @@
           "securityUntil": "2027-04-30",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "21",
@@ -4235,9 +3542,7 @@
           "securityUntil": "2024-06-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "20",
@@ -4246,9 +3551,7 @@
           "securityUntil": "2026-04-30",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "19",
@@ -4257,9 +3560,7 @@
           "securityUntil": "2023-06-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "18",
@@ -4268,9 +3569,7 @@
           "securityUntil": "2025-04-30",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "17",
@@ -4279,9 +3578,7 @@
           "securityUntil": "2022-06-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "16",
@@ -4290,9 +3587,7 @@
           "securityUntil": "2023-09-11",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "15",
@@ -4301,9 +3596,7 @@
           "securityUntil": "2021-06-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "14",
@@ -4312,9 +3605,7 @@
           "securityUntil": "2023-04-30",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "13",
@@ -4323,9 +3614,7 @@
           "securityUntil": "2020-06-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "12",
@@ -4334,9 +3623,7 @@
           "securityUntil": "2022-04-30",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "10",
@@ -4345,9 +3632,7 @@
           "securityUntil": "2021-04-30",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         }
       ]
     },
@@ -4356,7 +3641,6 @@
       "name": "PHP",
       "category": "runtime",
       "eolSlug": "php",
-      "url": "https://endoflife.date/php",
       "versions": [
         {
           "version": "8.5",
@@ -4365,9 +3649,7 @@
           "securityUntil": "2029-12-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "8.4",
@@ -4376,9 +3658,7 @@
           "securityUntil": "2028-12-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "8.3",
@@ -4387,9 +3667,7 @@
           "securityUntil": "2027-12-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "8.2",
@@ -4398,9 +3676,7 @@
           "securityUntil": "2026-12-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "8.1",
@@ -4409,9 +3685,7 @@
           "securityUntil": "2025-12-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "8.0",
@@ -4420,9 +3694,7 @@
           "securityUntil": "2023-11-26",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "7.4",
@@ -4431,9 +3703,7 @@
           "securityUntil": "2022-11-28",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "7.3",
@@ -4442,9 +3712,7 @@
           "securityUntil": "2021-12-06",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "7.2",
@@ -4453,9 +3721,7 @@
           "securityUntil": "2020-11-30",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "7.1",
@@ -4464,9 +3730,7 @@
           "securityUntil": "2019-12-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "7.0",
@@ -4475,9 +3739,7 @@
           "securityUntil": "2019-01-10",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         }
       ]
     },
@@ -4486,7 +3748,6 @@
       "name": "PostgreSQL",
       "category": "database",
       "eolSlug": "postgresql",
-      "url": "https://endoflife.date/postgresql",
       "versions": [
         {
           "version": "18",
@@ -4495,9 +3756,7 @@
           "securityUntil": "2030-11-14",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "17",
@@ -4506,9 +3765,7 @@
           "securityUntil": "2029-11-08",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "16",
@@ -4517,9 +3774,7 @@
           "securityUntil": "2028-11-09",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "15",
@@ -4528,9 +3783,7 @@
           "securityUntil": "2027-11-11",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "14",
@@ -4539,9 +3792,7 @@
           "securityUntil": "2026-11-12",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "13",
@@ -4550,9 +3801,7 @@
           "securityUntil": "2025-11-13",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "12",
@@ -4561,9 +3810,7 @@
           "securityUntil": "2024-11-21",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "11",
@@ -4572,9 +3819,7 @@
           "securityUntil": "2023-11-09",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "10",
@@ -4583,9 +3828,7 @@
           "securityUntil": "2022-11-10",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "9.6",
@@ -4594,9 +3837,7 @@
           "securityUntil": "2021-11-11",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "9.5",
@@ -4605,9 +3846,7 @@
           "securityUntil": "2021-02-11",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "9.4",
@@ -4616,9 +3855,7 @@
           "securityUntil": "2020-02-13",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         }
       ]
     },
@@ -4627,7 +3864,6 @@
       "name": "Python",
       "category": "runtime",
       "eolSlug": "python",
-      "url": "https://endoflife.date/python",
       "versions": [
         {
           "version": "3.15",
@@ -4636,9 +3872,7 @@
           "securityUntil": "2031-10-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "3.14",
@@ -4647,9 +3881,7 @@
           "securityUntil": "2030-10-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "3.13",
@@ -4658,9 +3890,7 @@
           "securityUntil": "2029-10-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "3.12",
@@ -4669,9 +3899,7 @@
           "securityUntil": "2028-10-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "3.11",
@@ -4680,9 +3908,7 @@
           "securityUntil": "2027-10-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "3.10",
@@ -4691,9 +3917,7 @@
           "securityUntil": "2026-10-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "3.9",
@@ -4702,9 +3926,7 @@
           "securityUntil": "2025-10-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "3.8",
@@ -4713,9 +3935,7 @@
           "securityUntil": "2024-10-07",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "3.7",
@@ -4724,9 +3944,7 @@
           "securityUntil": "2023-06-27",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "3.6",
@@ -4735,9 +3953,7 @@
           "securityUntil": "2021-12-23",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "3.5",
@@ -4746,9 +3962,7 @@
           "securityUntil": "2020-09-30",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "3.4",
@@ -4757,9 +3971,7 @@
           "securityUntil": "2019-03-18",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "2.7",
@@ -4768,9 +3980,7 @@
           "securityUntil": "2020-01-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         }
       ]
     },
@@ -4779,7 +3989,6 @@
       "name": "Redis",
       "category": "cache",
       "eolSlug": "redis",
-      "url": "https://endoflife.date/redis",
       "versions": [
         {
           "version": "8.10",
@@ -4788,9 +3997,7 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "8.8",
@@ -4799,9 +4006,7 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "8.6",
@@ -4810,9 +4015,7 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "8.4",
@@ -4821,9 +4024,7 @@
           "securityUntil": "",
           "lts": false,
           "state": "supported",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "8.2",
@@ -4832,9 +4033,7 @@
           "securityUntil": "2030-09-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "8.0",
@@ -4843,9 +4042,7 @@
           "securityUntil": "2026-12-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "7.4",
@@ -4854,9 +4051,7 @@
           "securityUntil": "2029-12-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "7.2",
@@ -4865,9 +4060,7 @@
           "securityUntil": "2029-12-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "7.0",
@@ -4876,9 +4069,7 @@
           "securityUntil": "2024-07-29",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "6.2",
@@ -4887,9 +4078,7 @@
           "securityUntil": "2027-04-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "6.0",
@@ -4898,9 +4087,7 @@
           "securityUntil": "2022-05-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "5.0",
@@ -4909,9 +4096,7 @@
           "securityUntil": "2022-04-27",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         }
       ]
     },
@@ -4920,7 +4105,6 @@
       "name": "Rocky Linux",
       "category": "os",
       "eolSlug": "rocky-linux",
-      "url": "https://endoflife.date/rocky-linux",
       "versions": [
         {
           "version": "10",
@@ -4929,9 +4113,7 @@
           "securityUntil": "2035-05-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "9",
@@ -4940,9 +4122,7 @@
           "securityUntil": "2032-05-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "8",
@@ -4951,9 +4131,7 @@
           "securityUntil": "2029-05-31",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         }
       ]
     },
@@ -4962,7 +4140,6 @@
       "name": "Ubuntu",
       "category": "os",
       "eolSlug": "ubuntu",
-      "url": "https://endoflife.date/ubuntu",
       "versions": [
         {
           "version": "26.10",
@@ -4971,9 +4148,7 @@
           "securityUntil": "2027-07-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "26.04",
@@ -4982,9 +4157,7 @@
           "securityUntil": "2031-05-29",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "25.10",
@@ -4993,9 +4166,7 @@
           "securityUntil": "2026-07-01",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "25.04",
@@ -5004,9 +4175,7 @@
           "securityUntil": "2026-01-17",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "24.10",
@@ -5015,9 +4184,7 @@
           "securityUntil": "2025-07-10",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "24.04",
@@ -5026,9 +4193,7 @@
           "securityUntil": "2029-05-31",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "23.10",
@@ -5037,9 +4202,7 @@
           "securityUntil": "2024-07-12",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "23.04",
@@ -5048,9 +4211,7 @@
           "securityUntil": "2024-01-20",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "22.10",
@@ -5059,9 +4220,7 @@
           "securityUntil": "2023-07-20",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "22.04",
@@ -5070,9 +4229,7 @@
           "securityUntil": "2027-06-01",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "21.10",
@@ -5081,9 +4238,7 @@
           "securityUntil": "2022-07-14",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "21.04",
@@ -5092,9 +4247,7 @@
           "securityUntil": "2022-01-20",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "20.10",
@@ -5103,9 +4256,7 @@
           "securityUntil": "2021-07-22",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "20.04",
@@ -5114,9 +4265,7 @@
           "securityUntil": "2025-05-31",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "19.10",
@@ -5125,9 +4274,7 @@
           "securityUntil": "2020-07-06",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "19.04",
@@ -5136,9 +4283,7 @@
           "securityUntil": "2020-01-23",
           "lts": false,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "18.04",
@@ -5147,9 +4292,7 @@
           "securityUntil": "2023-05-31",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         },
         {
           "version": "16.04",
@@ -5158,9 +4301,7 @@
           "securityUntil": "2021-04-02",
           "lts": true,
           "state": "",
-          "approx": false,
-          "requires": [],
-          "note": ""
+          "requires": []
         }
       ]
     }

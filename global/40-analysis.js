@@ -51,7 +51,6 @@
         else if (r.status !== 'unknown' || cycle.supportUntil) {
             r.phase = cycle.supportUntil && P.parseDate(cycle.supportUntil) < today ? 'security' : 'active';
         }
-        if (cycle.approx && r.reason === '') r.text += ' (আনুমানিক)';
         return r;
     };
 
@@ -350,7 +349,7 @@
                     type: i.type,
                     level: i.severity === 'critical' ? 'now' : 'soon',
                     status: i.severity,
-                    title: i.type === 'requires' ? 'সামঞ্জস্য নেই' : 'environment-এ অমিল',
+                    title: i.type === 'requires' ? 'সামঞ্জস্য নেই' : 'এনভায়রনমেন্টে অমিল',
                     meta: '',
                     text: i.text,
                     days: 1e9,

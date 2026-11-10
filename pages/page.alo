@@ -7,11 +7,13 @@
         <div>
             <span class="eyebrow" id="today"></span>
             <h1>পোর্টফোলিওর স্বাস্থ্য</h1>
-            <p id="lede">ডেটা লোড হচ্ছে…</p>
+            <p id="lede">&nbsp;</p>
         </div>
-        <div class="actions">
-            <button class="btn" type="button" id="report"><Icon name="report" />AI রিপোর্ট</button>
-        </div>
+    </div>
+
+    <div class="stack stack-lg" id="skeleton" aria-hidden="true">
+        <div class="card skeleton"><span></span><span></span><span></span></div>
+        <div class="card skeleton"><span></span><span></span><span></span><span></span></div>
     </div>
 
     <section class="card" id="empty" hidden>
@@ -21,13 +23,13 @@
             <p>প্রজেক্ট যোগ করুন, আগের ব্যাকআপ import করুন, অথবা আপনার লেখা তথ্য থেকে AI দিয়ে বানিয়ে নিন।</p>
             <div class="row">
                 <button class="btn btn-primary" type="button" data-action="new-project"><Icon name="plus" />প্রজেক্ট যোগ করুন</button>
-                <button class="btn" type="button" data-action="import"><Icon name="upload" />JSON import</button>
                 <button class="btn" type="button" data-action="ai"><Icon name="sparkles" />AI দিয়ে বানান</button>
+                <button class="btn" type="button" data-action="import"><Icon name="upload" />Import</button>
             </div>
         </div>
     </section>
 
-    <div class="stack" id="content" style="gap: 1.25rem" hidden>
+    <div class="stack stack-lg" id="content" hidden>
         <div class="overview">
             <section class="card hero" aria-label="অবস্থা অনুযায়ী প্রজেক্ট">
                 <div class="hero-top">
@@ -37,36 +39,23 @@
                     </div>
                     <span id="hero-badge"></span>
                 </div>
-                <div class="hero-kv" id="hero-kv"></div>
                 <div class="segbar" id="segbar" role="img"></div>
                 <div class="seg-legend" id="seg-legend"></div>
             </section>
             <div class="stats" id="stats"></div>
         </div>
 
-        <div class="grid-main">
-            <section class="card">
-                <div class="card-head">
-                    <div>
-                        <h2>করণীয়</h2>
-                        <p>সাপোর্ট শেষ বা শিগগির শেষ হওয়া ভার্সন, আর যেখানে সার্ভারের সাথে টেকের মিল নেই</p>
-                    </div>
+        <section class="card">
+            <div class="card-head">
+                <div>
+                    <h2>করণীয়</h2>
+                    <p>সাপোর্ট শেষ বা শিগগির শেষ হওয়া ভার্সন, আর যেখানে সার্ভারের সাথে টেকের মিল নেই</p>
                 </div>
-                <div id="todo"></div>
-                <div class="card-foot" id="todo-foot" hidden><button class="link-btn" type="button" id="todo-more"></button></div>
-            </section>
-
-            <section class="card">
-                <div class="card-head">
-                    <div>
-                        <h2>ঝুঁকিতে থাকা প্রজেক্ট</h2>
-                        <p>অবস্থা আর কাছের শেষ তারিখ অনুযায়ী</p>
-                    </div>
-                    <a class="small" href="/projects/">সব দেখুন</a>
-                </div>
-                <ul class="items" id="risky"></ul>
-            </section>
-        </div>
+                <button class="btn btn-ghost btn-sm" type="button" id="report"><Icon name="report" />AI রিপোর্ট</button>
+            </div>
+            <div id="todo"></div>
+            <div class="card-foot" id="todo-foot" hidden><button class="link-btn" type="button" id="todo-more"></button></div>
+        </section>
 
         <section class="card">
             <div class="card-head">
@@ -100,23 +89,12 @@
         ui.$('#hero-badge').innerHTML = risky ? ui.badge('eol', P.num(risky) + 'টিতে এখনই কাজ দরকার') : ui.badge('ok', 'জরুরি কিছু নেই');
         ui.$('#segbar').setAttribute('aria-label', P.STATUS_ORDER.map(function (s) { return P.STATUS[s].label + ' ' + a.counts[s]; }).join(', '));
         ui.$('#segbar').innerHTML = P.STATUS_ORDER.filter(function (s) { return a.counts[s]; }).map(function (s) {
-            return '<span class="s-' + s + '" style="flex: ' + a.counts[s] + '" title="' + esc(P.STATUS[s].label + ': ' + a.counts[s]) + '"></span>';
+            return '<span class="s-' + s + '" style="flex: ' + a.counts[s] + '" data-tip="' + esc(P.STATUS[s].label + ': ' + P.num(a.counts[s]) + 'টি প্রজেক্ট') + '"></span>';
         }).join('');
         ui.$('#seg-legend').innerHTML = P.STATUS_ORDER.map(function (s) {
             return '<a href="' + esc(P.url('/projects/?status=' + s)) + '"><span class="lbl"><span class="dot s-' + s + '"></span>' + P.STATUS[s].label + '</span><span class="val">' + P.num(a.counts[s]) + '</span></a>';
         }).join('');
 
-        const usage = P.usage(a.rows);
-        const envs = {};
-        a.rows.forEach(function (r) { r.project.deployments.forEach(function (d) { envs[d.name] = true; }); });
-        const parts = a.rows.reduce(function (n, r) { return n + r.items.length; }, 0);
-        ui.$('#hero-kv').innerHTML = [
-            ['চলমান ভার্সন', P.num(Object.keys(usage).length), 'ক্যাটালগে মেলে এমন'],
-            ['মোট অংশ', P.num(parts), 'টেক আর সার্ভার সফটওয়্যার'],
-            ['Environment', P.num(Object.keys(envs).length), Object.keys(envs).slice(0, 3).join(', ')]
-        ].map(function (k) {
-            return '<div><span>' + esc(k[0]) + '</span><b>' + esc(k[1]) + '</b><small>' + esc(k[2]) + '</small></div>';
-        }).join('');
         const up = P.upcoming(a.rows, 36500);
         const next = up.filter(function (u) { return u.days !== null && u.days >= 0; })[0];
         const ended = up.filter(function (u) { return u.days === null || u.days < 0; });
@@ -124,7 +102,7 @@
         const stats = [
             { icon: 'alert', s: 'eol', label: 'সাপোর্ট শেষ হয়েও চলছে', num: P.num(ended.length), sub: ended.length ? ended.slice(0, 2).map(function (u) { return u.productName + ' ' + u.version; }).join(', ') + (ended.length > 2 ? ' …' : '') : 'কোনো ভার্সন নেই' },
             { icon: 'clock', s: 'critical', label: P.num(data.settings.redDays) + ' দিনের মধ্যে শেষ', num: P.num(soon.length), sub: soon.length ? soon.map(function (u) { return u.productName + ' ' + u.version; }).slice(0, 2).join(', ') : 'কোনো ভার্সন নেই' },
-            { icon: 'compare', s: 'warning', label: 'সামঞ্জস্য আর অমিল', num: P.num(a.issues.length), sub: a.issues.length ? P.num(a.issues.filter(function (i) { return i.type === 'requires'; }).length) + 'টি রানটাইম, ' + P.num(a.issues.filter(function (i) { return i.type === 'drift'; }).length) + 'টি environment অমিল' : 'সব মিলছে' },
+            { icon: 'compare', s: 'warning', label: 'সামঞ্জস্য আর অমিল', num: P.num(a.issues.length), sub: a.issues.length ? P.num(a.issues.filter(function (i) { return i.type === 'requires'; }).length) + 'টি রানটাইম, ' + P.num(a.issues.filter(function (i) { return i.type === 'drift'; }).length) + 'টি এনভায়রনমেন্টে অমিল' : 'সব মিলছে' },
             { icon: 'calendar', s: 'unknown', label: 'পরের শেষ তারিখ', num: next ? P.num(next.days) + ' দিন' : '—', sub: next ? next.productName + ' ' + next.version + ' · ' + P.fmtDate(next.end) : 'সামনে কোনো তারিখ নেই' }
         ];
         ui.$('#stats').innerHTML = stats.map(function (x) {
@@ -161,15 +139,6 @@
         ui.$('#todo-more').textContent = showAll ? 'কম দেখান' : 'সব ' + P.num(all.length) + 'টি দেখুন';
     }
 
-    function risky(rows) {
-        const list = rows.filter(function (r) { return r.status !== 'ok' && r.status !== 'unknown'; }).slice(0, 6);
-        ui.$('#risky').innerHTML = list.length
-            ? list.map(function (r) {
-                  return '<li>' + ui.avatar(r.project.name) + '<div class="item-main"><div class="item-title">' + ui.projectLink(r.project) + '</div><div class="item-sub">' + esc(r.reason) + '</div></div><div class="item-meta">' + ui.badge(r.status) + '</div></li>';
-              }).join('')
-            : '<li style="display: block" class="muted">কোনো প্রজেক্ট ঝুঁকিতে নেই।</li>';
-    }
-
     /* ---------- টাইমলাইন ---------- */
 
     function timeline(rows) {
@@ -178,7 +147,7 @@
         const list = Object.keys(usage).map(function (k) { return usage[k]; }).filter(function (u) {
             return (tlKind === 'all' || u.kind === tlKind) && (u.cycle.released || u.end);
         });
-        ui.$('#tl-kind').innerHTML = [['all', 'সব'], ['tech', 'টেক'], ['env', 'এনভায়রনমেন্ট']].map(function (k) {
+        ui.$('#tl-kind').innerHTML = [['all', 'সব'], ['tech', P.KIND_LABEL.tech], ['env', P.KIND_LABEL.env]].map(function (k) {
             return '<button type="button" data-kind="' + k[0] + '" aria-pressed="' + (tlKind === k[0]) + '">' + k[1] + '</button>';
         }).join('');
         if (!list.length) {
@@ -242,7 +211,7 @@
                 (u.cycle.supportUntil ? 'সক্রিয় সাপোর্ট: ' + P.fmtDate(u.cycle.supportUntil) + ' পর্যন্ত\n' : '') +
                 (u.end ? 'সাপোর্ট শেষ: ' + P.fmtDate(u.end) : 'শেষের তারিখ ঘোষিত নয়') + '\n' +
                 P.STATUS[u.status].label + ' · ' + P.num(u.projects.length) + 'টি প্রজেক্ট';
-            out.push('<g><title>' + esc(tip) + '</title>');
+            out.push('<g data-tip="' + esc(tip) + '">');
             out.push('<rect x="0" y="' + yy + '" width="' + W + '" height="' + rowH + '" fill="transparent"></rect>');
             out.push('<text x="' + (L - 12) + '" y="' + (yy + rowH / 2 + 4) + '" text-anchor="end">' + esc(u.productName + ' ' + u.version) + '</text>');
             out.push('<rect x="' + x0 + '" y="' + by + '" width="' + Math.max(4, xe - x0) + '" height="8" rx="4" fill="' + color + '" opacity="0.25"></rect>');
@@ -263,14 +232,13 @@
         const a = P.analyze(data);
         lastRows = a.rows;
         ui.$('#today').textContent = 'আজ, ' + new Intl.DateTimeFormat('bn-BD', { day: 'numeric', month: 'long', year: 'numeric' }).format(P.now());
+        ui.$('#skeleton').hidden = true;
         ui.$('#empty').hidden = a.total > 0;
         ui.$('#content').hidden = a.total === 0;
-        ui.$('#report').hidden = a.total === 0;
         ui.$('#lede').textContent = a.total ? P.summaryText(a, data.settings) : 'প্রজেক্টের টেক আর সার্ভারের ভার্সন যোগ করলে এখানে দেখাবে কোনটার সাপোর্ট কবে শেষ হচ্ছে।';
         if (!a.total) return;
         overview(a, data);
         todo(a.rows, data.settings);
-        risky(a.rows);
         ui.$('#legend').innerHTML = ['eol', 'critical', 'warning', 'ok'].map(function (st) {
             return '<li class="s-' + st + '"><span class="swatch"></span>' + P.STATUS[st].label + '</li>';
         }).join('');

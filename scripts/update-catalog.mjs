@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // public/seed/catalog.json হালনাগাদ করে endoflife.date থেকে।
-// হাতে যোগ করা প্রোডাক্ট, ভার্সন, নোট আর requires যেমন আছে তেমন থাকে; শুধু তারিখগুলো নতুন করে আসে।
+// হাতে যোগ করা প্রোডাক্ট, ভার্সন আর requires যেমন আছে তেমন থাকে; শুধু তারিখগুলো নতুন করে আসে।
 // চালান: npm run catalog
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import vm from 'node:vm';
@@ -97,7 +97,7 @@ for (const kind of P.KINDS) {
 
 mkdirSync(new URL('public/seed/', root), { recursive: true });
 writeFileSync(target, JSON.stringify(out, null, 2) + '\n');
-console.log(`\nWrote ${out.tech.length} tech and ${out.env.length} environment products to public/seed/catalog.json`);
+console.log(`\nWrote ${out.tech.length} tech and ${out.env.length} server products to public/seed/catalog.json`);
 if (failed) {
     console.error(`${failed} product(s) could not be fetched; their old data was kept.`);
     process.exitCode = 1;

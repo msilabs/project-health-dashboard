@@ -52,7 +52,9 @@
             })]).then(function (res) {
                 var raw = Object.assign({}, res[1], { catalog: res[0].catalog || res[0] });
                 if (!raw.projects) raw.projects = [];
-                return P.stripMeta(P.normalizeData(raw));
+                var seed = P.stripMeta(P.normalizeData(raw));
+                seed.meta.catalogSeed = P.cleanDate(res[0].updatedAt || '');
+                return seed;
             });
         },
 
@@ -63,6 +65,7 @@
                 try {
                     state = P.stripMeta(P.normalizeData(JSON.parse(saved)));
                     ready = Promise.resolve(state);
+                    P.store.syncCatalog();
                     return ready;
                 } catch (e) {
                     write('phd:broken', saved);
@@ -79,6 +82,24 @@
                     return state;
                 });
             return ready;
+        },
+
+        // সাইটের সাথে আসা ক্যাটালগ নতুন হলে তারিখগুলো মিলিয়ে নেয়, যাতে পুরনো তারিখে ভুল অবস্থা না দেখায়।
+        // ব্যবহারকারীর যোগ করা প্রোডাক্ট আর ভার্সন থেকে যায়। একই origin-এর ফাইল, বাইরে কিছু যায় না।
+        syncCatalog: function () {
+            return getJson('/seed/catalog.json')
+                .then(function (file) {
+                    var stamp = P.cleanDate(file.updatedAt || '');
+                    if (!stamp || !state || stamp <= state.meta.catalogSeed) return false;
+                    var incoming = P.normalizeData({ catalog: file.catalog || file });
+                    var next = P.mergeData(state, incoming, 'merge');
+                    next.meta.catalogSeed = stamp;
+                    P.store.save(next, 'catalog');
+                    return true;
+                })
+                .catch(function () {
+                    return false;
+                });
         },
 
         get: function () {

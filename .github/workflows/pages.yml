@@ -4,6 +4,9 @@ on:
     push:
         branches: [main]
     workflow_dispatch:
+    # প্রতি সোমবার নতুন করে প্রকাশ, যাতে ক্যাটালগের তারিখ পুরনো না হয়
+    schedule:
+        - cron: '0 3 * * 1'
 
 permissions:
     contents: read
@@ -28,6 +31,10 @@ jobs:
                   cache: npm
             - run: npm ci
             - run: npm test
+            # endoflife.date থেকে নতুন তারিখ; আনা না গেলে রিপোর ফাইলটাই প্রকাশ হয়
+            - name: Refresh catalog
+              run: npm run catalog
+              continue-on-error: true
             # fork করলে রিপোর নাম নিজে থেকেই base হয়; <user>.github.io রিপোতে base হয় /
             - name: Build
               env:

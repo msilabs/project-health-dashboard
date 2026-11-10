@@ -1,22 +1,25 @@
 /* ডেটার কাঠামো: যেকোনো উৎসের (localStorage, import, AI) ডেটা এখানে একই আকারে আনা হয় */
 (function (P) {
     P.APP = 'project-health';
-    P.SCHEMA_VERSION = 1;
+    P.SCHEMA_VERSION = 2;
 
     P.KINDS = ['tech', 'env'];
-    P.KIND_LABEL = { tech: 'টেক', env: 'এনভায়রনমেন্ট' };
+    P.KIND_LABEL = { tech: 'টেক', env: 'সার্ভার' };
 
     P.CATEGORIES = {
         tech: { framework: 'ফ্রেমওয়ার্ক', library: 'লাইব্রেরি', language: 'ভাষা', cms: 'CMS', mobile: 'মোবাইল', tool: 'টুল' },
         env: { runtime: 'রানটাইম', database: 'ডাটাবেস', cache: 'ক্যাশ', server: 'ওয়েব সার্ভার', os: 'অপারেটিং সিস্টেম', container: 'কনটেইনার', tool: 'টুল' }
     };
 
-    P.LIFECYCLES = { active: 'সক্রিয়', maintenance: 'রক্ষণাবেক্ষণ', archived: 'আর্কাইভ' };
+    P.LIFECYCLES = { active: 'সক্রিয়', archived: 'আর্কাইভ' };
 
     // তারিখ না থাকলে ভার্সনটা কী ধরে নেওয়া হবে
     P.VERSION_STATES = { '': 'জানা নেই', supported: 'সাপোর্ট চলছে', ended: 'সাপোর্ট শেষ' };
 
-    P.DEFAULT_SETTINGS = { redDays: 90, yellowDays: 365, deploymentNames: ['production', 'staging', 'development'] };
+    P.DEFAULT_SETTINGS = { redDays: 90, yellowDays: 365 };
+
+    // নতুন environment যোগ করার সময় এই নামগুলো প্রস্তাব করা হয়
+    P.DEPLOYMENT_NAMES = ['production', 'staging', 'development'];
 
     var str = P.str;
 
@@ -88,9 +91,7 @@
             securityUntil: P.cleanDate(v.securityUntil || v.eol || ''),
             lts: bool(v.lts),
             state: P.VERSION_STATES[state] !== undefined ? state : '',
-            approx: bool(v.approx),
-            requires: normalizeRequires(v.requires),
-            note: str(v.note, 300)
+            requires: normalizeRequires(v.requires)
         };
     };
 
@@ -112,7 +113,6 @@
             name: str(p.name, 60) || id,
             category: category || (kind === 'env' ? 'runtime' : 'framework'),
             eolSlug: str(p.eolSlug, 60),
-            url: str(p.url, 300),
             versions: P.sortVersionsDesc(versions, 'version')
         };
     };
@@ -137,8 +137,6 @@
         if (!d || typeof d !== 'object') return null;
         return {
             name: str(d.name || (typeof d.env === 'string' ? d.env : ''), 40) || 'production',
-            url: str(d.url, 300),
-            host: str(d.host, 120),
             stack: refs(d.stack || d.components || (Array.isArray(d.env) ? d.env : []))
         };
     };
@@ -155,7 +153,8 @@
             repo: str(p.repo, 300),
             owner: str(p.owner, 80),
             tags: tags(p.tags),
-            lifecycle: P.LIFECYCLES[p.lifecycle] ? p.lifecycle : 'active',
+            // পুরনো ডেটার 'maintenance' এখন 'active'
+            lifecycle: p.lifecycle === 'archived' ? 'archived' : 'active',
             note: str(p.note, 1000),
             tech: refs(p.tech),
             deployments: list(p.deployments)
@@ -176,12 +175,18 @@
         var yellow = Math.round(Number(s.yellowDays));
         red = red >= 0 && red <= 3650 ? red : d.redDays;
         yellow = yellow >= 0 && yellow <= 3650 ? yellow : d.yellowDays;
-        var names = tags(s.deploymentNames);
-        return {
-            redDays: red,
-            yellowDays: Math.max(yellow, red),
-            deploymentNames: names.length ? names : d.deploymentNames.slice()
-        };
+        return { redDays: red, yellowDays: Math.max(yellow, red) };
+    };
+
+    // প্রজেক্টে ব্যবহৃত environment-এর নাম, তারপর প্রচলিত নামগুলো
+    P.deploymentNames = function (data) {
+        var used = [];
+        data.projects.forEach(function (p) {
+            p.deployments.forEach(function (d) {
+                used.push(d.name);
+            });
+        });
+        return P.unique(P.DEPLOYMENT_NAMES.concat(used));
     };
 
     function products(v, kind) {
@@ -217,11 +222,12 @@
             settings: P.normalizeSettings(),
             catalog: { tech: [], env: [] },
             projects: [],
-            meta: { sample: false }
+            meta: { sample: false, catalogSeed: '' }
         };
     };
 
-    // has: কোন অংশগুলো আসলে ইনপুটে ছিল (import-এ শুধু সেগুলোই বদলায়)
+    // has: কোন অংশগুলো আসলে ইনপুটে ছিল (import-এ শুধু সেগুলোই বদলায়)।
+    // schemaVersion 1-এর ডেটাও এখান দিয়েই আসে: বাদ পড়া ঘরগুলো (deployment-এর host আর url, ভার্সনের note …) আর নেওয়া হয় না।
     P.normalizeData = function (raw) {
         if (Array.isArray(raw)) raw = { projects: raw };
         if (!raw || typeof raw !== 'object') throw new Error('not-object');
@@ -241,6 +247,7 @@
         out.catalog.env = products(envSrc, 'env');
         out.projects = uniqueIds(list(raw.projects).map(P.normalizeProject).filter(Boolean));
         out.meta.sample = !!(raw.meta && raw.meta.sample);
+        out.meta.catalogSeed = P.cleanDate((raw.meta && raw.meta.catalogSeed) || '');
         if (!out.has.settings && !out.has.tech && !out.has.env && !out.has.projects) throw new Error('empty');
         return out;
     };
@@ -264,7 +271,6 @@
     }
 
     P.mergeVersion = function (a, b) {
-        var hasDates = !!(b.released || b.supportUntil || b.securityUntil);
         return {
             version: a.version,
             released: fill(a.released, b.released),
@@ -272,9 +278,7 @@
             securityUntil: fill(a.securityUntil, b.securityUntil),
             lts: a.lts || b.lts,
             state: b.state || (b.securityUntil ? '' : a.state),
-            approx: hasDates ? b.approx : a.approx,
-            requires: b.requires.length ? b.requires : a.requires,
-            note: fill(a.note, b.note)
+            requires: b.requires.length ? b.requires : a.requires
         };
     };
 
@@ -291,7 +295,6 @@
             name: fill(a.name, b.name),
             category: fill(a.category, b.category),
             eolSlug: fill(a.eolSlug, b.eolSlug),
-            url: fill(a.url, b.url),
             versions: P.sortVersionsDesc(
                 Object.keys(map).map(function (k) {
                     return map[k];
@@ -328,8 +331,6 @@
                 deps.push(d);
                 return;
             }
-            cur.url = fill(cur.url, d.url);
-            cur.host = fill(cur.host, d.host);
             if (d.stack.length) cur.stack = d.stack;
         });
         return {

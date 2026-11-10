@@ -20,7 +20,7 @@ test('normalizeData accepts a bare project array and AI-style refs', () => {
     const p = d.projects[0];
     assert.equal(p.id, 'shop');
     assert.deepEqual(plain(p.tech), [{ product: 'laravel', version: '11' }, { product: 'react', version: '18.3' }]);
-    assert.deepEqual(plain(p.deployments[0]), { name: 'production', url: '', host: '', stack: [{ product: 'php', version: '8.2' }] });
+    assert.deepEqual(plain(p.deployments[0]), { name: 'production', stack: [{ product: 'php', version: '8.2' }] });
 });
 
 test('normalizeData rejects junk and newer schemas', () => {
@@ -36,8 +36,8 @@ test('duplicate project ids get a suffix', () => {
 
 test('merge keeps existing details when incoming fields are empty', () => {
     const cur = P.normalizeData({
-        projects: [{ id: 'shop', name: 'Shop', owner: 'Rahim', deployments: [{ name: 'production', url: 'https://shop.example', stack: [{ product: 'php', version: '8.1' }] }] }],
-        catalog: { tech: [], env: [{ id: 'php', versions: [{ version: '8.1', securityUntil: '2025-12-31', note: 'keep' }] }] }
+        projects: [{ id: 'shop', name: 'Shop', owner: 'Rahim', repo: 'https://git.example/shop', deployments: [{ name: 'production', stack: [{ product: 'php', version: '8.1' }] }] }],
+        catalog: { tech: [], env: [{ id: 'php', versions: [{ version: '8.1', securityUntil: '2025-12-31', requires: 'ubuntu 22+' }] }] }
     });
     const inc = P.normalizeData({
         projects: [{ name: 'Shop', deployments: [{ name: 'production', stack: [{ product: 'php', version: '8.3' }] }, { name: 'staging', stack: [] }] }],
@@ -46,12 +46,12 @@ test('merge keeps existing details when incoming fields are empty', () => {
     const out = P.mergeData(cur, inc, 'merge');
     const p = out.projects[0];
     assert.equal(p.owner, 'Rahim');
-    assert.equal(p.deployments[0].url, 'https://shop.example');
+    assert.equal(p.repo, 'https://git.example/shop');
     assert.equal(p.deployments[0].stack[0].version, '8.3');
     assert.equal(p.deployments.length, 2);
     const php = out.catalog.env[0];
     assert.deepEqual(plain(php.versions.map((v) => v.version)), ['8.3', '8.1']);
-    assert.equal(php.versions[1].note, 'keep');
+    assert.equal(P.formatRequires(php.versions[1].requires), 'ubuntu 22+');
     assert.equal(php.versions[1].released, '2021-11-25');
     assert.equal(php.versions[1].securityUntil, '2025-12-31');
 });
@@ -89,9 +89,7 @@ test('endoflife.date releases map to catalog versions', () => {
         securityUntil: '2028-03-17',
         lts: false,
         state: '',
-        approx: false,
-        requires: [{ product: 'php', min: '8.3', max: '8.5' }],
-        note: ''
+        requires: [{ product: 'php', min: '8.3', max: '8.5' }]
     });
 });
 
@@ -100,4 +98,40 @@ test('endoflife.date requirement text keeps only the leading range', () => {
     assert.deepEqual(plain(v.requires), [{ product: 'python', min: '3.12', max: '3.15' }]);
     const w = P.versionFromEndOfLife({ name: '4', custom: { supportedPhpVersions: '8.1+' } });
     assert.deepEqual(plain(w.requires), [{ product: 'php', min: '8.1', max: '' }]);
+});
+
+test('schema 1 data loads without the removed fields', () => {
+    const d = P.normalizeData({
+        schemaVersion: 1,
+        settings: { redDays: 30, yellowDays: 200, deploymentNames: ['live'] },
+        catalog: { tech: [], env: [{ id: 'php', url: 'https://endoflife.date/php', versions: [{ version: '8.3', securityUntil: '2027-12-31', approx: true, note: 'x' }] }] },
+        projects: [{ name: 'Shop', lifecycle: 'maintenance', deployments: [{ name: 'live', host: 'AWS', url: 'https://shop.example', stack: ['php 8.3'] }] }, { name: 'Old', lifecycle: 'archived' }]
+    });
+    assert.equal(d.schemaVersion, 2);
+    assert.deepEqual(plain(d.settings), { redDays: 30, yellowDays: 200 });
+    assert.deepEqual(plain(d.catalog.env[0]), {
+        id: 'php',
+        name: 'php',
+        category: 'runtime',
+        eolSlug: '',
+        versions: [{ version: '8.3', released: '', supportUntil: '', securityUntil: '2027-12-31', lts: false, state: '', requires: [] }]
+    });
+    assert.deepEqual(plain(d.projects.map((p) => p.lifecycle)), ['active', 'archived']);
+    assert.deepEqual(plain(d.projects[0].deployments), [{ name: 'live', stack: [{ product: 'php', version: '8.3' }] }]);
+    assert.deepEqual(plain(P.deploymentNames(d)), ['production', 'staging', 'development', 'live']);
+});
+
+test('a newer site catalog updates dates and keeps what the user added', () => {
+    const cur = P.normalizeData({
+        meta: { catalogSeed: '2026-01-01' },
+        projects: [{ name: 'Shop' }],
+        catalog: { tech: [{ id: 'mine', name: 'In-house', versions: [{ version: '1' }] }], env: [{ id: 'php', versions: [{ version: '8.3', securityUntil: '2026-12-31' }, { version: '5.6', state: 'ended' }] }] }
+    });
+    assert.equal(cur.meta.catalogSeed, '2026-01-01');
+    const site = P.normalizeData({ catalog: { tech: [{ id: 'laravel' }], env: [{ id: 'php', versions: [{ version: '8.3', securityUntil: '2027-12-31' }, { version: '8.4', securityUntil: '2028-12-31' }] }] } });
+    const out = P.normalizeData(P.mergeData(cur, site, 'merge'));
+    assert.deepEqual(plain(out.catalog.tech.map((p) => p.id)), ['mine', 'laravel']);
+    assert.deepEqual(plain(out.catalog.env[0].versions.map((v) => v.version + ' ' + (v.securityUntil || v.state))), ['8.4 2028-12-31', '8.3 2027-12-31', '5.6 ended']);
+    assert.equal(out.projects.length, 1);
+    assert.equal(out.meta.catalogSeed, '2026-01-01');
 });
