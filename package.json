@@ -13,6 +13,6 @@
         "catalog": "node scripts/update-catalog.mjs"
     },
     "devDependencies": {
-        "@msilabs/alo": "^1.0.0"
+        "@msilabs/alo": "^1.1.0"
     }
 }
