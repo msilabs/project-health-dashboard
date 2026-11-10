@@ -165,6 +165,47 @@
         return shown + (projects.length > max ? ' আরও ' + P.num(projects.length - max) + 'টি' : '');
     };
 
+    // import বা AI-এর ডেটা বসানোর আগে কী কী বদলাবে
+    ui.diffHtml = function (before, after) {
+        var d = P.diffData(before, after);
+        function part(label, c, unit) {
+            var bits = [];
+            if (c.added) bits.push('নতুন ' + P.num(c.added) + 'টি');
+            if (c.changed) bits.push('বদলাবে ' + P.num(c.changed) + 'টি');
+            if (c.removed) bits.push('<b>মুছে যাবে ' + P.num(c.removed) + 'টি</b>');
+            return bits.length ? '<li>' + label + (unit ? ' ' + unit : '') + ': ' + bits.join(', ') + '</li>' : '';
+        }
+        var html =
+            part('প্রজেক্ট', d.projects, '') +
+            part('টেক ক্যাটালগ', d.tech, 'প্রোডাক্ট') +
+            part('টেক ক্যাটালগ', d.techVersions, 'ভার্সন') +
+            part('এনভায়রনমেন্ট ক্যাটালগ', d.env, 'প্রোডাক্ট') +
+            part('এনভায়রনমেন্ট ক্যাটালগ', d.envVersions, 'ভার্সন') +
+            (d.settings ? '<li>সেটিংস বদলাবে</li>' : '');
+        var before_ = {};
+        before.projects.forEach(function (p) {
+            before_[p.id] = JSON.stringify(p);
+        });
+        var touched = after.projects.filter(function (p) {
+            return before_[p.id] !== JSON.stringify(p);
+        });
+        if (touched.length) {
+            html += '<li class="muted">' + touched.slice(0, 10).map(function (p) {
+                return esc(p.name) + (before_[p.id] ? '' : ' (নতুন)');
+            }).join(', ') + (touched.length > 10 ? ' আরও ' + P.num(touched.length - 10) + 'টি' : '') + '</li>';
+        }
+        return { html: html ? '<ul style="margin: 0; padding-left: 1.2rem">' + html + '</ul>' : '<p>কিছুই বদলাবে না।</p>', empty: !html };
+    };
+
+    ui.importError = function (err) {
+        var m = err && err.message;
+        if (m === 'no-json') return 'লেখার মধ্যে JSON পাওয়া যায়নি। পুরো উত্তর বা পুরো ফাইল পেস্ট করুন।';
+        if (m === 'newer-schema') return 'এই ফাইল এই টুলের নতুন কোনো ভার্সনে বানানো। পেজটা রিফ্রেশ করে আবার চেষ্টা করুন।';
+        if (m === 'empty') return 'ফাইলে projects, catalog বা settings কিছুই নেই।';
+        if (m === 'not-object') return 'ফাইলের আকার ঠিক নেই। এই টুল থেকে export করা JSON দিন।';
+        return 'পড়া গেল না: ' + (m || 'অজানা সমস্যা');
+    };
+
     // প্রতিটা প্রজেক্টের প্রতিটা অংশ এক সারিতে; Excel-এ বাংলা ঠিক দেখাতে শুরুতে BOM
     ui.rowsToCsv = function (rows) {
         var head = ['project', 'lifecycle', 'owner', 'tags', 'project_status', 'kind', 'environment', 'product', 'version', 'cycle', 'status', 'phase', 'support_until', 'security_until', 'days_left', 'note'];
