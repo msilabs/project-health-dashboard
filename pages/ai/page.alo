@@ -1,0 +1,273 @@
+<head>
+    <title>AI সহায়তা | {{ data.site.name }}</title>
+</head>
+
+<template>
+    <section class="intro">
+        <h1>AI সহায়তা</h1>
+        <p>কোনো API key লাগে না। এখান থেকে প্রম্পট কপি করে ChatGPT, Claude বা Gemini-তে দিন। উত্তর JSON হলে এখানে পেস্ট করুন; বসানোর আগে দেখাবে কী বদলাবে, আর এক ক্লিকে আগের অবস্থায় ফেরা যায়।</p>
+    </section>
+
+    <p class="notice small">AI-কে কখনো পাঠানো হয় না: প্রজেক্টের URL, হোস্ট, রিপো, owner আর নোট। আপনি নিজে যে লেখা পেস্ট করবেন, শুধু সেটুকু প্রম্পটে যায়; পাঠানোর আগে দেখে নিন তাতে পাসওয়ার্ড বা গোপন কিছু নেই।</p>
+
+    <div class="chips" id="tasks" role="tablist" aria-label="কাজ বাছুন"></div>
+
+    <section class="card">
+        <header>
+            <h2>১. তথ্য দিন</h2>
+            <p class="card-note" id="task-note"></p>
+        </header>
+
+        <div class="stack" data-for="projects">
+            <label class="field"><span>আপনার তথ্য</span><textarea id="in-projects" rows="9" placeholder="composer.json, package.json, সার্ভারের php -v / mysql --version এর আউটপুট, বা আপনার স্প্রেডশিটের সারি…"></textarea></label>
+            <details>
+                <summary class="small">তথ্য জোগাড়ের কমান্ড</summary>
+                <div class="stack" style="margin-top: 0.75rem">
+                    <p class="small muted">সব প্রজেক্ট যে ফোল্ডারে আছে, সেখানে চালালে প্রতিটা রিপোর ভার্সনের ফাইলগুলো দেখাবে (.env পড়ে না):</p>
+                    <pre id="cmd-repos">for d in */; do echo "### $d"; for f in composer.json package.json .nvmrc .node-version requirements.txt; do [ -f "$d$f" ] &amp;&amp; { echo "--- $f"; head -c 3000 "$d$f"; echo; }; done; done</pre>
+                    <div><button class="btn btn-small" type="button" data-copy="#cmd-repos">কমান্ড কপি</button></div>
+                    <p class="small muted">সার্ভারে চালালে আসল চলমান ভার্সন দেখাবে। কোন environment-এর আউটপুট, সেটা উপরে লিখে দিন (যেমন "shop production:"):</p>
+                    <pre id="cmd-server">php -v | head -1; node -v; mysql --version; psql --version; nginx -v 2&gt;&amp;1; redis-server --version; (lsb_release -ds || head -2 /etc/os-release) 2&gt;/dev/null</pre>
+                    <div><button class="btn btn-small" type="button" data-copy="#cmd-server">কমান্ড কপি</button></div>
+                </div>
+            </details>
+        </div>
+
+        <div class="stack" data-for="catalog">
+            <div class="form-grid">
+                <label class="field"><span>ক্যাটালগ</span><select id="in-kind"></select></label>
+                <label class="field"><span>প্রোডাক্ট</span><select id="in-product"></select></label>
+                <label class="field" id="new-name-field"><span>নতুন প্রোডাক্টের নাম</span><input type="text" id="in-name" placeholder="যেমন Vite, Astro"></label>
+            </div>
+            <label class="field"><span>বাড়তি কিছু বলার থাকলে (ঐচ্ছিক)</span><textarea id="in-catalog" rows="3" style="min-height: 4rem"></textarea></label>
+            <p class="small muted">যে প্রোডাক্ট endoflife.date-এ আছে, তার জন্য ক্যাটালগ পেজের "endoflife.date থেকে তারিখ আনুন" বেশি নির্ভরযোগ্য। AI শুধু তখনই দরকার, যখন সেখানে নেই।</p>
+        </div>
+
+        <div class="stack" data-for="plan">
+            <label class="field"><span>প্রজেক্ট</span><select id="in-project"></select></label>
+            <div id="plan-summary"></div>
+            <label class="field"><span>বাড়তি তথ্য (ঐচ্ছিক)</span><textarea id="in-plan" rows="3" style="min-height: 4rem" placeholder="যেমন: ডিসেম্বরে ক্লায়েন্টের ব্যস্ত সময়, staging নেই…"></textarea></label>
+        </div>
+
+        <div class="stack" data-for="report">
+            <p class="small">আর্কাইভ ছাড়া সব প্রজেক্টের অবস্থা, সামনে কী শেষ হচ্ছে আর কোথায় অমিল, সেটা থেকে ম্যানেজারদের জন্য সহজ ভাষায় রিপোর্ট।</p>
+            <label class="field"><span>বাড়তি তথ্য (ঐচ্ছিক)</span><textarea id="in-report" rows="3" style="min-height: 4rem" placeholder="যেমন: আগামী কোয়ার্টারের বাজেট আলোচনার জন্য"></textarea></label>
+        </div>
+    </section>
+
+    <section class="card">
+        <header>
+            <h2>২. প্রম্পট কপি করে AI-তে দিন</h2>
+        </header>
+        <div class="row">
+            <button class="btn btn-primary" type="button" id="copy-prompt">প্রম্পট কপি করুন</button>
+            <a class="btn" href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a>
+            <a class="btn" href="https://claude.ai/new" target="_blank" rel="noopener">Claude</a>
+            <a class="btn" href="https://gemini.google.com/app" target="_blank" rel="noopener">Gemini</a>
+        </div>
+        <details>
+            <summary class="small">প্রম্পট দেখুন</summary>
+            <textarea id="prompt" rows="14" readonly style="margin-top: 0.75rem" aria-label="প্রম্পট"></textarea>
+        </details>
+    </section>
+
+    <section class="card" id="step3">
+        <header>
+            <h2>৩. AI-এর উত্তর পেস্ট করুন</h2>
+            <p class="card-note" id="step3-note"></p>
+        </header>
+        <div class="stack" id="reply-box">
+            <textarea id="reply" rows="8" placeholder="AI-এর পুরো উত্তর এখানে পেস্ট করুন"></textarea>
+            <div><button class="btn" type="button" id="check">যাচাই করুন</button></div>
+            <p class="notice s-critical" id="reply-error" hidden></p>
+            <div class="notice s-warning" id="warnings" hidden></div>
+            <div class="notice" id="preview" hidden>
+                <div class="stack">
+                    <b>মিলিয়ে নিলে যা বদলাবে</b>
+                    <div id="preview-body"></div>
+                    <div class="row">
+                        <button class="btn btn-primary" type="button" id="apply">প্রয়োগ করুন</button>
+                        <button class="btn" type="button" id="cancel">বাতিল</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</template>
+
+<script>
+    const P = PHD;
+    const ui = P.ui;
+    const esc = P.esc;
+    const query = ui.query();
+    const NOTES = {
+        projects: 'রিপোর ফাইল, সার্ভারের কমান্ডের আউটপুট বা স্প্রেডশিট থেকে প্রজেক্ট, টেক ভার্সন আর environment-এর তালিকা বানাবে। ক্যাটালগের id ব্যবহার করবে, যাতে সরাসরি মিলে যায়।',
+        catalog: 'কোনো প্রোডাক্টের ভার্সনগুলোর রিলিজ আর সাপোর্টের তারিখ। যা আছে তা প্রম্পটে যায়, AI সেটা ঠিক করে আর বাড়ায়।',
+        plan: 'একটা প্রজেক্টের কোন অংশ আগে আপগ্রেড করতে হবে, ধাপে ধাপে কীভাবে, আর কোথায় ঝুঁকি। শুধু ক্যাটালগের সাপোর্টেড ভার্সনই প্রস্তাব করবে।',
+        report: 'পুরো পোর্টফোলিওর অবস্থা নিয়ে অ-টেকনিক্যাল পাঠকের জন্য ছোট রিপোর্ট।'
+    };
+    let task = P.AI_TASKS[query.get('task')] ? query.get('task') : 'projects';
+    let pending = null;
+
+    function renderTasks() {
+        ui.$('#tasks').innerHTML = Object.keys(P.AI_TASKS).map(function (k) {
+            return '<button class="btn" type="button" role="tab" data-task="' + k + '" aria-pressed="' + (k === task) + '" aria-selected="' + (k === task) + '">' + P.AI_TASKS[k].label + '</button>';
+        }).join('');
+        ui.$$('[data-for]').forEach(function (el) { el.hidden = el.dataset.for !== task; });
+        ui.$('#task-note').textContent = NOTES[task];
+        const json = P.AI_TASKS[task].returnsJson;
+        ui.$('#reply-box').hidden = !json;
+        ui.$('#step3-note').textContent = json
+            ? 'উত্তরের পুরোটা পেস্ট করলেই হবে, JSON ব্লক নিজে খুঁজে নেবে। বসানো হবে মিলিয়ে নিয়ে: আগের তথ্য মুছবে না।'
+            : 'এই কাজের উত্তর লেখা আকারে আসবে। সেটা নিজের কাছে রাখুন বা শেয়ার করুন; এখানে কিছু বসাতে হবে না।';
+        resetReply();
+    }
+
+    function renderPickers() {
+        const data = P.store.get();
+        const kindSel = ui.$('#in-kind');
+        const kind = kindSel.value || query.get('kind') || 'tech';
+        kindSel.innerHTML = ui.options(P.KIND_LABEL, kind);
+        const prodSel = ui.$('#in-product');
+        const current = prodSel.value || query.get('product') || '';
+        const map = {};
+        data.catalog[kind].forEach(function (p) { map[p.id] = p.name; });
+        map['__new'] = '+ নতুন প্রোডাক্ট';
+        prodSel.innerHTML = ui.options(map, map[current] ? current : Object.keys(map)[0]);
+        ui.$('#new-name-field').hidden = prodSel.value !== '__new';
+
+        const projSel = ui.$('#in-project');
+        const pid = projSel.value || query.get('project') || '';
+        const rows = P.analyze(data, { includeArchived: true }).rows;
+        projSel.innerHTML = rows.length
+            ? rows.map(function (r) {
+                  return '<option value="' + esc(r.project.id) + '"' + (r.project.id === pid ? ' selected' : '') + '>' + esc(r.project.name) + ' · ' + P.STATUS[r.status].label + '</option>';
+              }).join('')
+            : '<option value="">কোনো প্রজেক্ট নেই</option>';
+        const row = rows.find(function (r) { return r.project.id === projSel.value; });
+        ui.$('#plan-summary').innerHTML = row
+            ? '<div class="cell-list">' + row.items.map(function (x) { return ui.ver(x); }).join('') + '</div>'
+            : '';
+    }
+
+    function prompt() {
+        const data = P.store.get();
+        if (task === 'projects') return P.aiPrompts.projects(data, ui.$('#in-projects').value);
+        if (task === 'catalog') {
+            const product = ui.$('#in-product').value;
+            const name = ui.$('#in-name').value.trim();
+            if (product === '__new' && !name) return '';
+            return P.aiPrompts.catalog(data, ui.$('#in-catalog').value, { kind: ui.$('#in-kind').value, product: product === '__new' ? P.slug(name) : product, name: name });
+        }
+        if (task === 'plan') return ui.$('#in-project').value ? P.aiPrompts.plan(data, ui.$('#in-plan').value, { project: ui.$('#in-project').value }) : '';
+        return P.aiPrompts.report(data, ui.$('#in-report').value);
+    }
+
+    function refreshPrompt() {
+        ui.$('#prompt').value = prompt() || 'আগে উপরের ঘরগুলো পূরণ করুন।';
+        ui.setQuery({ task: task, project: task === 'plan' ? ui.$('#in-project').value : '', kind: task === 'catalog' ? ui.$('#in-kind').value : '', product: task === 'catalog' ? ui.$('#in-product').value : '' });
+    }
+
+    function resetReply() {
+        pending = null;
+        ui.$('#reply-error').hidden = true;
+        ui.$('#warnings').hidden = true;
+        ui.$('#preview').hidden = true;
+    }
+
+    function render() {
+        renderPickers();
+        refreshPrompt();
+    }
+
+    ui.$('#tasks').addEventListener('click', function (e) {
+        const b = e.target.closest('[data-task]');
+        if (!b) return;
+        task = b.dataset.task;
+        renderTasks();
+        render();
+    });
+
+    ['#in-kind', '#in-product', '#in-project'].forEach(function (sel) {
+        ui.$(sel).addEventListener('change', function () {
+            if (sel === '#in-kind') ui.$('#in-product').value = '';
+            render();
+        });
+    });
+    ['#in-projects', '#in-name', '#in-catalog', '#in-plan', '#in-report'].forEach(function (sel) {
+        ui.$(sel).addEventListener('input', refreshPrompt);
+    });
+
+    ui.$('#copy-prompt').addEventListener('click', function () {
+        const text = prompt();
+        if (!text) return ui.toast('আগে উপরের ঘরগুলো পূরণ করুন।', 'warning');
+        if (task === 'projects' && !ui.$('#in-projects').value.trim()) return ui.toast('আগে আপনার তথ্য পেস্ট করুন।', 'warning');
+        ui.copy(text).then(function () { ui.toast('প্রম্পট কপি হয়েছে। এবার AI-তে পেস্ট করুন।'); }, function () { ui.toast('কপি করা গেল না। "প্রম্পট দেখুন" খুলে নিজে কপি করুন।', 'warning'); });
+    });
+
+    ui.$$('[data-copy]').forEach(function (b) {
+        b.addEventListener('click', function () {
+            ui.copy(ui.$(b.dataset.copy).textContent).then(function () { ui.toast('কমান্ড কপি হয়েছে।'); });
+        });
+    });
+
+    ui.$('#check').addEventListener('click', function () {
+        resetReply();
+        const data = P.store.get();
+        try {
+            const incoming = P.normalizeData(P.extractJson(ui.$('#reply').value));
+            if (task === 'projects' && !incoming.has.projects) throw new Error('no-projects');
+            if (task === 'catalog' && !incoming.has.tech && !incoming.has.env) throw new Error('no-catalog');
+            incoming.has.settings = false;
+            const next = P.mergeData(data, incoming, 'merge');
+            const warnings = [];
+            if (task === 'projects') {
+                const invented = P.inventedVersions(incoming, ui.$('#in-projects').value);
+                if (invented.length) warnings.push('এই ভার্সনগুলো আপনার দেওয়া লেখায় পাওয়া যায়নি, AI হয়তো অনুমান করেছে। বসানোর আগে মিলিয়ে নিন:<br>' + invented.map(esc).join('<br>'));
+                const missing = [];
+                incoming.projects.forEach(function (p) {
+                    p.tech.forEach(function (r) { if (!P.findProduct(data, 'tech', r.product)) missing.push(r.product); });
+                    p.deployments.forEach(function (d) { d.stack.forEach(function (r) { if (!P.findProduct(data, 'env', r.product)) missing.push(r.product); }); });
+                });
+                if (missing.length) warnings.push('ক্যাটালগে নেই, তাই এগুলোর অবস্থা অজানা দেখাবে: ' + esc(P.unique(missing).join(', ')) + '। চাইলে পরে ক্যাটালগে যোগ করুন।');
+            }
+            if (task === 'catalog') {
+                const approx = [];
+                P.KINDS.forEach(function (k) {
+                    incoming.catalog[k].forEach(function (p) { p.versions.forEach(function (v) { if (v.approx) approx.push(p.name + ' ' + v.version); }); });
+                });
+                warnings.push('AI-এর দেওয়া তারিখ অফিসিয়াল সূত্রের সাথে মিলিয়ে নিন।' + (approx.length ? ' আনুমানিক হিসেবে চিহ্নিত: ' + esc(approx.join(', ')) + '।' : ''));
+            }
+            if (warnings.length) {
+                ui.$('#warnings').innerHTML = warnings.map(function (w) { return '<p>' + w + '</p>'; }).join('');
+                ui.$('#warnings').hidden = false;
+            }
+            const diff = ui.diffHtml(data, P.normalizeData(next));
+            ui.$('#preview-body').innerHTML = diff.html;
+            ui.$('#apply').disabled = diff.empty;
+            ui.$('#preview').hidden = false;
+            pending = next;
+        } catch (err) {
+            const msg = err.message === 'no-projects' ? 'উত্তরে "projects" তালিকা নেই। AI-কে আবার প্রম্পটের ফরম্যাট মেনে উত্তর দিতে বলুন।'
+                : err.message === 'no-catalog' ? 'উত্তরে "catalog" নেই। AI-কে আবার প্রম্পটের ফরম্যাট মেনে উত্তর দিতে বলুন।'
+                : ui.importError(err);
+            ui.$('#reply-error').textContent = msg;
+            ui.$('#reply-error').hidden = false;
+        }
+    });
+
+    ui.$('#apply').addEventListener('click', function () {
+        if (!pending) return;
+        P.store.apply(pending, 'AI-এর উত্তর বসানো (' + P.AI_TASKS[task].label + ')');
+        resetReply();
+        ui.$('#reply').value = '';
+        ui.undoToast('AI-এর উত্তর বসানো হয়েছে।');
+    });
+    ui.$('#cancel').addEventListener('click', resetReply);
+
+    P.store.ready().then(function () {
+        renderTasks();
+        render();
+    });
+    ui.onChange(render);
+</script>

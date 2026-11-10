@@ -84,6 +84,7 @@
                 <span class="row">
                     <button class="btn btn-danger" type="button" id="ed-delete">মুছুন</button>
                     <button class="btn" type="button" id="ed-copy">কপি বানান</button>
+                    <a class="btn" id="ed-plan" href="/ai/">AI দিয়ে আপগ্রেড পরিকল্পনা</a>
                 </span>
                 <span class="row">
                     <button class="btn" type="button" data-close>বাতিল</button>
@@ -292,6 +293,8 @@
         ui.$('#ed-deps').innerHTML = p.deployments.map(depBlock).join('');
         ui.$('#ed-delete').hidden = !editing;
         ui.$('#ed-copy').hidden = !editing;
+        ui.$('#ed-plan').hidden = !editing;
+        if (editing) ui.$('#ed-plan').href = P.url('/ai/?task=plan&project=' + encodeURIComponent(editing));
         ui.$('#ed-error').hidden = true;
         if (!dialog.open) dialog.showModal();
         form.elements.name.focus();
