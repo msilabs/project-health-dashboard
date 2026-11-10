@@ -100,9 +100,18 @@ test('upcoming lists ended and soon-ending versions with projects', () => {
     assert.equal(up[0].projects.length, 1);
 });
 
-test('gaps group unknown parts by reason', () => {
-    const gaps = P.gaps(P.analyze(data).rows);
-    assert.deepEqual(plain(gaps.map((g) => g.product + ':' + g.reason).sort()), ['mysql:no-date', 'redis:no-product']);
+test('todo puts ended, critical and incompatible items first', () => {
+    const a = P.analyze(data);
+    const todo = P.todo(a.rows, data.settings);
+    assert.deepEqual(plain(todo.map((t) => t.level + ':' + t.type + ':' + t.status)), [
+        'now:version:eol',
+        'now:version:eol',
+        'now:version:critical',
+        'now:requires:critical',
+        'now:requires:critical',
+        'soon:drift:warning'
+    ]);
+    assert.match(todo[0].title, /PHP 8.1-এর সাপোর্ট শেষ/);
 });
 
 test('a version older than every ended catalog version counts as ended', () => {

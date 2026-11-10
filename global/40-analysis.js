@@ -330,24 +330,37 @@
             });
     };
 
-    // ক্যাটালগে নেই বা তারিখ নেই এমন অংশ, প্রোডাক্ট-ভার্সন অনুযায়ী
-    P.gaps = function (rows) {
-        var map = {};
+    // ড্যাশবোর্ডের করণীয়: এখনই (সাপোর্ট শেষ, জরুরি, অসামঞ্জস্য) আর শিগগির (সতর্কতা, অমিল)
+    P.todo = function (rows, settings) {
+        var list = P.upcoming(rows, settings.yellowDays).map(function (u) {
+            var ended = u.days === null || u.days < 0;
+            return {
+                type: 'version',
+                level: u.status === 'warning' ? 'soon' : 'now',
+                status: u.status,
+                title: u.productName + ' ' + u.version + (ended ? '-এর সাপোর্ট শেষ' : '-এর সাপোর্ট শেষ হচ্ছে'),
+                meta: u.days === null ? 'তারিখ জানা নেই' : ended ? P.fmtDate(u.end) + '-এ শেষ' : P.num(u.days) + ' দিন বাকি · ' + P.fmtDate(u.end),
+                days: u.days === null ? -1e9 : u.days,
+                projects: u.projects
+            };
+        });
         rows.forEach(function (r) {
-            r.items.forEach(function (x) {
-                if (x.status !== 'unknown') return;
-                var key = x.kind + '|' + x.product + '|' + (x.cycle ? x.cycle.version : x.version) + '|' + x.reason;
-                var g = (map[key] = map[key] || { kind: x.kind, product: x.product, productName: x.productName, version: x.cycle ? x.cycle.version : x.version, reason: x.reason, text: x.text, projects: [] });
-                if (g.projects.indexOf(r.project) === -1) g.projects.push(r.project);
+            r.issues.forEach(function (i) {
+                list.push({
+                    type: i.type,
+                    level: i.severity === 'critical' ? 'now' : 'soon',
+                    status: i.severity,
+                    title: i.type === 'requires' ? 'সামঞ্জস্য নেই' : 'environment-এ অমিল',
+                    meta: '',
+                    text: i.text,
+                    days: 1e9,
+                    projects: [r.project]
+                });
             });
         });
-        return Object.keys(map)
-            .map(function (k) {
-                return map[k];
-            })
-            .sort(function (a, b) {
-                return b.projects.length - a.projects.length;
-            });
+        return list.sort(function (a, b) {
+            return (a.level === b.level ? 0 : a.level === 'now' ? -1 : 1) || RANK[b.status] - RANK[a.status] || a.days - b.days;
+        });
     };
 
     P.summaryText = function (a, settings) {
