@@ -94,3 +94,10 @@ test('endoflife.date releases map to catalog versions', () => {
         note: ''
     });
 });
+
+test('endoflife.date requirement text keeps only the leading range', () => {
+    const v = P.versionFromEndOfLife({ name: '6.1', releaseDate: '2026-08-05', eolFrom: '2027-12-31', custom: { supportedPythonVersions: '3.12 - 3.15 (added in 6.1.3)' } });
+    assert.deepEqual(plain(v.requires), [{ product: 'python', min: '3.12', max: '3.15' }]);
+    const w = P.versionFromEndOfLife({ name: '4', custom: { supportedPhpVersions: '8.1+' } });
+    assert.deepEqual(plain(w.requires), [{ product: 'php', min: '8.1', max: '' }]);
+});

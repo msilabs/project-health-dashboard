@@ -15,11 +15,11 @@
         Object.keys(REQUIRES_FIELDS).forEach(function (key) {
             var text = custom && custom[key];
             if (typeof text !== 'string') return;
-            var nums = text.match(/\d+(?:\.\d+)*/g);
-            if (!nums) return;
-            var r = { product: REQUIRES_FIELDS[key], min: nums[0], max: '' };
-            if (/[-–]/.test(text) && nums.length > 1) r.max = nums[nums.length - 1];
-            out.push(r);
+            // যেমন "3.12 - 3.15 (added in 6.1.3)": শুধু শুরুর রেঞ্জটুকু ধরা হয়
+            var range = text.match(/(\d+(?:\.\d+)*)\s*[-–]\s*(\d+(?:\.\d+)*)/);
+            var single = text.match(/\d+(?:\.\d+)*/);
+            if (!range && !single) return;
+            out.push({ product: REQUIRES_FIELDS[key], min: range ? range[1] : single[0], max: range ? range[2] : '' });
         });
         return out;
     }
