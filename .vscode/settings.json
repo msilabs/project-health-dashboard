@@ -1,0 +1,7 @@
+{
+    "files.associations": { "*.alo": "html" },
+    "workbench.editor.customLabels.patterns": {
+        "**/pages/**/page.alo": "${dirname} (page)",
+        "**/pages/**/layout.alo": "${dirname} (layout)"
+    }
+}

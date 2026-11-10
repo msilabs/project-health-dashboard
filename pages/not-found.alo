@@ -1,0 +1,10 @@
+<head>
+    <title>পেজটি পাওয়া যায়নি | {{ data.site.name }}</title>
+</head>
+
+<template>
+    <div class="empty">
+        <h1>এই পেজটি পাওয়া যায়নি</h1>
+        <a class="btn btn-primary" href="/">সারাংশে ফিরে যান</a>
+    </div>
+</template>

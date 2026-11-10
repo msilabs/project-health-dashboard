@@ -1,0 +1,73 @@
+<template>
+    <header class="site-header">
+        <div class="bar container">
+            <a class="logo" href="/">
+                <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 12h4l2.5-6 5 12 2.5-6H21" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                {{ data.site.name }}
+            </a>
+            <nav aria-label="প্রধান মেনু">
+                <template for="link in data.menu">
+                    <a href="{{ link.href }}" aria-current="{{ route.path === link.href ? 'page' : null }}">{{ link.label }}</a>
+                </template>
+            </nav>
+        </div>
+    </header>
+</template>
+
+<style>
+    .site-header {
+        border-bottom: 1px solid var(--border);
+        background: var(--surface);
+    }
+
+    .bar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.25rem 1rem;
+        min-height: 3.5rem;
+        padding-block: 0.4rem;
+    }
+
+    .logo {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        color: var(--text);
+        font-size: 1.05rem;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .logo svg {
+        color: var(--accent);
+    }
+
+    nav {
+        display: flex;
+        gap: 0.15rem;
+        max-width: 100%;
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    nav a {
+        padding: 0.3rem 0.7rem;
+        border-radius: 999px;
+        color: var(--muted);
+        font-size: 0.9rem;
+        font-weight: 550;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+
+    nav a:hover {
+        color: var(--text);
+    }
+
+    nav a[aria-current='page'] {
+        background: var(--accent-soft);
+        color: var(--text);
+    }
+</style>

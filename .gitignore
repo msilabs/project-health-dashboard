@@ -1,0 +1,5 @@
+node_modules/
+dist/
+.alo/
+private/
+.DS_Store

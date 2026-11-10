@@ -1,0 +1,18 @@
+{
+    "name": "project-health-dashboard",
+    "private": true,
+    "description": "প্রজেক্টের টেক আর এনভায়রনমেন্ট ভার্সনের সাপোর্ট-শেষের হিসাব রাখার স্ট্যাটিক ড্যাশবোর্ড",
+    "license": "MIT",
+    "engines": {
+        "node": ">=22"
+    },
+    "scripts": {
+        "dev": "alo dev",
+        "build": "alo build",
+        "test": "node --test tests/*.test.mjs",
+        "catalog": "node scripts/update-catalog.mjs"
+    },
+    "devDependencies": {
+        "@msilabs/alo": "^1.0.0"
+    }
+}

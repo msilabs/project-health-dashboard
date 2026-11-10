@@ -1,0 +1,693 @@
+/* পেজের কাঠামো */
+.page {
+    display: grid;
+    gap: 1.5rem;
+    padding-block: 2rem 3rem;
+}
+
+.intro {
+    display: grid;
+    gap: 0.4rem;
+}
+
+.intro p {
+    max-width: 70ch;
+    color: var(--muted);
+}
+
+.muted {
+    color: var(--muted);
+}
+
+.small {
+    font-size: 0.85rem;
+}
+
+.num {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.spread {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: 1.25rem;
+    align-items: start;
+}
+
+.stack {
+    display: grid;
+    gap: 0.75rem;
+}
+
+/* কার্ড */
+.card {
+    display: grid;
+    gap: 0.9rem;
+    min-width: 0;
+    padding: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+}
+
+.card > header {
+    display: grid;
+    gap: 0.2rem;
+}
+
+.card-note {
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+/* বোতাম */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    min-height: 2.25rem;
+    padding: 0.35rem 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-small);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.9rem;
+    font-weight: 550;
+    line-height: 1.3;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.btn:hover {
+    background: var(--surface-2);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    border-color: transparent;
+    background: var(--accent);
+    color: var(--on-accent);
+}
+
+.btn-primary:hover {
+    background: var(--accent);
+    filter: brightness(1.08);
+}
+
+.btn-danger {
+    color: var(--eol);
+}
+
+.btn-small {
+    min-height: 1.9rem;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.82rem;
+}
+
+.btn-icon {
+    min-width: 2rem;
+    padding-inline: 0.4rem;
+}
+
+.btn[aria-pressed='true'] {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    color: var(--text);
+}
+
+/* ফর্ম */
+.field {
+    display: grid;
+    gap: 0.25rem;
+    min-width: 0;
+}
+
+.field > span {
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-weight: 550;
+}
+
+input[type='text'],
+input[type='search'],
+input[type='url'],
+input[type='number'],
+input[type='date'],
+select,
+textarea {
+    width: 100%;
+    min-height: 2.25rem;
+    padding: 0.35rem 0.6rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-small);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.9rem;
+}
+
+textarea {
+    min-height: 8rem;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    line-height: 1.5;
+    resize: vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--accent);
+    outline: none;
+    box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.check {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.check input {
+    width: 1rem;
+    height: 1rem;
+    accent-color: var(--accent);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+    gap: 0.75rem;
+}
+
+/* ফিল্টার */
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: 0.6rem 0.9rem;
+}
+
+.filters .field {
+    flex: 1 1 10rem;
+    max-width: 16rem;
+}
+
+.filters .field.grow {
+    flex: 2 1 14rem;
+    max-width: none;
+}
+
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+/* অবস্থার রং */
+.pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.05rem 0.55rem;
+    border-radius: 999px;
+    background: var(--unknown-bg);
+    color: var(--unknown);
+    font-size: 0.78rem;
+    font-weight: 650;
+    white-space: nowrap;
+}
+
+.dot {
+    display: inline-block;
+    flex: none;
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: var(--unknown);
+}
+
+.s-eol {
+    --s: var(--eol);
+    --s-bg: var(--eol-bg);
+}
+
+.s-critical {
+    --s: var(--critical);
+    --s-bg: var(--critical-bg);
+}
+
+.s-warning {
+    --s: var(--warning);
+    --s-bg: var(--warning-bg);
+}
+
+.s-ok {
+    --s: var(--ok);
+    --s-bg: var(--ok-bg);
+}
+
+.s-unknown {
+    --s: var(--unknown);
+    --s-bg: var(--unknown-bg);
+}
+
+.pill[class*='s-'] {
+    background: var(--s-bg);
+    color: var(--s);
+}
+
+.dot[class*='s-'] {
+    background: var(--s);
+}
+
+.ver {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.3rem;
+    max-width: 100%;
+    padding: 0.05rem 0.45rem;
+    border-left: 3px solid var(--s, var(--unknown));
+    border-radius: 4px;
+    background: var(--s-bg, var(--unknown-bg));
+    font-size: 0.82rem;
+    line-height: 1.45;
+}
+
+.ver b {
+    font-weight: 650;
+}
+
+.ver small {
+    color: var(--muted);
+    font-size: 0.76rem;
+}
+
+/* টাইল */
+.tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5rem), 1fr));
+    gap: 0.75rem;
+}
+
+.tile {
+    display: grid;
+    gap: 0.1rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--s, var(--border));
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: inherit;
+    text-decoration: none;
+}
+
+a.tile:hover {
+    box-shadow: var(--shadow);
+}
+
+.tile-label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.tile-num {
+    font-size: 1.9rem;
+    font-weight: 650;
+    line-height: 1.2;
+    font-variant-numeric: tabular-nums;
+}
+
+.tile-note {
+    color: var(--muted);
+    font-size: 0.8rem;
+}
+
+/* টেবিল */
+.tablewrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-small);
+}
+
+.table {
+    width: 100%;
+    font-size: 0.88rem;
+}
+
+.table th,
+.table td {
+    padding: 0.55rem 0.7rem;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+}
+
+.table th {
+    position: sticky;
+    top: 0;
+    background: var(--surface-2);
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-weight: 650;
+    white-space: nowrap;
+}
+
+.table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.table tbody tr:hover td {
+    background: color-mix(in srgb, var(--surface-2) 55%, transparent);
+}
+
+.table .clickable {
+    cursor: pointer;
+}
+
+.cell-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+}
+
+.cell-title {
+    display: grid;
+    gap: 0.1rem;
+    min-width: 11rem;
+}
+
+.cell-title b {
+    font-weight: 600;
+}
+
+.dep-label {
+    color: var(--muted);
+    font-size: 0.74rem;
+    font-weight: 650;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+/* তালিকা */
+.list {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.list > li {
+    display: grid;
+    gap: 0.2rem;
+    padding-block: 0.65rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.list > li:last-child {
+    border-bottom: 0;
+}
+
+/* খালি অবস্থা, ব্যানার */
+.empty {
+    display: grid;
+    justify-items: start;
+    gap: 0.6rem;
+    padding: 1.5rem;
+    border: 1px dashed var(--border);
+    border-radius: var(--radius);
+    color: var(--muted);
+}
+
+.banner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
+    border-radius: var(--radius);
+    background: var(--accent-soft);
+    font-size: 0.9rem;
+}
+
+.notice {
+    padding: 0.7rem 0.9rem;
+    border-left: 3px solid var(--s, var(--accent));
+    border-radius: var(--radius-small);
+    background: var(--s-bg, var(--accent-soft));
+    font-size: 0.88rem;
+}
+
+/* ডায়ালগ */
+dialog.modal {
+    width: min(100% - 1.5rem, 58rem);
+    max-height: calc(100vh - 2rem);
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: var(--shadow);
+}
+
+dialog.modal::backdrop {
+    background: rgb(0 0 0 / 45%);
+}
+
+.modal-form {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    max-height: calc(100vh - 2rem);
+}
+
+.modal-head,
+.modal-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    padding: 0.9rem 1.25rem;
+}
+
+.modal-head {
+    border-bottom: 1px solid var(--border);
+}
+
+.modal-foot {
+    border-top: 1px solid var(--border);
+}
+
+.modal-body {
+    display: grid;
+    gap: 1.25rem;
+    padding: 1.25rem;
+    overflow-y: auto;
+}
+
+fieldset {
+    display: grid;
+    gap: 0.6rem;
+    min-width: 0;
+    margin: 0;
+    padding: 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-small);
+}
+
+legend {
+    padding-inline: 0.3rem;
+    font-size: 0.88rem;
+    font-weight: 650;
+}
+
+.item-row {
+    display: grid;
+    grid-template-columns: minmax(8rem, 1.2fr) minmax(6rem, 1fr) auto;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.dep-block {
+    display: grid;
+    gap: 0.6rem;
+    padding: 0.8rem;
+    border-radius: var(--radius-small);
+    background: var(--surface-2);
+}
+
+.ver-table input,
+.ver-table select {
+    min-width: 6.5rem;
+    min-height: 2rem;
+    padding: 0.2rem 0.4rem;
+    font-size: 0.82rem;
+}
+
+.ver-table td {
+    padding: 0.35rem 0.4rem;
+    vertical-align: middle;
+}
+
+/* টোস্ট */
+.toasts {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 50;
+    display: grid;
+    gap: 0.5rem;
+    max-width: min(24rem, calc(100% - 2rem));
+}
+
+.toast {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--s, var(--accent));
+    border-radius: var(--radius-small);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+    font-size: 0.9rem;
+}
+
+/* ড্রপ জোন */
+.dropzone {
+    display: grid;
+    place-items: center;
+    gap: 0.4rem;
+    padding: 1.5rem;
+    border: 2px dashed var(--border);
+    border-radius: var(--radius);
+    color: var(--muted);
+    text-align: center;
+}
+
+.dropzone.over {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+}
+
+/* টাইমলাইন আর বার */
+.chart {
+    overflow-x: auto;
+}
+
+.chart svg {
+    display: block;
+    min-width: 40rem;
+    max-width: none;
+    width: 100%;
+    height: auto;
+    font-family: var(--font-sans);
+}
+
+.chart text {
+    fill: var(--text);
+    font-size: 11px;
+}
+
+.chart .tick {
+    fill: var(--muted);
+}
+
+.chart .grid {
+    stroke: var(--border);
+}
+
+.chart .today {
+    stroke: var(--text);
+    stroke-dasharray: 3 3;
+}
+
+.legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+    margin: 0;
+    padding: 0;
+    color: var(--muted);
+    font-size: 0.82rem;
+    list-style: none;
+}
+
+.legend li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.swatch {
+    display: inline-block;
+    width: 1.1rem;
+    height: 0.6rem;
+    border-radius: 2px;
+}
+
+.dist-row {
+    display: grid;
+    grid-template-columns: minmax(7rem, 10rem) 1fr;
+    gap: 0.75rem;
+    align-items: start;
+    padding-block: 0.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.dist-row:last-child {
+    border-bottom: 0;
+}
+
+.dist-bar {
+    display: flex;
+    overflow: hidden;
+    height: 0.6rem;
+    margin-bottom: 0.35rem;
+    border-radius: 999px;
+    background: var(--surface-2);
+    gap: 2px;
+}
+
+.dist-bar span {
+    background: var(--s);
+}
+
+@media (max-width: 40rem) {
+    .item-row {
+        grid-template-columns: 1fr 1fr auto;
+    }
+
+    .dist-row {
+        grid-template-columns: 1fr;
+        gap: 0.25rem;
+    }
+}

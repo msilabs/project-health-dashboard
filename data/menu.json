@@ -1,0 +1,9 @@
+[
+    { "href": "/", "label": "সারাংশ" },
+    { "href": "/projects/", "label": "প্রজেক্ট" },
+    { "href": "/tech/", "label": "টেক" },
+    { "href": "/environments/", "label": "এনভায়রনমেন্ট" },
+    { "href": "/analysis/", "label": "বিশ্লেষণ" },
+    { "href": "/ai/", "label": "AI সহায়তা" },
+    { "href": "/data/", "label": "ডেটা" }
+]
