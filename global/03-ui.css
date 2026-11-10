@@ -544,7 +544,7 @@ legend {
     background: var(--surface-2);
 }
 
-.ver-table input,
+.ver-table input:not([type='checkbox']),
 .ver-table select {
     min-width: 6.5rem;
     min-height: 2rem;
@@ -555,6 +555,12 @@ legend {
 .ver-table td {
     padding: 0.35rem 0.4rem;
     vertical-align: middle;
+}
+
+.ver-table input[type='checkbox'] {
+    width: 1rem;
+    height: 1rem;
+    accent-color: var(--accent);
 }
 
 /* টোস্ট */
@@ -690,4 +696,49 @@ legend {
         grid-template-columns: 1fr;
         gap: 0.25rem;
     }
+}
+
+/* ক্যাটালগের প্রোডাক্ট */
+.product {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-small);
+    background: var(--surface);
+}
+
+.product > summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 0.75rem;
+    padding: 0.7rem 0.9rem;
+    cursor: pointer;
+    list-style: none;
+}
+
+.product > summary::-webkit-details-marker {
+    display: none;
+}
+
+.product > summary::before {
+    content: '▸';
+    color: var(--muted);
+    transition: transform 0.15s ease;
+}
+
+.product[open] > summary::before {
+    transform: rotate(90deg);
+}
+
+.product-name {
+    font-weight: 650;
+}
+
+.product-use {
+    margin-left: auto;
+}
+
+.product-body {
+    display: grid;
+    gap: 0.6rem;
+    padding: 0 0.9rem 0.9rem;
 }

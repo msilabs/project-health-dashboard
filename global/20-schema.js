@@ -14,7 +14,7 @@
     P.LIFECYCLES = { active: 'সক্রিয়', maintenance: 'রক্ষণাবেক্ষণ', archived: 'আর্কাইভ' };
 
     // তারিখ না থাকলে ভার্সনটা কী ধরে নেওয়া হবে
-    P.VERSION_STATES = { '': 'অজানা', supported: 'সাপোর্ট চলছে', ended: 'সাপোর্ট শেষ' };
+    P.VERSION_STATES = { '': 'জানা নেই', supported: 'সাপোর্ট চলছে', ended: 'সাপোর্ট শেষ' };
 
     P.DEFAULT_SETTINGS = { redDays: 90, yellowDays: 365, deploymentNames: ['production', 'staging', 'development'] };
 
