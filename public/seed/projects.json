@@ -1,0 +1,509 @@
+{
+    "meta": {
+        "sample": true
+    },
+    "settings": {
+        "redDays": 90,
+        "yellowDays": 365,
+        "deploymentNames": [
+            "production",
+            "staging",
+            "development"
+        ]
+    },
+    "projects": [
+        {
+            "id": "shop",
+            "name": "ই-কমার্স স্টোর",
+            "repo": "https://github.com/example-org/shop",
+            "owner": "রাহিম",
+            "tags": [
+                "client",
+                "payment"
+            ],
+            "lifecycle": "active",
+            "note": "ঈদের আগে production-এর PHP আপগ্রেড করা যাবে না।",
+            "tech": [
+                {
+                    "product": "laravel",
+                    "version": "12.40"
+                },
+                {
+                    "product": "livewire",
+                    "version": "3.6"
+                },
+                {
+                    "product": "tailwind-css",
+                    "version": "4.3"
+                }
+            ],
+            "deployments": [
+                {
+                    "name": "production",
+                    "url": "https://shop.example.com",
+                    "host": "DigitalOcean",
+                    "stack": [
+                        {
+                            "product": "php",
+                            "version": "8.2.28"
+                        },
+                        {
+                            "product": "mysql",
+                            "version": "8.4.5"
+                        },
+                        {
+                            "product": "nginx",
+                            "version": "1.30"
+                        },
+                        {
+                            "product": "redis",
+                            "version": "7.4"
+                        },
+                        {
+                            "product": "ubuntu",
+                            "version": "22.04"
+                        }
+                    ]
+                },
+                {
+                    "name": "staging",
+                    "url": "https://staging.shop.example.com",
+                    "host": "DigitalOcean",
+                    "stack": [
+                        {
+                            "product": "php",
+                            "version": "8.4"
+                        },
+                        {
+                            "product": "mysql",
+                            "version": "8.4"
+                        },
+                        {
+                            "product": "nginx",
+                            "version": "1.30"
+                        },
+                        {
+                            "product": "redis",
+                            "version": "7.4"
+                        },
+                        {
+                            "product": "ubuntu",
+                            "version": "24.04"
+                        }
+                    ]
+                }
+            ],
+            "updatedAt": "2026-10-28"
+        },
+        {
+            "id": "school-erp",
+            "name": "স্কুল ম্যানেজমেন্ট",
+            "repo": "https://github.com/example-org/school-erp",
+            "owner": "সুমাইয়া",
+            "tags": [
+                "client"
+            ],
+            "lifecycle": "maintenance",
+            "note": "",
+            "tech": [
+                {
+                    "product": "laravel",
+                    "version": "10"
+                }
+            ],
+            "deployments": [
+                {
+                    "name": "production",
+                    "url": "",
+                    "host": "cPanel",
+                    "stack": [
+                        {
+                            "product": "php",
+                            "version": "8.1"
+                        },
+                        {
+                            "product": "mysql",
+                            "version": "5.7"
+                        },
+                        {
+                            "product": "apache",
+                            "version": "2.4"
+                        }
+                    ]
+                }
+            ],
+            "updatedAt": "2026-06-14"
+        },
+        {
+            "id": "learning",
+            "name": "লার্নিং প্ল্যাটফর্ম",
+            "repo": "https://github.com/example-org/learning",
+            "owner": "তানভীর",
+            "tags": [
+                "internal"
+            ],
+            "lifecycle": "active",
+            "note": "নতুন Laravel-এ আপগ্রেড হয়েছে, সার্ভার এখনো হয়নি।",
+            "tech": [
+                {
+                    "product": "laravel",
+                    "version": "13.1"
+                },
+                {
+                    "product": "vue",
+                    "version": "3.5"
+                }
+            ],
+            "deployments": [
+                {
+                    "name": "production",
+                    "url": "https://learn.example.com",
+                    "host": "AWS EC2",
+                    "stack": [
+                        {
+                            "product": "php",
+                            "version": "8.2"
+                        },
+                        {
+                            "product": "postgresql",
+                            "version": "16"
+                        },
+                        {
+                            "product": "nginx",
+                            "version": "1.30"
+                        },
+                        {
+                            "product": "ubuntu",
+                            "version": "24.04"
+                        }
+                    ]
+                }
+            ],
+            "updatedAt": "2026-11-02"
+        },
+        {
+            "id": "corporate-site",
+            "name": "কর্পোরেট ওয়েবসাইট",
+            "repo": "https://github.com/example-org/corporate-site",
+            "owner": "নুসরাত",
+            "tags": [
+                "marketing"
+            ],
+            "lifecycle": "active",
+            "note": "",
+            "tech": [
+                {
+                    "product": "nextjs",
+                    "version": "16.0"
+                },
+                {
+                    "product": "react",
+                    "version": "19.1"
+                },
+                {
+                    "product": "tailwind-css",
+                    "version": "4.3"
+                }
+            ],
+            "deployments": [
+                {
+                    "name": "production",
+                    "url": "https://example.com",
+                    "host": "VPS",
+                    "stack": [
+                        {
+                            "product": "nodejs",
+                            "version": "22.15"
+                        },
+                        {
+                            "product": "nginx",
+                            "version": "1.30"
+                        },
+                        {
+                            "product": "docker",
+                            "version": "29"
+                        }
+                    ]
+                }
+            ],
+            "updatedAt": "2026-09-20"
+        },
+        {
+            "id": "mobile-api",
+            "name": "মোবাইল অ্যাপ API",
+            "repo": "https://github.com/example-org/mobile-api",
+            "owner": "তানভীর",
+            "tags": [
+                "client",
+                "api"
+            ],
+            "lifecycle": "active",
+            "note": "",
+            "tech": [
+                {
+                    "product": "nestjs",
+                    "version": "12"
+                }
+            ],
+            "deployments": [
+                {
+                    "name": "production",
+                    "url": "https://api.example.com",
+                    "host": "AWS ECS",
+                    "stack": [
+                        {
+                            "product": "nodejs",
+                            "version": "20.18"
+                        },
+                        {
+                            "product": "postgresql",
+                            "version": "15"
+                        },
+                        {
+                            "product": "redis",
+                            "version": "7.4"
+                        },
+                        {
+                            "product": "docker",
+                            "version": "29"
+                        }
+                    ]
+                },
+                {
+                    "name": "staging",
+                    "url": "",
+                    "host": "AWS ECS",
+                    "stack": [
+                        {
+                            "product": "nodejs",
+                            "version": "24"
+                        },
+                        {
+                            "product": "postgresql",
+                            "version": "17"
+                        },
+                        {
+                            "product": "redis",
+                            "version": "7.4"
+                        },
+                        {
+                            "product": "docker",
+                            "version": "29"
+                        }
+                    ]
+                }
+            ],
+            "updatedAt": "2026-10-11"
+        },
+        {
+            "id": "admin-panel",
+            "name": "অ্যাডমিন ড্যাশবোর্ড",
+            "repo": "https://github.com/example-org/admin-panel",
+            "owner": "নুসরাত",
+            "tags": [
+                "internal"
+            ],
+            "lifecycle": "active",
+            "note": "Vite ক্যাটালগে নেই, তাই অজানা দেখাবে।",
+            "tech": [
+                {
+                    "product": "react",
+                    "version": "19.2"
+                },
+                {
+                    "product": "vite",
+                    "version": "6"
+                },
+                {
+                    "product": "tailwind-css",
+                    "version": "3.4"
+                }
+            ],
+            "deployments": [
+                {
+                    "name": "production",
+                    "url": "",
+                    "host": "Netlify",
+                    "stack": [
+                        {
+                            "product": "nodejs",
+                            "version": "22"
+                        }
+                    ]
+                }
+            ],
+            "updatedAt": "2026-08-05"
+        },
+        {
+            "id": "hospital",
+            "name": "হাসপাতাল পোর্টাল",
+            "repo": "https://github.com/example-org/hospital",
+            "owner": "সুমাইয়া",
+            "tags": [
+                "client"
+            ],
+            "lifecycle": "active",
+            "note": "",
+            "tech": [
+                {
+                    "product": "laravel",
+                    "version": "13"
+                },
+                {
+                    "product": "livewire",
+                    "version": "4"
+                }
+            ],
+            "deployments": [
+                {
+                    "name": "production",
+                    "url": "https://care.example.com",
+                    "host": "Hetzner",
+                    "stack": [
+                        {
+                            "product": "php",
+                            "version": "8.4"
+                        },
+                        {
+                            "product": "mariadb",
+                            "version": "11.4"
+                        },
+                        {
+                            "product": "nginx",
+                            "version": "1.30"
+                        },
+                        {
+                            "product": "ubuntu",
+                            "version": "24.04"
+                        }
+                    ]
+                }
+            ],
+            "updatedAt": "2026-11-05"
+        },
+        {
+            "id": "reporting",
+            "name": "ডেটা রিপোর্টিং",
+            "repo": "https://github.com/example-org/reporting",
+            "owner": "রাহিম",
+            "tags": [
+                "internal",
+                "data"
+            ],
+            "lifecycle": "active",
+            "note": "",
+            "tech": [
+                {
+                    "product": "django",
+                    "version": "5.2"
+                }
+            ],
+            "deployments": [
+                {
+                    "name": "production",
+                    "url": "",
+                    "host": "VPS",
+                    "stack": [
+                        {
+                            "product": "python",
+                            "version": "3.12"
+                        },
+                        {
+                            "product": "postgresql",
+                            "version": "17"
+                        },
+                        {
+                            "product": "debian",
+                            "version": "12"
+                        }
+                    ]
+                }
+            ],
+            "updatedAt": "2026-07-30"
+        },
+        {
+            "id": "landing",
+            "name": "ল্যান্ডিং পেজ",
+            "repo": "https://github.com/example-org/landing",
+            "owner": "নুসরাত",
+            "tags": [
+                "marketing"
+            ],
+            "lifecycle": "active",
+            "note": "Astro ক্যাটালগে যোগ করা হয়নি।",
+            "tech": [
+                {
+                    "product": "astro",
+                    "version": "5"
+                }
+            ],
+            "deployments": [
+                {
+                    "name": "production",
+                    "url": "https://launch.example.com",
+                    "host": "GitHub Pages",
+                    "stack": []
+                }
+            ],
+            "updatedAt": "2026-10-01"
+        },
+        {
+            "id": "pos-desktop",
+            "name": "ডেস্কটপ POS",
+            "repo": "https://github.com/example-org/pos-desktop",
+            "owner": "রাহিম",
+            "tags": [
+                "client"
+            ],
+            "lifecycle": "active",
+            "note": "ডেস্কটপ অ্যাপ, কোনো সার্ভার নেই।",
+            "tech": [
+                {
+                    "product": "electron",
+                    "version": "45"
+                },
+                {
+                    "product": "react",
+                    "version": "19"
+                }
+            ],
+            "deployments": [],
+            "updatedAt": "2026-09-01"
+        },
+        {
+            "id": "old-inventory",
+            "name": "পুরনো ইনভেন্টরি",
+            "repo": "https://github.com/example-org/inventory",
+            "owner": "সুমাইয়া",
+            "tags": [
+                "client"
+            ],
+            "lifecycle": "archived",
+            "note": "ক্লায়েন্ট নতুন সিস্টেমে চলে গেছে।",
+            "tech": [
+                {
+                    "product": "laravel",
+                    "version": "8"
+                }
+            ],
+            "deployments": [
+                {
+                    "name": "production",
+                    "url": "",
+                    "host": "cPanel",
+                    "stack": [
+                        {
+                            "product": "php",
+                            "version": "7.4"
+                        },
+                        {
+                            "product": "mysql",
+                            "version": "5.7"
+                        }
+                    ]
+                }
+            ],
+            "updatedAt": "2025-03-10"
+        }
+    ]
+}

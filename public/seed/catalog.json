@@ -1,0 +1,5168 @@
+{
+  "updatedAt": "2026-11-10",
+  "source": "https://endoflife.date",
+  "tech": [
+    {
+      "id": "angular",
+      "name": "Angular",
+      "category": "framework",
+      "eolSlug": "angular",
+      "url": "https://endoflife.date/angular",
+      "versions": [
+        {
+          "version": "22",
+          "released": "2026-06-03",
+          "supportUntil": "2027-06-30",
+          "securityUntil": "2028-06-30",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "21",
+          "released": "2025-11-19",
+          "supportUntil": "2026-06-03",
+          "securityUntil": "2027-06-30",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "20",
+          "released": "2025-05-28",
+          "supportUntil": "2025-11-19",
+          "securityUntil": "2026-11-28",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "19",
+          "released": "2024-11-19",
+          "supportUntil": "2025-05-28",
+          "securityUntil": "2026-05-19",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "18",
+          "released": "2024-05-22",
+          "supportUntil": "2024-11-19",
+          "securityUntil": "2025-11-21",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "17",
+          "released": "2023-11-08",
+          "supportUntil": "2024-05-08",
+          "securityUntil": "2025-05-15",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "16",
+          "released": "2023-05-03",
+          "supportUntil": "2023-11-08",
+          "securityUntil": "2024-11-08",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "15",
+          "released": "2022-11-16",
+          "supportUntil": "2023-05-03",
+          "securityUntil": "2024-05-18",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "14",
+          "released": "2022-06-02",
+          "supportUntil": "2022-11-18",
+          "securityUntil": "2023-11-18",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "13",
+          "released": "2021-11-03",
+          "supportUntil": "2022-06-02",
+          "securityUntil": "2023-05-04",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "12",
+          "released": "2021-05-13",
+          "supportUntil": "2021-11-12",
+          "securityUntil": "2022-11-12",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "11",
+          "released": "2020-11-11",
+          "supportUntil": "2021-05-11",
+          "securityUntil": "2022-05-11",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "10",
+          "released": "2020-06-24",
+          "supportUntil": "2020-12-24",
+          "securityUntil": "2021-12-24",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "9",
+          "released": "2020-02-06",
+          "supportUntil": "2020-08-06",
+          "securityUntil": "2021-08-06",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "cakephp",
+      "name": "CakePHP",
+      "category": "framework",
+      "eolSlug": "cakephp",
+      "url": "https://endoflife.date/cakephp",
+      "versions": [
+        {
+          "version": "5.4",
+          "released": "2026-07-19",
+          "supportUntil": "",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [
+            {
+              "product": "php",
+              "min": "8.2",
+              "max": "8.5"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "5.3",
+          "released": "2026-01-09",
+          "supportUntil": "2026-07-20",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [
+            {
+              "product": "php",
+              "min": "8.2",
+              "max": "8.5"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "5.2",
+          "released": "2025-03-29",
+          "supportUntil": "2026-01-10",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [
+            {
+              "product": "php",
+              "min": "8.1",
+              "max": "8.5"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "5.1",
+          "released": "2024-09-13",
+          "supportUntil": "2025-03-30",
+          "securityUntil": "2026-07-19",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "php",
+              "min": "8.1",
+              "max": "8.5"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "5.0",
+          "released": "2023-09-09",
+          "supportUntil": "2024-09-14",
+          "securityUntil": "2026-01-09",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "php",
+              "min": "8.1",
+              "max": "8.3"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "4.6",
+          "released": "2025-03-22",
+          "supportUntil": "2025-09-09",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [
+            {
+              "product": "php",
+              "min": "7.4",
+              "max": "8.3"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "4.5",
+          "released": "2023-10-14",
+          "supportUntil": "2025-03-23",
+          "securityUntil": "2026-09-09",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "php",
+              "min": "7.4",
+              "max": "8.3"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "4.4",
+          "released": "2022-06-06",
+          "supportUntil": "2023-10-15",
+          "securityUntil": "2026-09-09",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "php",
+              "min": "7.4",
+              "max": "8.2"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "4.3",
+          "released": "2021-10-23",
+          "supportUntil": "2022-06-07",
+          "securityUntil": "2026-09-09",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "php",
+              "min": "7.2",
+              "max": "8.1"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "4.2",
+          "released": "2020-12-20",
+          "supportUntil": "2021-10-24",
+          "securityUntil": "2023-10-14",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "php",
+              "min": "7.2",
+              "max": "8.1"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "4.1",
+          "released": "2020-07-04",
+          "supportUntil": "2020-12-21",
+          "securityUntil": "",
+          "lts": false,
+          "state": "ended",
+          "approx": false,
+          "requires": [
+            {
+              "product": "php",
+              "min": "7.2",
+              "max": "7.4"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "4.0",
+          "released": "2019-12-15",
+          "supportUntil": "2020-07-05",
+          "securityUntil": "",
+          "lts": false,
+          "state": "ended",
+          "approx": false,
+          "requires": [
+            {
+              "product": "php",
+              "min": "7.2",
+              "max": "7.4"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "3.10",
+          "released": "2021-06-19",
+          "supportUntil": "2021-12-15",
+          "securityUntil": "2022-12-15",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "php",
+              "min": "5.6",
+              "max": "7.4"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "3.9",
+          "released": "2020-06-20",
+          "supportUntil": "2021-06-20",
+          "securityUntil": "",
+          "lts": false,
+          "state": "ended",
+          "approx": false,
+          "requires": [
+            {
+              "product": "php",
+              "min": "5.6",
+              "max": "7.4"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "2.10",
+          "released": "2017-07-22",
+          "supportUntil": "2020-12-15",
+          "securityUntil": "2021-06-15",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "php",
+              "min": "5.4",
+              "max": "7.4"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "django",
+      "name": "Django",
+      "category": "framework",
+      "eolSlug": "django",
+      "url": "https://endoflife.date/django",
+      "versions": [
+        {
+          "version": "6.1",
+          "released": "2026-08-05",
+          "supportUntil": "2027-04-30",
+          "securityUntil": "2027-12-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "python",
+              "min": "3.12",
+              "max": "6.1.3"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "6.0",
+          "released": "2025-12-03",
+          "supportUntil": "2026-08-04",
+          "securityUntil": "2027-04-30",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "python",
+              "min": "3.12",
+              "max": "3.14"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "5.2",
+          "released": "2025-04-02",
+          "supportUntil": "2025-12-03",
+          "securityUntil": "2028-04-30",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "python",
+              "min": "3.10",
+              "max": "5.2.8"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "5.1",
+          "released": "2024-08-07",
+          "supportUntil": "2025-04-02",
+          "securityUntil": "2025-12-03",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "python",
+              "min": "3.10",
+              "max": "5.1.3"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "5.0",
+          "released": "2023-12-04",
+          "supportUntil": "2024-08-07",
+          "securityUntil": "2025-04-02",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "python",
+              "min": "3.10",
+              "max": "3.12"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "4.2",
+          "released": "2023-04-03",
+          "supportUntil": "2023-12-04",
+          "securityUntil": "2026-04-07",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "python",
+              "min": "3.8",
+              "max": "4.2.8"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "4.1",
+          "released": "2022-08-03",
+          "supportUntil": "2023-04-05",
+          "securityUntil": "2023-12-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "python",
+              "min": "3.8",
+              "max": "4.1.3"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "4.0",
+          "released": "2021-12-07",
+          "supportUntil": "2022-08-03",
+          "securityUntil": "2023-04-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "python",
+              "min": "3.8",
+              "max": "3.10"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "3.2",
+          "released": "2021-04-06",
+          "supportUntil": "2021-12-07",
+          "securityUntil": "2024-04-01",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "python",
+              "min": "3.6",
+              "max": "3.2.9"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "3.1",
+          "released": "2020-08-04",
+          "supportUntil": "2021-04-06",
+          "securityUntil": "2021-12-07",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "python",
+              "min": "3.6",
+              "max": "3.1.3"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "3.0",
+          "released": "2019-12-02",
+          "supportUntil": "2020-08-03",
+          "securityUntil": "2021-04-06",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "python",
+              "min": "3.6",
+              "max": "3.0.11"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "2.2",
+          "released": "2019-04-01",
+          "supportUntil": "2019-12-02",
+          "securityUntil": "2022-04-11",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "python",
+              "min": "3.5",
+              "max": "2.2.17"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "2.1",
+          "released": "2018-08-01",
+          "supportUntil": "2019-04-01",
+          "securityUntil": "2019-12-02",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "python",
+              "min": "3.5",
+              "max": "3.7"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "2.0",
+          "released": "2017-12-02",
+          "supportUntil": "2018-08-01",
+          "securityUntil": "2019-04-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "python",
+              "min": "3.4",
+              "max": "3.7"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "1.11",
+          "released": "2017-04-04",
+          "supportUntil": "2017-12-02",
+          "securityUntil": "2020-04-01",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "python",
+              "min": "2.7",
+              "max": "1.11.17"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "electron",
+      "name": "Electron",
+      "category": "framework",
+      "eolSlug": "electron",
+      "url": "https://endoflife.date/electron",
+      "versions": [
+        {
+          "version": "45",
+          "released": "2026-10-20",
+          "supportUntil": "",
+          "securityUntil": "2027-04-27",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "44",
+          "released": "2026-08-24",
+          "supportUntil": "",
+          "securityUntil": "2027-03-02",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "43",
+          "released": "2026-06-29",
+          "supportUntil": "",
+          "securityUntil": "2027-01-05",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "42",
+          "released": "2026-05-05",
+          "supportUntil": "",
+          "securityUntil": "2026-10-20",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "41",
+          "released": "2026-03-10",
+          "supportUntil": "",
+          "securityUntil": "2026-08-24",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "40",
+          "released": "2026-01-15",
+          "supportUntil": "",
+          "securityUntil": "2026-07-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "39",
+          "released": "2025-10-27",
+          "supportUntil": "",
+          "securityUntil": "2026-05-05",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "38",
+          "released": "2025-09-02",
+          "supportUntil": "",
+          "securityUntil": "2026-03-10",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "37",
+          "released": "2025-06-23",
+          "supportUntil": "",
+          "securityUntil": "2026-01-15",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "36",
+          "released": "2025-04-28",
+          "supportUntil": "",
+          "securityUntil": "2025-10-27",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "35",
+          "released": "2025-03-03",
+          "supportUntil": "",
+          "securityUntil": "2025-09-02",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "34",
+          "released": "2025-01-14",
+          "supportUntil": "",
+          "securityUntil": "2025-06-23",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "33",
+          "released": "2024-10-14",
+          "supportUntil": "",
+          "securityUntil": "2025-04-28",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "32",
+          "released": "2024-08-19",
+          "supportUntil": "",
+          "securityUntil": "2025-03-03",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "31",
+          "released": "2024-06-10",
+          "supportUntil": "",
+          "securityUntil": "2025-01-14",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "30",
+          "released": "2024-04-15",
+          "supportUntil": "",
+          "securityUntil": "2024-10-14",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "29",
+          "released": "2024-02-19",
+          "supportUntil": "",
+          "securityUntil": "2024-08-19",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "28",
+          "released": "2023-12-04",
+          "supportUntil": "",
+          "securityUntil": "2024-06-10",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "27",
+          "released": "2023-10-09",
+          "supportUntil": "",
+          "securityUntil": "2024-04-16",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "26",
+          "released": "2023-08-14",
+          "supportUntil": "",
+          "securityUntil": "2024-02-19",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "25",
+          "released": "2023-05-29",
+          "supportUntil": "",
+          "securityUntil": "2023-12-05",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "24",
+          "released": "2023-04-03",
+          "supportUntil": "",
+          "securityUntil": "2023-10-11",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "23",
+          "released": "2023-02-06",
+          "supportUntil": "",
+          "securityUntil": "2023-08-16",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "22",
+          "released": "2022-11-29",
+          "supportUntil": "",
+          "securityUntil": "2023-10-09",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "21",
+          "released": "2022-09-26",
+          "supportUntil": "",
+          "securityUntil": "2023-04-04",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "20",
+          "released": "2022-08-01",
+          "supportUntil": "",
+          "securityUntil": "2023-02-08",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "19",
+          "released": "2022-05-23",
+          "supportUntil": "",
+          "securityUntil": "2022-11-30",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "18",
+          "released": "2022-03-28",
+          "supportUntil": "",
+          "securityUntil": "2022-09-27",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "17",
+          "released": "2022-01-31",
+          "supportUntil": "",
+          "securityUntil": "2022-08-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "16",
+          "released": "2021-11-15",
+          "supportUntil": "",
+          "securityUntil": "2022-05-24",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "15",
+          "released": "2021-09-21",
+          "supportUntil": "",
+          "securityUntil": "2022-05-24",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "14",
+          "released": "2021-08-30",
+          "supportUntil": "",
+          "securityUntil": "2022-03-29",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "13",
+          "released": "2021-05-24",
+          "supportUntil": "",
+          "securityUntil": "2022-02-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "12",
+          "released": "2021-03-01",
+          "supportUntil": "",
+          "securityUntil": "2021-11-15",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "11",
+          "released": "2020-11-16",
+          "supportUntil": "",
+          "securityUntil": "2021-08-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "10",
+          "released": "2020-08-24",
+          "supportUntil": "",
+          "securityUntil": "2021-05-24",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "9",
+          "released": "2020-05-18",
+          "supportUntil": "",
+          "securityUntil": "2021-03-03",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "8",
+          "released": "2020-02-03",
+          "supportUntil": "",
+          "securityUntil": "2020-11-18",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "7",
+          "released": "2019-10-21",
+          "supportUntil": "",
+          "securityUntil": "2020-08-25",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "6",
+          "released": "2019-07-29",
+          "supportUntil": "",
+          "securityUntil": "2020-05-18",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "express",
+      "name": "Express",
+      "category": "framework",
+      "eolSlug": "express",
+      "url": "https://endoflife.date/express",
+      "versions": [
+        {
+          "version": "5",
+          "released": "2024-09-09",
+          "supportUntil": "",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "4",
+          "released": "2014-04-09",
+          "supportUntil": "",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "laravel",
+      "name": "Laravel",
+      "category": "framework",
+      "eolSlug": "laravel",
+      "url": "https://endoflife.date/laravel",
+      "versions": [
+        {
+          "version": "13",
+          "released": "2026-03-17",
+          "supportUntil": "2027-09-30",
+          "securityUntil": "2028-03-17",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "php",
+              "min": "8.3",
+              "max": "8.5"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "12",
+          "released": "2025-02-24",
+          "supportUntil": "2026-08-13",
+          "securityUntil": "2027-02-24",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "php",
+              "min": "8.2",
+              "max": "8.5"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "11",
+          "released": "2024-03-12",
+          "supportUntil": "2025-09-03",
+          "securityUntil": "2026-03-12",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "php",
+              "min": "8.2",
+              "max": "8.4"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "10",
+          "released": "2023-02-14",
+          "supportUntil": "2024-08-06",
+          "securityUntil": "2025-02-04",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "php",
+              "min": "8.1",
+              "max": "8.3"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "9",
+          "released": "2022-02-08",
+          "supportUntil": "2023-08-08",
+          "securityUntil": "2024-02-06",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "php",
+              "min": "8.0",
+              "max": "8.2"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "8",
+          "released": "2020-09-08",
+          "supportUntil": "2022-07-26",
+          "securityUntil": "2023-01-24",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "php",
+              "min": "7.3",
+              "max": "8.1"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "7",
+          "released": "2020-03-03",
+          "supportUntil": "2020-10-06",
+          "securityUntil": "2021-03-03",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "php",
+              "min": "7.2",
+              "max": "8.0"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "6",
+          "released": "2019-09-03",
+          "supportUntil": "2022-01-25",
+          "securityUntil": "2022-09-06",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "php",
+              "min": "7.2",
+              "max": "8.0"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "5.8",
+          "released": "2019-02-26",
+          "supportUntil": "2019-08-26",
+          "securityUntil": "2020-02-26",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "php",
+              "min": "7.1",
+              "max": "7.3"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "5.5",
+          "released": "2017-08-30",
+          "supportUntil": "2019-08-30",
+          "securityUntil": "2020-08-30",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "php",
+              "min": "7.0",
+              "max": "7.1"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "livewire",
+      "name": "Livewire",
+      "category": "framework",
+      "eolSlug": "livewire",
+      "url": "https://endoflife.date/livewire",
+      "versions": [
+        {
+          "version": "4",
+          "released": "2026-01-14",
+          "supportUntil": "",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [
+            {
+              "product": "php",
+              "min": "8.1",
+              "max": "8.5"
+            },
+            {
+              "product": "laravel",
+              "min": "10",
+              "max": "13"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "3",
+          "released": "2023-08-20",
+          "supportUntil": "",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [
+            {
+              "product": "php",
+              "min": "8.1",
+              "max": "8.5"
+            },
+            {
+              "product": "laravel",
+              "min": "10",
+              "max": "13"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "2",
+          "released": "2020-09-08",
+          "supportUntil": "",
+          "securityUntil": "2023-08-20",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "php",
+              "min": "7.2.5",
+              "max": "8.2"
+            },
+            {
+              "product": "laravel",
+              "min": "7",
+              "max": "10"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "1",
+          "released": "2020-02-14",
+          "supportUntil": "",
+          "securityUntil": "2020-09-08",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "php",
+              "min": "7.2",
+              "max": "8.0"
+            },
+            {
+              "product": "laravel",
+              "min": "5.6",
+              "max": "8"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "nestjs",
+      "name": "NestJS",
+      "category": "framework",
+      "eolSlug": "nestjs",
+      "url": "https://endoflife.date/nestjs",
+      "versions": [
+        {
+          "version": "12",
+          "released": "2026-08-27",
+          "supportUntil": "",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "11",
+          "released": "2025-01-20",
+          "supportUntil": "2026-08-27",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [
+            {
+              "product": "nodejs",
+              "min": "20",
+              "max": ""
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "10",
+          "released": "2023-06-15",
+          "supportUntil": "2025-01-20",
+          "securityUntil": "",
+          "lts": false,
+          "state": "ended",
+          "approx": false,
+          "requires": [
+            {
+              "product": "nodejs",
+              "min": "16",
+              "max": ""
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "9",
+          "released": "2022-07-08",
+          "supportUntil": "2023-06-15",
+          "securityUntil": "",
+          "lts": false,
+          "state": "ended",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "8",
+          "released": "2021-07-07",
+          "supportUntil": "2022-07-08",
+          "securityUntil": "",
+          "lts": false,
+          "state": "ended",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "7",
+          "released": "2020-03-13",
+          "supportUntil": "2021-07-07",
+          "securityUntil": "",
+          "lts": false,
+          "state": "ended",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "nextjs",
+      "name": "Next.js",
+      "category": "framework",
+      "eolSlug": "nextjs",
+      "url": "https://endoflife.date/nextjs",
+      "versions": [
+        {
+          "version": "16",
+          "released": "2025-10-22",
+          "supportUntil": "",
+          "securityUntil": "",
+          "lts": true,
+          "state": "supported",
+          "approx": false,
+          "requires": [
+            {
+              "product": "nodejs",
+              "min": "20.9",
+              "max": ""
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "15",
+          "released": "2024-10-21",
+          "supportUntil": "",
+          "securityUntil": "2027-01-31",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "nodejs",
+              "min": "18.18",
+              "max": ""
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "14",
+          "released": "2023-10-26",
+          "supportUntil": "",
+          "securityUntil": "2025-10-26",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "nodejs",
+              "min": "18.17",
+              "max": ""
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "13",
+          "released": "2022-10-25",
+          "supportUntil": "",
+          "securityUntil": "2024-12-21",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [
+            {
+              "product": "nodejs",
+              "min": "16.14",
+              "max": ""
+            }
+          ],
+          "note": ""
+        },
+        {
+          "version": "12",
+          "released": "2021-10-26",
+          "supportUntil": "",
+          "securityUntil": "2022-11-21",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "11",
+          "released": "2021-06-15",
+          "supportUntil": "",
+          "securityUntil": "2022-01-27",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "10",
+          "released": "2020-10-27",
+          "supportUntil": "",
+          "securityUntil": "2021-06-15",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "9",
+          "released": "2019-07-08",
+          "supportUntil": "",
+          "securityUntil": "2020-10-27",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "nuxt",
+      "name": "Nuxt",
+      "category": "framework",
+      "eolSlug": "nuxt",
+      "url": "https://endoflife.date/nuxt",
+      "versions": [
+        {
+          "version": "4",
+          "released": "2025-07-16",
+          "supportUntil": "",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "3",
+          "released": "2022-11-16",
+          "supportUntil": "2025-07-16",
+          "securityUntil": "2026-07-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "2",
+          "released": "2018-09-21",
+          "supportUntil": "2022-11-16",
+          "securityUntil": "2024-06-30",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "1",
+          "released": "2018-01-08",
+          "supportUntil": "2018-09-21",
+          "securityUntil": "2019-09-21",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "react",
+      "name": "React",
+      "category": "framework",
+      "eolSlug": "react",
+      "url": "https://endoflife.date/react",
+      "versions": [
+        {
+          "version": "19",
+          "released": "2024-12-05",
+          "supportUntil": "",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "18",
+          "released": "2022-03-29",
+          "supportUntil": "2024-12-05",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "17",
+          "released": "2020-10-20",
+          "supportUntil": "2022-03-29",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "16",
+          "released": "2017-09-26",
+          "supportUntil": "2020-10-20",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "15",
+          "released": "2016-04-07",
+          "supportUntil": "2020-10-14",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "react-native",
+      "name": "React Native",
+      "category": "mobile",
+      "eolSlug": "react-native",
+      "url": "https://endoflife.date/react-native",
+      "versions": [
+        {
+          "version": "0.88",
+          "released": "2026-10-12",
+          "supportUntil": "",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "0.87",
+          "released": "2026-08-11",
+          "supportUntil": "",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "0.86",
+          "released": "2026-06-09",
+          "supportUntil": "2026-10-12",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "0.85",
+          "released": "2026-04-07",
+          "supportUntil": "2026-08-11",
+          "securityUntil": "2026-10-12",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "0.84",
+          "released": "2026-02-11",
+          "supportUntil": "2026-06-09",
+          "securityUntil": "2026-08-11",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "0.83",
+          "released": "2025-12-10",
+          "supportUntil": "2026-04-07",
+          "securityUntil": "2026-06-09",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "0.82",
+          "released": "2025-10-08",
+          "supportUntil": "2026-02-11",
+          "securityUntil": "2026-04-07",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "0.81",
+          "released": "2025-08-12",
+          "supportUntil": "2025-12-10",
+          "securityUntil": "2026-02-11",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "0.80",
+          "released": "2025-06-12",
+          "supportUntil": "2025-10-08",
+          "securityUntil": "2025-12-10",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "0.79",
+          "released": "2025-04-08",
+          "supportUntil": "2025-08-12",
+          "securityUntil": "2025-10-08",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "0.78",
+          "released": "2025-02-19",
+          "supportUntil": "2025-06-12",
+          "securityUntil": "2025-08-12",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "0.77",
+          "released": "2025-01-21",
+          "supportUntil": "2025-04-08",
+          "securityUntil": "2025-06-12",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "0.76",
+          "released": "2024-10-23",
+          "supportUntil": "2025-02-19",
+          "securityUntil": "2025-04-08",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "0.75",
+          "released": "2024-08-14",
+          "supportUntil": "2025-01-21",
+          "securityUntil": "2025-02-19",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "0.74",
+          "released": "2024-04-22",
+          "supportUntil": "2024-10-23",
+          "securityUntil": "2025-01-27",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "0.73",
+          "released": "2023-12-06",
+          "supportUntil": "2024-08-14",
+          "securityUntil": "2024-10-23",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "0.72",
+          "released": "2023-06-21",
+          "supportUntil": "2024-04-23",
+          "securityUntil": "2024-08-14",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "0.71",
+          "released": "2023-01-12",
+          "supportUntil": "2023-12-07",
+          "securityUntil": "2024-04-23",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "0.70",
+          "released": "2022-09-05",
+          "supportUntil": "2023-06-22",
+          "securityUntil": "2023-12-07",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "0.69",
+          "released": "2022-06-22",
+          "supportUntil": "2023-01-13",
+          "securityUntil": "2023-06-22",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "0.68",
+          "released": "2022-03-30",
+          "supportUntil": "2022-11-06",
+          "securityUntil": "2023-01-13",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "0.67",
+          "released": "2022-01-18",
+          "supportUntil": "2022-06-23",
+          "securityUntil": "2022-11-06",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "0.66",
+          "released": "2021-10-01",
+          "supportUntil": "2022-03-30",
+          "securityUntil": "2022-06-23",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "0.65",
+          "released": "2021-08-17",
+          "supportUntil": "2022-01-19",
+          "securityUntil": "2022-03-30",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "0.64",
+          "released": "2021-03-12",
+          "supportUntil": "2021-10-02",
+          "securityUntil": "2022-01-19",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "0.63",
+          "released": "2020-07-08",
+          "supportUntil": "2021-08-18",
+          "securityUntil": "2021-10-02",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "0.62",
+          "released": "2020-03-26",
+          "supportUntil": "2021-03-13",
+          "securityUntil": "2021-08-18",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "0.61",
+          "released": "2019-09-24",
+          "supportUntil": "2020-07-09",
+          "securityUntil": "2021-03-13",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "0.60",
+          "released": "2019-07-03",
+          "supportUntil": "2020-03-27",
+          "securityUntil": "2020-07-09",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "rails",
+      "name": "Ruby on Rails",
+      "category": "framework",
+      "eolSlug": "rails",
+      "url": "https://endoflife.date/rails",
+      "versions": [
+        {
+          "version": "8.1",
+          "released": "2025-10-22",
+          "supportUntil": "2026-10-10",
+          "securityUntil": "2027-10-10",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "8.0",
+          "released": "2024-11-07",
+          "supportUntil": "2026-05-07",
+          "securityUntil": "2026-11-07",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "7.2",
+          "released": "2024-08-09",
+          "supportUntil": "2025-08-09",
+          "securityUntil": "2026-08-09",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "7.1",
+          "released": "2023-10-05",
+          "supportUntil": "2024-10-01",
+          "securityUntil": "2025-10-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "7.0",
+          "released": "2021-12-15",
+          "supportUntil": "2023-10-15",
+          "securityUntil": "2025-04-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "6.1",
+          "released": "2020-12-09",
+          "supportUntil": "2021-12-15",
+          "securityUntil": "2024-10-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "6.0",
+          "released": "2019-08-16",
+          "supportUntil": "2021-12-15",
+          "securityUntil": "2023-06-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "5.2",
+          "released": "2018-04-09",
+          "supportUntil": "2021-12-15",
+          "securityUntil": "2022-06-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "5.1",
+          "released": "2017-04-27",
+          "supportUntil": "2018-04-09",
+          "securityUntil": "2019-08-25",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "symfony",
+      "name": "Symfony",
+      "category": "framework",
+      "eolSlug": "symfony",
+      "url": "https://endoflife.date/symfony",
+      "versions": [
+        {
+          "version": "8.1",
+          "released": "2026-05-29",
+          "supportUntil": "2027-01-31",
+          "securityUntil": "2027-01-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "8.0",
+          "released": "2025-11-27",
+          "supportUntil": "2026-07-31",
+          "securityUntil": "2026-07-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "7.4",
+          "released": "2025-11-27",
+          "supportUntil": "2028-11-30",
+          "securityUntil": "2029-11-30",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "7.3",
+          "released": "2025-05-29",
+          "supportUntil": "2026-01-31",
+          "securityUntil": "2026-01-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "7.2",
+          "released": "2024-11-29",
+          "supportUntil": "2025-07-31",
+          "securityUntil": "2025-07-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "7.1",
+          "released": "2024-05-31",
+          "supportUntil": "2025-01-31",
+          "securityUntil": "2025-01-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "7.0",
+          "released": "2023-11-29",
+          "supportUntil": "2024-07-31",
+          "securityUntil": "2024-07-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "6.4",
+          "released": "2023-11-29",
+          "supportUntil": "2026-11-30",
+          "securityUntil": "2027-11-30",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "6.3",
+          "released": "2023-05-30",
+          "supportUntil": "2024-01-31",
+          "securityUntil": "2024-01-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "6.2",
+          "released": "2022-11-30",
+          "supportUntil": "2023-07-31",
+          "securityUntil": "2023-07-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "6.1",
+          "released": "2022-05-27",
+          "supportUntil": "2023-01-31",
+          "securityUntil": "2023-01-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "6.0",
+          "released": "2021-11-29",
+          "supportUntil": "2023-01-31",
+          "securityUntil": "2023-01-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "5.4",
+          "released": "2021-11-29",
+          "supportUntil": "2024-11-30",
+          "securityUntil": "2029-02-28",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "5.3",
+          "released": "2021-05-31",
+          "supportUntil": "2022-01-01",
+          "securityUntil": "2022-01-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "5.2",
+          "released": "2020-11-30",
+          "supportUntil": "2021-07-21",
+          "securityUntil": "2021-07-21",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "5.1",
+          "released": "2020-05-31",
+          "supportUntil": "2021-01-21",
+          "securityUntil": "2021-01-21",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "5.0",
+          "released": "2019-11-21",
+          "supportUntil": "2020-07-21",
+          "securityUntil": "2020-07-21",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "4.4",
+          "released": "2019-11-21",
+          "supportUntil": "2022-11-21",
+          "securityUntil": "2023-11-21",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "4.3",
+          "released": "2019-05-30",
+          "supportUntil": "2020-01-01",
+          "securityUntil": "2020-07-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "4.2",
+          "released": "2018-11-30",
+          "supportUntil": "2019-07-01",
+          "securityUntil": "2020-01-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "3.4",
+          "released": "2017-11-30",
+          "supportUntil": "2020-11-01",
+          "securityUntil": "2021-11-01",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "tailwind-css",
+      "name": "Tailwind CSS",
+      "category": "library",
+      "eolSlug": "tailwind-css",
+      "url": "https://endoflife.date/tailwind-css",
+      "versions": [
+        {
+          "version": "4.3",
+          "released": "2026-05-08",
+          "supportUntil": "",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "4.2",
+          "released": "2026-02-18",
+          "supportUntil": "",
+          "securityUntil": "2026-05-08",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "4.1",
+          "released": "2025-04-01",
+          "supportUntil": "",
+          "securityUntil": "2026-02-18",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "4.0",
+          "released": "2025-01-21",
+          "supportUntil": "",
+          "securityUntil": "2025-04-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "3.4",
+          "released": "2023-12-18",
+          "supportUntil": "",
+          "securityUntil": "2027-02-28",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "3.3",
+          "released": "2023-03-28",
+          "supportUntil": "",
+          "securityUntil": "2023-12-18",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "3.2",
+          "released": "2022-10-19",
+          "supportUntil": "",
+          "securityUntil": "2023-03-28",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "3.1",
+          "released": "2022-06-08",
+          "supportUntil": "",
+          "securityUntil": "2022-10-19",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "3.0",
+          "released": "2021-12-09",
+          "supportUntil": "",
+          "securityUntil": "2022-06-08",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "2.2",
+          "released": "2021-06-17",
+          "supportUntil": "",
+          "securityUntil": "2021-12-09",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "2.1",
+          "released": "2021-04-05",
+          "supportUntil": "",
+          "securityUntil": "2021-06-17",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "2.0",
+          "released": "2020-11-18",
+          "supportUntil": "",
+          "securityUntil": "2021-04-05",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "1.9",
+          "released": "2020-10-12",
+          "supportUntil": "",
+          "securityUntil": "2020-11-18",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "1.8",
+          "released": "2020-09-04",
+          "supportUntil": "",
+          "securityUntil": "2020-10-12",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "1.7",
+          "released": "2020-08-18",
+          "supportUntil": "",
+          "securityUntil": "2020-09-04",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "1.6",
+          "released": "2020-07-28",
+          "supportUntil": "",
+          "securityUntil": "2020-08-18",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "1.5",
+          "released": "2020-07-15",
+          "supportUntil": "",
+          "securityUntil": "2020-07-28",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "1.4",
+          "released": "2020-04-29",
+          "supportUntil": "",
+          "securityUntil": "2020-07-15",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "1.3",
+          "released": "2020-04-20",
+          "supportUntil": "",
+          "securityUntil": "2020-04-29",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "1.2",
+          "released": "2020-02-05",
+          "supportUntil": "",
+          "securityUntil": "2020-04-20",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "1.1",
+          "released": "2019-08-06",
+          "supportUntil": "",
+          "securityUntil": "2020-02-05",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "vue",
+      "name": "Vue",
+      "category": "framework",
+      "eolSlug": "vue",
+      "url": "https://endoflife.date/vue",
+      "versions": [
+        {
+          "version": "3.5",
+          "released": "2024-09-03",
+          "supportUntil": "",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "3.4",
+          "released": "2023-12-29",
+          "supportUntil": "2024-09-03",
+          "securityUntil": "2024-09-03",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "3.3",
+          "released": "2023-05-11",
+          "supportUntil": "2023-12-29",
+          "securityUntil": "2023-12-29",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "3.2",
+          "released": "2021-08-09",
+          "supportUntil": "2023-05-11",
+          "securityUntil": "2023-05-11",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "3.1",
+          "released": "2021-06-07",
+          "supportUntil": "2021-08-09",
+          "securityUntil": "2021-08-09",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "3.0",
+          "released": "2020-09-18",
+          "supportUntil": "2021-06-07",
+          "securityUntil": "2021-06-07",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "2.7",
+          "released": "2022-07-01",
+          "supportUntil": "2023-12-31",
+          "securityUntil": "2023-12-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "2.6",
+          "released": "2019-02-04",
+          "supportUntil": "2022-07-01",
+          "securityUntil": "2022-07-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "2.5",
+          "released": "2017-10-13",
+          "supportUntil": "2019-02-04",
+          "securityUntil": "2019-02-04",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        }
+      ]
+    }
+  ],
+  "env": [
+    {
+      "id": "almalinux",
+      "name": "AlmaLinux OS",
+      "category": "os",
+      "eolSlug": "almalinux",
+      "url": "https://endoflife.date/almalinux",
+      "versions": [
+        {
+          "version": "10",
+          "released": "2025-05-27",
+          "supportUntil": "2030-05-31",
+          "securityUntil": "2035-05-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "9",
+          "released": "2022-05-26",
+          "supportUntil": "2027-05-31",
+          "securityUntil": "2032-05-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "8",
+          "released": "2021-03-30",
+          "supportUntil": "2024-05-31",
+          "securityUntil": "2029-05-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "apache",
+      "name": "Apache HTTP Server",
+      "category": "server",
+      "eolSlug": "apache-http-server",
+      "url": "https://endoflife.date/apache-http-server",
+      "versions": [
+        {
+          "version": "2.4",
+          "released": "2012-02-21",
+          "supportUntil": "",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "bun",
+      "name": "Bun",
+      "category": "runtime",
+      "eolSlug": "bun",
+      "url": "https://endoflife.date/bun",
+      "versions": [
+        {
+          "version": "1",
+          "released": "2023-09-07",
+          "supportUntil": "",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "composer",
+      "name": "Composer",
+      "category": "tool",
+      "eolSlug": "composer",
+      "url": "https://endoflife.date/composer",
+      "versions": [
+        {
+          "version": "2.11",
+          "released": "2026-10-29",
+          "supportUntil": "",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "2.10",
+          "released": "2026-05-28",
+          "supportUntil": "",
+          "securityUntil": "2026-10-29",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "2.9",
+          "released": "2025-11-13",
+          "supportUntil": "",
+          "securityUntil": "2026-05-28",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "2.8",
+          "released": "2024-10-02",
+          "supportUntil": "",
+          "securityUntil": "2025-11-13",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "2.7",
+          "released": "2024-02-08",
+          "supportUntil": "",
+          "securityUntil": "2024-10-02",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "2.6",
+          "released": "2023-09-01",
+          "supportUntil": "",
+          "securityUntil": "2024-02-08",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "2.5",
+          "released": "2022-12-20",
+          "supportUntil": "",
+          "securityUntil": "2023-09-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "2.4",
+          "released": "2022-08-16",
+          "supportUntil": "",
+          "securityUntil": "2022-12-20",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "2.3",
+          "released": "2022-03-30",
+          "supportUntil": "",
+          "securityUntil": "2022-08-16",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "2.2",
+          "released": "2021-12-22",
+          "supportUntil": "",
+          "securityUntil": "2026-12-31",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "2.1",
+          "released": "2021-06-03",
+          "supportUntil": "",
+          "securityUntil": "2021-12-22",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "2.0",
+          "released": "2020-10-24",
+          "supportUntil": "",
+          "securityUntil": "2021-06-03",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "1",
+          "released": "2016-04-05",
+          "supportUntil": "",
+          "securityUntil": "2026-05-30",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "debian",
+      "name": "Debian",
+      "category": "os",
+      "eolSlug": "debian",
+      "url": "https://endoflife.date/debian",
+      "versions": [
+        {
+          "version": "13",
+          "released": "2025-08-09",
+          "supportUntil": "2028-08-09",
+          "securityUntil": "2030-06-30",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "12",
+          "released": "2023-06-10",
+          "supportUntil": "2026-07-11",
+          "securityUntil": "2028-06-30",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "11",
+          "released": "2021-08-14",
+          "supportUntil": "2024-08-14",
+          "securityUntil": "2026-08-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "10",
+          "released": "2019-07-06",
+          "supportUntil": "2022-09-10",
+          "securityUntil": "2024-06-30",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "9",
+          "released": "2017-06-17",
+          "supportUntil": "2020-07-18",
+          "securityUntil": "2022-07-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "8",
+          "released": "2015-04-25",
+          "supportUntil": "2018-06-17",
+          "securityUntil": "2020-06-30",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "docker",
+      "name": "Docker Engine",
+      "category": "container",
+      "eolSlug": "docker-engine",
+      "url": "https://endoflife.date/docker-engine",
+      "versions": [
+        {
+          "version": "29",
+          "released": "2025-11-10",
+          "supportUntil": "",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "28",
+          "released": "2025-02-20",
+          "supportUntil": "",
+          "securityUntil": "2026-05-13",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "27",
+          "released": "2024-06-25",
+          "supportUntil": "",
+          "securityUntil": "2025-05-03",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "26.1",
+          "released": "2024-04-22",
+          "supportUntil": "",
+          "securityUntil": "2025-02-17",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "26.0",
+          "released": "2024-03-20",
+          "supportUntil": "",
+          "securityUntil": "2024-06-08",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "25.0",
+          "released": "2024-01-19",
+          "supportUntil": "",
+          "securityUntil": "2026-12-04",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "24.0",
+          "released": "2023-05-16",
+          "supportUntil": "",
+          "securityUntil": "2024-06-08",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "23.0",
+          "released": "2023-02-02",
+          "supportUntil": "",
+          "securityUntil": "2025-05-19",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "20.10",
+          "released": "2020-12-09",
+          "supportUntil": "",
+          "securityUntil": "2023-12-10",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "19.03",
+          "released": "2019-07-22",
+          "supportUntil": "",
+          "securityUntil": "2021-01-08",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "18.09",
+          "released": "2018-11-08",
+          "supportUntil": "",
+          "securityUntil": "2019-08-22",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "mariadb",
+      "name": "MariaDB",
+      "category": "database",
+      "eolSlug": "mariadb",
+      "url": "https://endoflife.date/mariadb",
+      "versions": [
+        {
+          "version": "13.0",
+          "released": "2026-09-15",
+          "supportUntil": "",
+          "securityUntil": "2026-12-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "12.3",
+          "released": "2026-05-28",
+          "supportUntil": "",
+          "securityUntil": "2029-06-12",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "12.2",
+          "released": "2026-02-13",
+          "supportUntil": "",
+          "securityUntil": "2026-05-28",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "12.1",
+          "released": "2025-11-18",
+          "supportUntil": "",
+          "securityUntil": "2026-02-13",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "12.0",
+          "released": "2025-08-07",
+          "supportUntil": "",
+          "securityUntil": "2025-11-18",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "11.8",
+          "released": "2025-06-04",
+          "supportUntil": "",
+          "securityUntil": "2028-06-04",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "11.7",
+          "released": "2025-02-12",
+          "supportUntil": "",
+          "securityUntil": "2025-05-12",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "11.6",
+          "released": "2024-11-13",
+          "supportUntil": "",
+          "securityUntil": "2025-02-13",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "11.5",
+          "released": "2024-08-14",
+          "supportUntil": "",
+          "securityUntil": "2024-11-21",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "11.4",
+          "released": "2024-05-29",
+          "supportUntil": "",
+          "securityUntil": "2029-05-29",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "11.3",
+          "released": "2024-02-16",
+          "supportUntil": "",
+          "securityUntil": "2024-05-29",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "11.2",
+          "released": "2023-11-21",
+          "supportUntil": "",
+          "securityUntil": "2024-11-21",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "11.1",
+          "released": "2023-08-21",
+          "supportUntil": "",
+          "securityUntil": "2024-08-21",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "11.0",
+          "released": "2023-06-06",
+          "supportUntil": "",
+          "securityUntil": "2024-06-06",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "10.11",
+          "released": "2023-02-16",
+          "supportUntil": "",
+          "securityUntil": "2028-02-16",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "10.10",
+          "released": "2022-11-07",
+          "supportUntil": "",
+          "securityUntil": "2023-11-17",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "10.9",
+          "released": "2022-08-15",
+          "supportUntil": "",
+          "securityUntil": "2023-08-22",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "10.8",
+          "released": "2022-05-20",
+          "supportUntil": "",
+          "securityUntil": "2023-05-20",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "10.7",
+          "released": "2022-02-08",
+          "supportUntil": "",
+          "securityUntil": "2023-02-09",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "10.6",
+          "released": "2021-07-06",
+          "supportUntil": "",
+          "securityUntil": "2026-07-06",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "10.5",
+          "released": "2020-06-24",
+          "supportUntil": "",
+          "securityUntil": "2025-06-24",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "10.4",
+          "released": "2019-06-18",
+          "supportUntil": "",
+          "securityUntil": "2024-06-18",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "10.3",
+          "released": "2018-05-25",
+          "supportUntil": "",
+          "securityUntil": "2023-05-25",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "10.2",
+          "released": "2017-05-23",
+          "supportUntil": "",
+          "securityUntil": "2022-05-23",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "10.1",
+          "released": "2015-10-17",
+          "supportUntil": "",
+          "securityUntil": "2020-10-17",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "5.5",
+          "released": "2012-04-11",
+          "supportUntil": "",
+          "securityUntil": "2020-04-11",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "mongodb",
+      "name": "MongoDB Server",
+      "category": "database",
+      "eolSlug": "mongodb",
+      "url": "https://endoflife.date/mongodb",
+      "versions": [
+        {
+          "version": "9.0",
+          "released": "2026-09-30",
+          "supportUntil": "",
+          "securityUntil": "2031-10-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "8.3",
+          "released": "2026-05-31",
+          "supportUntil": "",
+          "securityUntil": "2029-10-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "8.2",
+          "released": "2025-09-30",
+          "supportUntil": "",
+          "securityUntil": "2026-07-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "8.1",
+          "released": "2025-06-30",
+          "supportUntil": "",
+          "securityUntil": "2025-09-30",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "8.0",
+          "released": "2024-10-31",
+          "supportUntil": "",
+          "securityUntil": "2029-10-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "7.3",
+          "released": "2024-03-31",
+          "supportUntil": "",
+          "securityUntil": "2024-10-02",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "7.2",
+          "released": "2024-01-31",
+          "supportUntil": "",
+          "securityUntil": "2024-03-27",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "7.1",
+          "released": "2023-10-31",
+          "supportUntil": "",
+          "securityUntil": "2024-01-23",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "7.0",
+          "released": "2023-08-31",
+          "supportUntil": "",
+          "securityUntil": "2027-08-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "6.3",
+          "released": "2023-04-30",
+          "supportUntil": "",
+          "securityUntil": "2023-08-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "6.2",
+          "released": "2023-02-28",
+          "supportUntil": "",
+          "securityUntil": "2023-04-24",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "6.1",
+          "released": "2022-10-31",
+          "supportUntil": "",
+          "securityUntil": "2023-02-09",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "6.0",
+          "released": "2022-07-31",
+          "supportUntil": "",
+          "securityUntil": "2025-07-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "5.3",
+          "released": "2022-03-31",
+          "supportUntil": "",
+          "securityUntil": "2022-07-19",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "5.2",
+          "released": "2022-01-31",
+          "supportUntil": "",
+          "securityUntil": "2022-03-23",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "5.1",
+          "released": "2021-11-30",
+          "supportUntil": "",
+          "securityUntil": "2022-01-19",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "5.0",
+          "released": "2021-07-31",
+          "supportUntil": "",
+          "securityUntil": "2024-10-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "4.4",
+          "released": "2020-07-31",
+          "supportUntil": "",
+          "securityUntil": "2024-02-29",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "4.2",
+          "released": "2019-08-31",
+          "supportUntil": "",
+          "securityUntil": "2023-04-30",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "4.0",
+          "released": "2018-06-30",
+          "supportUntil": "",
+          "securityUntil": "2022-04-30",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "3.6",
+          "released": "2017-11-30",
+          "supportUntil": "",
+          "securityUntil": "2021-04-30",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "3.4",
+          "released": "2016-11-30",
+          "supportUntil": "",
+          "securityUntil": "2020-01-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "mysql",
+      "name": "MySQL",
+      "category": "database",
+      "eolSlug": "mysql",
+      "url": "https://endoflife.date/mysql",
+      "versions": [
+        {
+          "version": "26.10",
+          "released": "2026-10-20",
+          "supportUntil": "",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "26.7",
+          "released": "2026-07-28",
+          "supportUntil": "2026-10-20",
+          "securityUntil": "2026-10-20",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "9.7",
+          "released": "2026-04-21",
+          "supportUntil": "2031-04-30",
+          "securityUntil": "2034-04-30",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "9.6",
+          "released": "2026-01-20",
+          "supportUntil": "2026-04-21",
+          "securityUntil": "2026-04-21",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "9.5",
+          "released": "2025-10-21",
+          "supportUntil": "2026-01-20",
+          "securityUntil": "2026-01-20",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "9.4",
+          "released": "2025-07-22",
+          "supportUntil": "2025-10-21",
+          "securityUntil": "2025-10-21",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "9.3",
+          "released": "2025-04-15",
+          "supportUntil": "2025-07-22",
+          "securityUntil": "2025-07-22",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "9.2",
+          "released": "2025-01-21",
+          "supportUntil": "2025-04-15",
+          "securityUntil": "2025-04-15",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "9.1",
+          "released": "2024-10-15",
+          "supportUntil": "2025-01-21",
+          "securityUntil": "2025-01-21",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "9.0",
+          "released": "2024-07-01",
+          "supportUntil": "2024-10-15",
+          "securityUntil": "2024-10-15",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "8.4",
+          "released": "2024-04-30",
+          "supportUntil": "2029-04-30",
+          "securityUntil": "2032-04-30",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "8.3",
+          "released": "2024-01-16",
+          "supportUntil": "2024-04-30",
+          "securityUntil": "2024-04-30",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "8.2",
+          "released": "2023-10-25",
+          "supportUntil": "2024-01-16",
+          "securityUntil": "2024-01-16",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "8.1",
+          "released": "2023-07-18",
+          "supportUntil": "2023-10-25",
+          "securityUntil": "2023-10-25",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "8.0",
+          "released": "2018-04-19",
+          "supportUntil": "2025-04-30",
+          "securityUntil": "2026-04-30",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "5.7",
+          "released": "2015-10-09",
+          "supportUntil": "2020-10-31",
+          "securityUntil": "2023-10-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "5.6",
+          "released": "2013-02-01",
+          "supportUntil": "2018-02-28",
+          "securityUntil": "2021-02-28",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "nginx",
+      "name": "nginx",
+      "category": "server",
+      "eolSlug": "nginx",
+      "url": "https://endoflife.date/nginx",
+      "versions": [
+        {
+          "version": "1.31",
+          "released": "2026-05-13",
+          "supportUntil": "",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "1.30",
+          "released": "2026-04-14",
+          "supportUntil": "",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "1.29",
+          "released": "2025-06-24",
+          "supportUntil": "",
+          "securityUntil": "2026-05-13",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "1.28",
+          "released": "2025-04-23",
+          "supportUntil": "",
+          "securityUntil": "2026-04-14",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "1.27",
+          "released": "2024-05-28",
+          "supportUntil": "",
+          "securityUntil": "2025-06-24",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "1.26",
+          "released": "2024-04-23",
+          "supportUntil": "",
+          "securityUntil": "2025-04-23",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "1.25",
+          "released": "2023-05-23",
+          "supportUntil": "",
+          "securityUntil": "2024-05-29",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "1.24",
+          "released": "2023-04-11",
+          "supportUntil": "",
+          "securityUntil": "2024-04-23",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "1.23",
+          "released": "2022-06-21",
+          "supportUntil": "",
+          "securityUntil": "2023-05-23",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "1.22",
+          "released": "2022-05-24",
+          "supportUntil": "",
+          "securityUntil": "2023-04-11",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "1.21",
+          "released": "2021-05-25",
+          "supportUntil": "",
+          "securityUntil": "2022-06-21",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "1.20",
+          "released": "2021-04-20",
+          "supportUntil": "",
+          "securityUntil": "2022-05-24",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "1.19",
+          "released": "2020-05-26",
+          "supportUntil": "",
+          "securityUntil": "2021-05-25",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "1.18",
+          "released": "2020-04-21",
+          "supportUntil": "",
+          "securityUntil": "2021-04-20",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "1.17",
+          "released": "2019-05-21",
+          "supportUntil": "",
+          "securityUntil": "2020-05-26",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "1.16",
+          "released": "2019-04-23",
+          "supportUntil": "",
+          "securityUntil": "2020-04-20",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "nodejs",
+      "name": "Node.js",
+      "category": "runtime",
+      "eolSlug": "nodejs",
+      "url": "https://endoflife.date/nodejs",
+      "versions": [
+        {
+          "version": "26",
+          "released": "2026-05-05",
+          "supportUntil": "2027-10-27",
+          "securityUntil": "2029-04-30",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "25",
+          "released": "2025-10-15",
+          "supportUntil": "2026-04-01",
+          "securityUntil": "2026-06-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "24",
+          "released": "2025-05-06",
+          "supportUntil": "2026-10-20",
+          "securityUntil": "2028-04-30",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "23",
+          "released": "2024-10-16",
+          "supportUntil": "2025-04-01",
+          "securityUntil": "2025-06-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "22",
+          "released": "2024-04-24",
+          "supportUntil": "2025-10-21",
+          "securityUntil": "2027-04-30",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "21",
+          "released": "2023-10-17",
+          "supportUntil": "2024-04-01",
+          "securityUntil": "2024-06-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "20",
+          "released": "2023-04-18",
+          "supportUntil": "2024-10-22",
+          "securityUntil": "2026-04-30",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "19",
+          "released": "2022-10-18",
+          "supportUntil": "2023-04-01",
+          "securityUntil": "2023-06-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "18",
+          "released": "2022-04-19",
+          "supportUntil": "2023-10-18",
+          "securityUntil": "2025-04-30",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "17",
+          "released": "2021-10-19",
+          "supportUntil": "2022-04-01",
+          "securityUntil": "2022-06-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "16",
+          "released": "2021-04-20",
+          "supportUntil": "2022-10-18",
+          "securityUntil": "2023-09-11",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "15",
+          "released": "2020-10-20",
+          "supportUntil": "2021-04-01",
+          "securityUntil": "2021-06-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "14",
+          "released": "2020-04-21",
+          "supportUntil": "2021-10-19",
+          "securityUntil": "2023-04-30",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "13",
+          "released": "2019-10-22",
+          "supportUntil": "2020-04-01",
+          "securityUntil": "2020-06-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "12",
+          "released": "2019-04-23",
+          "supportUntil": "2020-10-20",
+          "securityUntil": "2022-04-30",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "10",
+          "released": "2018-04-24",
+          "supportUntil": "2020-05-19",
+          "securityUntil": "2021-04-30",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "php",
+      "name": "PHP",
+      "category": "runtime",
+      "eolSlug": "php",
+      "url": "https://endoflife.date/php",
+      "versions": [
+        {
+          "version": "8.5",
+          "released": "2025-11-20",
+          "supportUntil": "2027-12-31",
+          "securityUntil": "2029-12-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "8.4",
+          "released": "2024-11-21",
+          "supportUntil": "2026-12-31",
+          "securityUntil": "2028-12-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "8.3",
+          "released": "2023-11-23",
+          "supportUntil": "2025-12-31",
+          "securityUntil": "2027-12-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "8.2",
+          "released": "2022-12-08",
+          "supportUntil": "2024-12-31",
+          "securityUntil": "2026-12-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "8.1",
+          "released": "2021-11-25",
+          "supportUntil": "2023-11-25",
+          "securityUntil": "2025-12-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "8.0",
+          "released": "2020-11-26",
+          "supportUntil": "2022-11-26",
+          "securityUntil": "2023-11-26",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "7.4",
+          "released": "2019-11-28",
+          "supportUntil": "2021-11-28",
+          "securityUntil": "2022-11-28",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "7.3",
+          "released": "2018-12-06",
+          "supportUntil": "2020-12-06",
+          "securityUntil": "2021-12-06",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "7.2",
+          "released": "2017-11-30",
+          "supportUntil": "2019-11-30",
+          "securityUntil": "2020-11-30",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "7.1",
+          "released": "2016-12-01",
+          "supportUntil": "2018-12-01",
+          "securityUntil": "2019-12-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "7.0",
+          "released": "2015-12-03",
+          "supportUntil": "2018-01-04",
+          "securityUntil": "2019-01-10",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "postgresql",
+      "name": "PostgreSQL",
+      "category": "database",
+      "eolSlug": "postgresql",
+      "url": "https://endoflife.date/postgresql",
+      "versions": [
+        {
+          "version": "18",
+          "released": "2025-09-25",
+          "supportUntil": "",
+          "securityUntil": "2030-11-14",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "17",
+          "released": "2024-09-26",
+          "supportUntil": "",
+          "securityUntil": "2029-11-08",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "16",
+          "released": "2023-09-14",
+          "supportUntil": "",
+          "securityUntil": "2028-11-09",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "15",
+          "released": "2022-10-13",
+          "supportUntil": "",
+          "securityUntil": "2027-11-11",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "14",
+          "released": "2021-09-30",
+          "supportUntil": "",
+          "securityUntil": "2026-11-12",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "13",
+          "released": "2020-09-24",
+          "supportUntil": "",
+          "securityUntil": "2025-11-13",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "12",
+          "released": "2019-10-03",
+          "supportUntil": "",
+          "securityUntil": "2024-11-21",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "11",
+          "released": "2018-10-18",
+          "supportUntil": "",
+          "securityUntil": "2023-11-09",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "10",
+          "released": "2017-10-05",
+          "supportUntil": "",
+          "securityUntil": "2022-11-10",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "9.6",
+          "released": "2016-09-29",
+          "supportUntil": "",
+          "securityUntil": "2021-11-11",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "9.5",
+          "released": "2016-01-07",
+          "supportUntil": "",
+          "securityUntil": "2021-02-11",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "9.4",
+          "released": "2014-12-18",
+          "supportUntil": "",
+          "securityUntil": "2020-02-13",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "python",
+      "name": "Python",
+      "category": "runtime",
+      "eolSlug": "python",
+      "url": "https://endoflife.date/python",
+      "versions": [
+        {
+          "version": "3.15",
+          "released": "2026-10-09",
+          "supportUntil": "2028-10-09",
+          "securityUntil": "2031-10-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "3.14",
+          "released": "2025-10-07",
+          "supportUntil": "2027-10-01",
+          "securityUntil": "2030-10-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "3.13",
+          "released": "2024-10-07",
+          "supportUntil": "2026-10-01",
+          "securityUntil": "2029-10-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "3.12",
+          "released": "2023-10-02",
+          "supportUntil": "2025-04-02",
+          "securityUntil": "2028-10-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "3.11",
+          "released": "2022-10-24",
+          "supportUntil": "2024-04-01",
+          "securityUntil": "2027-10-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "3.10",
+          "released": "2021-10-04",
+          "supportUntil": "2023-04-05",
+          "securityUntil": "2026-10-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "3.9",
+          "released": "2020-10-05",
+          "supportUntil": "2022-05-17",
+          "securityUntil": "2025-10-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "3.8",
+          "released": "2019-10-14",
+          "supportUntil": "2021-05-03",
+          "securityUntil": "2024-10-07",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "3.7",
+          "released": "2018-06-27",
+          "supportUntil": "2020-06-27",
+          "securityUntil": "2023-06-27",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "3.6",
+          "released": "2016-12-23",
+          "supportUntil": "2018-12-24",
+          "securityUntil": "2021-12-23",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "3.5",
+          "released": "2015-09-13",
+          "supportUntil": "",
+          "securityUntil": "2020-09-30",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "3.4",
+          "released": "2014-03-16",
+          "supportUntil": "",
+          "securityUntil": "2019-03-18",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "2.7",
+          "released": "2010-07-03",
+          "supportUntil": "",
+          "securityUntil": "2020-01-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "redis",
+      "name": "Redis",
+      "category": "cache",
+      "eolSlug": "redis",
+      "url": "https://endoflife.date/redis",
+      "versions": [
+        {
+          "version": "8.10",
+          "released": "2026-07-29",
+          "supportUntil": "",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "8.8",
+          "released": "2026-05-25",
+          "supportUntil": "2026-07-29",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "8.6",
+          "released": "2026-02-11",
+          "supportUntil": "2026-05-25",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "8.4",
+          "released": "2025-11-18",
+          "supportUntil": "2026-02-11",
+          "securityUntil": "",
+          "lts": false,
+          "state": "supported",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "8.2",
+          "released": "2025-08-04",
+          "supportUntil": "2025-11-18",
+          "securityUntil": "2030-09-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "8.0",
+          "released": "2025-05-02",
+          "supportUntil": "2025-08-04",
+          "securityUntil": "2026-12-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "7.4",
+          "released": "2024-07-29",
+          "supportUntil": "2025-05-02",
+          "securityUntil": "2029-12-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "7.2",
+          "released": "2023-08-15",
+          "supportUntil": "2024-07-29",
+          "securityUntil": "2029-12-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "7.0",
+          "released": "2022-04-27",
+          "supportUntil": "2023-08-15",
+          "securityUntil": "2024-07-29",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "6.2",
+          "released": "2021-02-22",
+          "supportUntil": "2022-04-27",
+          "securityUntil": "2027-04-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "6.0",
+          "released": "2020-04-30",
+          "supportUntil": "2021-02-22",
+          "securityUntil": "2022-05-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "5.0",
+          "released": "2018-10-17",
+          "supportUntil": "2020-04-30",
+          "securityUntil": "2022-04-27",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "rocky-linux",
+      "name": "Rocky Linux",
+      "category": "os",
+      "eolSlug": "rocky-linux",
+      "url": "https://endoflife.date/rocky-linux",
+      "versions": [
+        {
+          "version": "10",
+          "released": "2025-06-11",
+          "supportUntil": "2030-05-31",
+          "securityUntil": "2035-05-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "9",
+          "released": "2022-07-14",
+          "supportUntil": "2027-05-31",
+          "securityUntil": "2032-05-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "8",
+          "released": "2021-05-01",
+          "supportUntil": "2024-05-31",
+          "securityUntil": "2029-05-31",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "ubuntu",
+      "name": "Ubuntu",
+      "category": "os",
+      "eolSlug": "ubuntu",
+      "url": "https://endoflife.date/ubuntu",
+      "versions": [
+        {
+          "version": "26.10",
+          "released": "2026-10-15",
+          "supportUntil": "2027-07-01",
+          "securityUntil": "2027-07-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "26.04",
+          "released": "2026-04-23",
+          "supportUntil": "2031-05-29",
+          "securityUntil": "2031-05-29",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "25.10",
+          "released": "2025-10-09",
+          "supportUntil": "2026-07-01",
+          "securityUntil": "2026-07-01",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "25.04",
+          "released": "2025-04-17",
+          "supportUntil": "2026-01-17",
+          "securityUntil": "2026-01-17",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "24.10",
+          "released": "2024-10-10",
+          "supportUntil": "2025-07-10",
+          "securityUntil": "2025-07-10",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "24.04",
+          "released": "2024-04-25",
+          "supportUntil": "2029-05-31",
+          "securityUntil": "2029-05-31",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "23.10",
+          "released": "2023-10-12",
+          "supportUntil": "2024-07-12",
+          "securityUntil": "2024-07-12",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "23.04",
+          "released": "2023-04-20",
+          "supportUntil": "2024-01-20",
+          "securityUntil": "2024-01-20",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "22.10",
+          "released": "2022-10-20",
+          "supportUntil": "2023-07-20",
+          "securityUntil": "2023-07-20",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "22.04",
+          "released": "2022-04-21",
+          "supportUntil": "2024-09-30",
+          "securityUntil": "2027-06-01",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "21.10",
+          "released": "2021-10-14",
+          "supportUntil": "2022-07-14",
+          "securityUntil": "2022-07-14",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "21.04",
+          "released": "2021-04-22",
+          "supportUntil": "2022-01-20",
+          "securityUntil": "2022-01-20",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "20.10",
+          "released": "2020-10-22",
+          "supportUntil": "2021-07-22",
+          "securityUntil": "2021-07-22",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "20.04",
+          "released": "2020-04-23",
+          "supportUntil": "2022-10-01",
+          "securityUntil": "2025-05-31",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "19.10",
+          "released": "2019-10-17",
+          "supportUntil": "2020-07-06",
+          "securityUntil": "2020-07-06",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "19.04",
+          "released": "2019-04-18",
+          "supportUntil": "2020-01-23",
+          "securityUntil": "2020-01-23",
+          "lts": false,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "18.04",
+          "released": "2018-04-26",
+          "supportUntil": "2023-05-31",
+          "securityUntil": "2023-05-31",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        },
+        {
+          "version": "16.04",
+          "released": "2016-04-21",
+          "supportUntil": "2021-04-02",
+          "securityUntil": "2021-04-02",
+          "lts": true,
+          "state": "",
+          "approx": false,
+          "requires": [],
+          "note": ""
+        }
+      ]
+    }
+  ]
+}
