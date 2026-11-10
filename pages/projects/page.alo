@@ -9,7 +9,7 @@
             <p id="count">ডেটা লোড হচ্ছে…</p>
         </div>
         <div class="actions">
-            <button class="btn btn-primary" type="button" id="add"><Icon name="plus" />নতুন প্রজেক্ট</button>
+            <button class="btn" type="button" data-action="csv"><Icon name="file" />CSV</button>
         </div>
     </div>
 
@@ -36,7 +36,9 @@
                         <th>প্রজেক্ট</th>
                         <th>অবস্থা</th>
                         <th>মূল কারণ</th>
-                        <th class="hide-sm">স্ট্যাক</th>
+                        <th class="hide-sm">Environment</th>
+                        <th class="hide-sm">হালনাগাদ</th>
+                        <th class="hide-sm" aria-label="খুলুন"></th>
                     </tr>
                 </thead>
                 <tbody id="rows"></tbody>
@@ -139,21 +141,33 @@
         ui.$('#more').setAttribute('aria-expanded', String(!ui.$('#more-panel').hidden));
     }
 
-    function stack(r) {
-        const labels = r.items.filter(function (x) { return x.version; }).map(function (x) { return x.label; });
-        if (!labels.length) return '<span class="muted">—</span>';
-        return '<span class="small muted">' + esc(labels.slice(0, 3).join(', ')) + (labels.length > 3 ? ' +' + P.num(labels.length - 3) : '') + '</span>';
+    // প্রতিটা environment-এর সবচেয়ে খারাপ অবস্থা; টেকের জন্য আলাদা একটা
+    function envPills(r) {
+        const groups = [{ name: 'টেক', items: r.items.filter(function (x) { return x.kind === 'tech'; }) }].concat(
+            r.project.deployments.filter(function (d) { return !f.dep || d.name === f.dep; }).map(function (d) {
+                return { name: d.name, items: r.items.filter(function (x) { return x.kind === 'env' && x.deployment === d.name; }) };
+            })
+        ).filter(function (g) { return g.items.length; });
+        if (!groups.length) return '<span class="muted">—</span>';
+        return '<div class="env-pills">' + groups.map(function (g) {
+            let worst = 'unknown';
+            g.items.forEach(function (x) { if (P.statusRank(x.status) > P.statusRank(worst)) worst = x.status; });
+            const tip = g.items.map(function (x) { return x.label + ': ' + x.text; }).join('\n');
+            return '<span class="env-pill s-' + worst + '" title="' + esc(tip) + '"><span class="dot"></span>' + esc(g.name) + '</span>';
+        }).join('') + '</div>';
     }
 
     function rowHtml(r) {
         const p = r.project;
-        const sub = [p.owner].concat(p.tags).filter(Boolean);
+        const sub = [p.owner].concat(p.tags).filter(Boolean).join(' · ');
         return (
             '<tr class="clickable" data-id="' + esc(p.id) + '">' +
-            '<td><div class="cell-title"><b>' + esc(p.name) + '</b>' + (sub.length || p.lifecycle !== 'active' ? '<span class="small muted">' + esc(sub.join(' · ')) + (p.lifecycle !== 'active' ? ' <span class="tag">' + esc(P.LIFECYCLES[p.lifecycle]) + '</span>' : '') + '</span>' : '') + '</div></td>' +
+            '<td><div class="who">' + ui.avatar(p.name) + '<div><b>' + esc(p.name) + (p.lifecycle !== 'active' ? ' <span class="tag">' + esc(P.LIFECYCLES[p.lifecycle]) + '</span>' : '') + '</b>' + (sub ? '<span>' + esc(sub) + '</span>' : '') + '</div></div></td>' +
             '<td>' + ui.badge(r.status) + '</td>' +
             '<td class="small">' + esc(r.reason) + (r.issues.length ? '<br><span class="muted">' + P.num(r.issues.length) + 'টি অমিল</span>' : '') + '</td>' +
-            '<td class="hide-sm">' + stack(r) + '</td>' +
+            '<td class="hide-sm">' + envPills(r) + '</td>' +
+            '<td class="hide-sm small muted num">' + (p.updatedAt ? P.fmtDate(p.updatedAt) : '—') + '</td>' +
+            '<td class="hide-sm arrow">' + ui.icon('chevron') + '</td>' +
             '</tr>'
         );
     }
@@ -204,7 +218,6 @@
         const tr = e.target.closest('tr[data-id]');
         if (tr) ui.openProject(tr.dataset.id);
     });
-    ui.$('#add').addEventListener('click', function () { ui.openProject(null); });
 
     P.store.ready().then(function () {
         render();

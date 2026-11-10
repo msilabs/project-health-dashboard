@@ -82,7 +82,7 @@
     const ui = P.ui;
     const esc = P.esc;
     const query = ui.query();
-    const f = { kind: query.get('kind') === 'env' ? 'env' : 'tech', q: '', category: '', used: false };
+    const f = { kind: query.get('kind') === 'env' ? 'env' : 'tech', q: query.get('q') || '', category: '', used: false };
     const dialog = ui.$('#editor');
     const form = dialog.querySelector('form');
     const openOld = {};
@@ -112,7 +112,7 @@
         const cats = categories(data, f.kind);
         ui.$('#category').innerHTML = ui.options(cats, f.category, 'সব ধরন');
         ui.$('#category').value = f.category;
-        ui.setQuery({ kind: f.kind === 'tech' ? '' : f.kind });
+        ui.setQuery({ kind: f.kind === 'tech' ? '' : f.kind, q: f.q.trim() });
 
         const usage = P.usage(P.analyze(data, { includeArchived: true }).rows);
         const needle = f.q.trim().toLowerCase();
@@ -147,7 +147,7 @@
                 : '<p class="small muted">সক্রিয় কোনো ভার্সন নেই।</p>';
             return (
                 '<details class="product"' + (used.length ? ' open' : '') + '>' +
-                '<summary>' + ui.icon('chevron').replace('class="icon"', 'class="icon chev"') +
+                '<summary>' + ui.icon('chevron').replace('class="icon"', 'class="icon chev"') + ui.avatar(product.name) +
                 '<span><b>' + esc(product.name) + '</b> <span class="small muted">' + esc(cats[product.category] || product.category) + '</span></span>' +
                 '<span class="small hide-sm">' + projectsLink(product.id, '', Object.keys(projectIds).length) + '</span>' +
                 (worst ? ui.badge(worst) : '<span class="small muted">' + P.num(product.versions.length) + 'টি ভার্সন</span>') +
@@ -392,6 +392,7 @@
     });
 
     P.store.ready().then(function () {
+        ui.$('#q').value = f.q;
         render();
         const product = query.get('edit') && P.findProduct(P.store.get(), f.kind, query.get('edit'));
         if (product) openEditor(product);

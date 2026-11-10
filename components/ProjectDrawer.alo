@@ -2,13 +2,16 @@
     <dialog class="drawer" aria-labelledby="pd-title">
         <form class="sheet" novalidate>
             <div class="sheet-head">
-                <div class="stack" style="gap: 0.35rem; min-width: 0">
-                    <h2 id="pd-title"></h2>
-                    <div class="row small muted" data-meta></div>
+                <div class="who" style="align-items: flex-start">
+                    <span data-avatar></span>
+                    <div class="stack" style="gap: 0.4rem; min-width: 0">
+                        <h2 id="pd-title"></h2>
+                        <div class="row small muted" data-meta></div>
+                    </div>
                 </div>
                 <button class="btn btn-ghost btn-sm btn-icon" type="button" data-close aria-label="বন্ধ করুন"><Icon name="x" /></button>
             </div>
-            <div class="sheet-body" data-body></div>
+            <div class="sheet-body" data-body tabindex="-1" style="outline: none"></div>
             <div class="sheet-foot" data-foot></div>
             <div data-lists hidden></div>
         </form>
@@ -47,8 +50,14 @@
     function renderView(p) {
         const r = P.analyzeProject(P.store.get(), p);
         $el.querySelector('#pd-title').textContent = p.name;
+        $el.querySelector('[data-avatar]').innerHTML = ui.avatar(p.name, 'lg');
         $el.querySelector('[data-meta]').innerHTML = meta(p, r);
-        let html = '';
+        const bad = r.items.filter(function (x) { return x.status === 'eol' || x.status === 'critical' || x.status === 'warning'; }).length;
+        let html = '<div class="mini-stats">' +
+            '<div><span>টেক</span><b>' + P.num(r.items.filter(function (x) { return x.kind === 'tech'; }).length) + '</b></div>' +
+            '<div><span>Environment</span><b>' + P.num(p.deployments.length) + '</b></div>' +
+            '<div><span>ঝুঁকির অংশ</span><b' + (bad ? ' style="color: var(--' + r.status + ')"' : '') + '>' + P.num(bad + r.issues.length) + '</b></div>' +
+            '</div>';
         if (r.issues.length) {
             html += '<div class="section"><span class="section-title">সামঞ্জস্য আর অমিল</span>' + r.issues.map(function (i) {
                 return '<div class="notice s-' + i.severity + '">' + esc(i.text) + '</div>';
@@ -102,6 +111,7 @@
     function renderEdit(p) {
         const data = P.store.get();
         $el.querySelector('#pd-title').textContent = current ? 'প্রজেক্ট এডিট' : 'নতুন প্রজেক্ট';
+        $el.querySelector('[data-avatar]').innerHTML = '';
         $el.querySelector('[data-meta]').innerHTML = '';
         $el.querySelector('[data-lists]').innerHTML = ui.datalists(data);
         body.innerHTML =
@@ -178,6 +188,7 @@
         render();
         if (!$el.open) $el.showModal();
         body.scrollTop = 0;
+        if (!editing) body.focus({ preventScroll: true });
     };
 
     ui.bindDialog($el, function () {
