@@ -98,7 +98,7 @@
                     '<td class="up-arrow" aria-hidden="true">→</td>' +
                     '<td>' + cell(t.current) + '</td>' +
                     '<td class="up-steps">' + t.entries.map(function (h) {
-                        return '<div><span class="muted">' + P.fmtDate(h.date) + '</span> <span class="v">' + esc(h.version) + '</span>' + (h.note ? '<span class="muted"> · ' + esc(h.note) + '</span>' : '') + '</div>';
+                        return '<div><span class="muted">' + P.fmtDate(h.date) + '</span> <span class="v">' + esc(h.version) + '</span></div>';
                     }).join('') + '</td>' +
                     '</tr>';
             }).join('') +
@@ -120,12 +120,12 @@
         ui.$('#content').hidden = !has;
         ui.$('#empty').hidden = has;
         if (!has) {
-            const any = data.projects.some(function (p) { return p.history.length; });
+            const any = data.projects.some(function (p) { return P.upgradeJourney(data, p).length; });
             ui.$('#lede').textContent = rangeText();
             ui.$('#empty-title').textContent = any ? 'এই সময়ে কোনো আপগ্রেড নেই' : 'এখনো কোনো আপগ্রেডের ইতিহাস নেই';
             ui.$('#empty-text').textContent = any
                 ? 'তারিখ বদলে দেখুন, বা "সব সময়" বাছুন।'
-                : 'প্রজেক্ট এডিট করে ভার্সন বদলালে ধাপ নিজে থেকেই যোগ হয়। আগের আপগ্রেড লিখতে প্রজেক্টের "এডিট করুন" থেকে "আপগ্রেডের ইতিহাস" খুলুন।';
+                : 'প্রজেক্ট এডিট করে কোনো টেক বা সার্ভারের অংশে "+ নতুন ভার্সন" দিয়ে তারিখসহ নতুন ভার্সন যোগ করলে এখানে দেখাবে।';
             return;
         }
 

@@ -371,49 +371,37 @@
     P.upgradeJourney = function (data, project, range) {
         var from = (range && range.from) || '';
         var to = (range && range.to) || '';
-        var tracks = {};
-        var order = [];
-        (project.history || []).forEach(function (h) {
-            var key = h.where + '|' + h.product;
-            if (!tracks[key]) {
-                tracks[key] = { product: h.product, where: h.where, kind: h.where ? 'env' : 'tech', all: [] };
-                order.push(key);
-            }
-            tracks[key].all.push(h);
+        var parts = project.tech.map(function (r) {
+            return { ref: r, where: '', kind: 'tech' };
         });
-        return order
-            .map(function (key) {
-                var t = tracks[key];
-                var all = t.all;
+        project.deployments.forEach(function (d) {
+            d.stack.forEach(function (r) {
+                parts.push({ ref: r, where: d.name, kind: 'env' });
+            });
+        });
+        return parts
+            .map(function (x) {
+                var all = x.ref.versions || [];
                 var pairs = [];
                 for (var i = 1; i < all.length; i++) {
                     if ((!from || all[i].date >= from) && (!to || all[i].date <= to)) pairs.push(i);
                 }
                 if (!pairs.length) return null;
+                var t = { product: x.ref.product, where: x.where, kind: x.kind };
                 t.steps = pairs.map(function (i) {
-                    return { date: all[i].date, from: all[i - 1].version, to: all[i].version, note: all[i].note };
+                    return { date: all[i].date, from: all[i - 1].version, to: all[i].version };
                 });
                 t.entries = [all[pairs[0] - 1]].concat(
                     pairs.map(function (i) {
                         return all[i];
                     })
                 );
-                var refs = t.where
-                    ? (project.deployments.filter(function (d) {
-                          return d.name === t.where;
-                      })[0] || { stack: [] }).stack
-                    : project.tech;
-                var now = refs.filter(function (r) {
-                    return r.product === t.product;
-                })[0];
                 var lastStep = t.steps[t.steps.length - 1];
-                var isLatest = pairs[pairs.length - 1] === all.length - 1;
                 t.start = P.evaluateRef(data, t.kind, { product: t.product, version: t.steps[0].from }, t.where || null);
-                t.current = P.evaluateRef(data, t.kind, { product: t.product, version: isLatest && now && now.version ? now.version : lastStep.to }, t.where || null);
+                t.current = P.evaluateRef(data, t.kind, { product: t.product, version: lastStep.to }, t.where || null);
                 t.productName = t.start.productName;
                 t.firstDate = t.entries[0].date;
                 t.lastDate = lastStep.date;
-                delete t.all;
                 return t;
             })
             .filter(Boolean)
@@ -479,7 +467,7 @@
             lines.push('- এখন: ' + t.current.label + ', ' + P.statusLine(t.current));
             lines.push('- ভার্সনের ইতিহাস:');
             t.entries.forEach(function (h) {
-                lines.push('  ' + P.fmtDate(h.date) + ': ' + t.productName + ' ' + h.version + (h.note ? '। ' + h.note : ''));
+                lines.push('  ' + P.fmtDate(h.date) + ': ' + t.productName + ' ' + h.version);
             });
         });
         return lines.join('\n');

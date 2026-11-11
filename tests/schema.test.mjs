@@ -19,8 +19,11 @@ test('normalizeData accepts a bare project array and AI-style refs', () => {
     assert.equal(d.has.tech, false);
     const p = d.projects[0];
     assert.equal(p.id, 'shop');
-    assert.deepEqual(plain(p.tech), [{ product: 'laravel', version: '11' }, { product: 'react', version: '18.3' }]);
-    assert.deepEqual(plain(p.deployments[0]), { name: 'production', stack: [{ product: 'php', version: '8.2' }] });
+    const short = (r) => ({ product: r.product, version: r.version });
+    assert.deepEqual(plain(p.tech.map(short)), [{ product: 'laravel', version: '11' }, { product: 'react', version: '18.3' }]);
+    assert.equal(p.deployments[0].name, 'production');
+    assert.deepEqual(plain(p.deployments[0].stack.map(short)), [{ product: 'php', version: '8.2' }]);
+    assert.deepEqual(plain(p.tech[0].versions), [{ version: '11', date: '2026-11-10' }]);
 });
 
 test('normalizeData rejects junk and newer schemas', () => {
@@ -107,7 +110,7 @@ test('schema 1 data loads without the removed fields', () => {
         catalog: { tech: [], env: [{ id: 'php', url: 'https://endoflife.date/php', versions: [{ version: '8.3', securityUntil: '2027-12-31', approx: true, note: 'x' }] }] },
         projects: [{ name: 'Shop', lifecycle: 'maintenance', deployments: [{ name: 'live', host: 'AWS', url: 'https://shop.example', stack: ['php 8.3'] }] }, { name: 'Old', lifecycle: 'archived' }]
     });
-    assert.equal(d.schemaVersion, 4);
+    assert.equal(d.schemaVersion, 5);
     assert.deepEqual(plain(d.settings), { redDays: 30, yellowDays: 200 });
     assert.deepEqual(plain(d.catalog.env[0]), {
         id: 'php',
@@ -117,7 +120,7 @@ test('schema 1 data loads without the removed fields', () => {
         versions: [{ version: '8.3', released: '', supportUntil: '', securityUntil: '2027-12-31', lts: false, state: '', requires: [] }]
     });
     assert.deepEqual(plain(d.projects.map((p) => p.lifecycle)), ['active', 'archived']);
-    assert.deepEqual(plain(d.projects[0].deployments), [{ name: 'live', stack: [{ product: 'php', version: '8.3' }] }]);
+    assert.deepEqual(plain(d.projects[0].deployments.map((x) => ({ name: x.name, stack: x.stack.map((r) => r.product + ' ' + r.version) }))), [{ name: 'live', stack: ['php 8.3'] }]);
     assert.deepEqual(plain(P.deploymentNames(d)), ['production', 'staging', 'development', 'live']);
 });
 
@@ -136,78 +139,65 @@ test('a newer site catalog updates dates and keeps what the user added', () => {
     assert.equal(out.meta.catalogSeed, '2026-01-01');
 });
 
-test('history entries are cleaned, sorted and kept on merge', () => {
+test('versions are sorted by date, one per date, and the latest is the current version', () => {
     const d = P.normalizeData({
-        projects: [{ name: 'Shop', history: [
-            { date: '2026-11-09', product: 'Laravel', version: '12' },
-            { date: '2026-11-04', product: 'laravel', version: '10', note: 'first' },
-            { date: 'bad', product: 'laravel', version: '9' },
-            { date: '2026-11-01', product: 'php', where: 'production', version: '' }
+        projects: [{ name: 'Shop', updatedAt: '2026-10-01', tech: [
+            { product: 'Laravel', versions: [
+                { version: '12', date: '2026-11-09' },
+                { version: '10', date: '2026-11-04' },
+                { version: '11', date: '2026-11-04' },
+                { version: '', date: '2026-11-05' }
+            ] },
+            'Vue 3.5'
         ] }]
     });
-    assert.deepEqual(plain(d.projects[0].history.map((h) => h.date + ' ' + h.product + ' ' + h.version)), ['2026-11-04 laravel 10', '2026-11-09 laravel 12']);
-    const inc = P.normalizeData({ projects: [{ name: 'Shop', history: [{ date: '2026-11-04', product: 'laravel', version: '10' }, { date: '2026-11-10', product: 'laravel', version: '13' }] }] });
-    assert.equal(P.mergeData(d, inc, 'merge').projects[0].history.length, 3);
+    const [laravel, vue] = d.projects[0].tech;
+    assert.deepEqual(plain(laravel.versions), [{ version: '11', date: '2026-11-04' }, { version: '12', date: '2026-11-09' }]);
+    assert.equal(laravel.version, '12');
+    // ভার্সনের তালিকা না থাকলে version থেকে, প্রজেক্টের শেষ হালনাগাদের তারিখে
+    assert.deepEqual(plain(vue.versions), [{ version: '3.5', date: '2026-10-01' }]);
 });
 
-test('schema 3 upgrade steps become version entries', () => {
+test('schema 4 history becomes versions inside each part', () => {
+    const d = P.normalizeData({
+        schemaVersion: 4,
+        projects: [{
+            name: 'Shop',
+            updatedAt: '2026-11-01',
+            tech: [{ product: 'laravel', version: '12.40' }],
+            deployments: [{ name: 'production', stack: [{ product: 'php', version: '8.3' }] }],
+            history: [
+                { date: '2023-03-20', product: 'laravel', where: '', version: '10' },
+                { date: '2025-04-15', product: 'laravel', where: '', version: '12' },
+                { date: '2024-01-01', product: 'php', where: 'production', version: '8.1' }
+            ]
+        }]
+    });
+    const p = d.projects[0];
+    assert.equal(p.history, undefined);
+    assert.deepEqual(plain(p.tech[0].versions), [{ version: '10', date: '2023-03-20' }, { version: '12.40', date: '2025-04-15' }]);
+    assert.deepEqual(plain(p.deployments[0].stack[0].versions), [{ version: '8.1', date: '2024-01-01' }, { version: '8.3', date: '2026-11-01' }]);
+});
+
+test('schema 3 upgrade steps also become versions', () => {
     const d = P.normalizeData({
         schemaVersion: 3,
-        projects: [{ name: 'Shop', history: [
+        projects: [{ name: 'Shop', tech: ['laravel 11'], history: [
             { date: '2024-06-10', product: 'laravel', where: '', from: '10', to: '11', note: '' },
             { date: '2023-03-20', product: 'laravel', where: '', from: '9', to: '10', note: 'x' }
         ] }]
     });
-    assert.deepEqual(plain(d.projects[0].history.map((h) => h.date + ' ' + h.version + ' ' + h.note)), ['2023-03-20 9 ', '2023-03-20 10 x', '2024-06-10 11 ']);
+    assert.deepEqual(plain(d.projects[0].tech[0].versions.map((v) => v.version)), ['10', '11']);
 });
 
-test('recordUpgrades adds entries only when the cycle changes', () => {
-    const catalog = { tech: [{ id: 'laravel', versions: [{ version: '12' }, { version: '11' }, { version: '10' }] }], env: [{ id: 'php', versions: [{ version: '8.3' }, { version: '8.2' }] }] };
-    const before = P.normalizeData({ catalog, projects: [{ name: 'Shop', updatedAt: '2026-10-01', tech: ['laravel 11.2'], deployments: [{ name: 'production', stack: ['php 8.2.10'] }] }] });
-    const patch = P.clone(before);
-    patch.projects[0].tech[0].version = '11.9';
-    patch.projects[0].deployments[0].stack[0].version = '8.2.30';
-    assert.equal(P.recordUpgrades(before, patch, '2026-11-10').projects[0].history.length, 0);
-
-    // ইতিহাস ফাঁকা: আগের ভার্সন আগের সেভের তারিখে, নতুনটা আজ
-    const after = P.clone(before);
-    after.projects[0].tech[0].version = '12.1';
-    after.projects[0].deployments[0].stack[0].version = '8.3';
-    P.recordUpgrades(before, after, '2026-11-10');
-    assert.deepEqual(plain(after.projects[0].history.map((h) => h.date + ' ' + h.where + '|' + h.product + ' ' + h.version)), [
-        '2026-10-01 |laravel 11.2', '2026-10-01 production|php 8.2.10', '2026-11-10 |laravel 12.1', '2026-11-10 production|php 8.3'
-    ]);
-
-    // একই দিনে আবার আগের ভার্সনে ফিরলে আজকের এন্ট্রি মুছে যায়
-    const back = P.clone(after);
-    back.projects[0].tech[0].version = '11.2';
-    P.recordUpgrades(after, back, '2026-11-10');
-    assert.deepEqual(plain(back.projects[0].history.filter((h) => h.product === 'laravel').map((h) => h.version)), ['11.2']);
-
-    // হাতে লেখা ইতিহাসে নতুন ভার্সন আগেই থাকলে কিছু যোগ হয় না
-    const manual = P.clone(before);
-    manual.projects[0].history = [{ date: '2025-01-01', product: 'laravel', where: '', version: '11', note: '' }, { date: '2026-11-04', product: 'laravel', where: '', version: '12', note: '' }];
-    manual.projects[0].tech[0].version = '12';
-    P.recordUpgrades(before, manual, '2026-11-10');
-    assert.equal(manual.projects[0].history.length, 2);
-
-    // আগের দিনের শেষ এন্ট্রির পরে নতুন এন্ট্রি
-    const more = P.clone(manual);
-    more.projects[0].tech[0].version = '13';
-    P.recordUpgrades(manual, more, '2026-11-11');
-    assert.deepEqual(plain(more.projects[0].history.map((h) => h.version)), ['11', '12', '13']);
-});
-
-test('creating a project and saving the same version again adds nothing more', () => {
-    const catalog = { tech: [{ id: 'laravel', versions: [{ version: '11' }, { version: '10' }] }], env: [] };
-    const empty = P.normalizeData({ catalog, projects: [] });
-    const created = P.recordUpgrades(empty, P.normalizeData({ catalog, projects: [{ name: 'A', tech: ['laravel 10'], updatedAt: '2026-11-11' }] }), '2026-11-11');
-    assert.equal(created.projects[0].history.length, 0);
-    const edited = P.clone(created);
-    edited.projects[0].tech[0].version = '11';
-    P.recordUpgrades(created, edited, '2026-11-11');
-    assert.deepEqual(plain(edited.projects[0].history.map((h) => h.version)), ['10', '11']);
-    const again = P.clone(edited);
-    P.recordUpgrades(edited, again, '2026-11-12');
-    assert.equal(again.projects[0].history.length, 2);
+test('merge keeps the version list and adds only a new cycle', () => {
+    const catalog = { tech: [{ id: 'laravel', versions: [{ version: '13' }, { version: '12' }, { version: '11' }] }], env: [] };
+    const cur = P.normalizeData({ catalog, projects: [{ id: 'shop', name: 'Shop', tech: [{ product: 'laravel', versions: [{ version: '11', date: '2026-10-10' }, { version: '12.40', date: '2026-11-09' }] }] }] });
+    // AI-এর উত্তরে একই সাইকেল: কিছু বদলায় না
+    const same = P.mergeData(cur, P.normalizeData({ projects: [{ id: 'shop', name: 'Shop', tech: ['laravel 12'] }] }), 'merge');
+    assert.deepEqual(plain(same.projects[0].tech[0].versions.map((v) => v.version)), ['11', '12.40']);
+    // নতুন সাইকেল: আজকের তারিখে শেষে যোগ
+    const up = P.mergeData(cur, P.normalizeData({ projects: [{ id: 'shop', name: 'Shop', tech: ['laravel 13'] }] }), 'merge');
+    assert.deepEqual(plain(up.projects[0].tech[0].versions), [{ version: '11', date: '2026-10-10' }, { version: '12.40', date: '2026-11-09' }, { version: '13', date: '2026-11-10' }]);
+    assert.equal(up.projects[0].tech[0].version, '13');
 });

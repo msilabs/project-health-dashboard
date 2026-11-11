@@ -21,15 +21,45 @@
             "tech": [
                 {
                     "product": "laravel",
-                    "version": "12.40"
+                    "version": "12.40",
+                    "versions": [
+                        {
+                            "version": "9",
+                            "date": "2022-08-01"
+                        },
+                        {
+                            "version": "10",
+                            "date": "2023-03-20"
+                        },
+                        {
+                            "version": "11",
+                            "date": "2024-06-10"
+                        },
+                        {
+                            "version": "12.40",
+                            "date": "2025-04-15"
+                        }
+                    ]
                 },
                 {
                     "product": "livewire",
-                    "version": "3.6"
+                    "version": "3.6",
+                    "versions": [
+                        {
+                            "version": "3.6",
+                            "date": "2026-10-28"
+                        }
+                    ]
                 },
                 {
                     "product": "tailwind-css",
-                    "version": "4.3"
+                    "version": "4.3",
+                    "versions": [
+                        {
+                            "version": "4.3",
+                            "date": "2026-10-28"
+                        }
+                    ]
                 }
             ],
             "deployments": [
@@ -38,23 +68,61 @@
                     "stack": [
                         {
                             "product": "php",
-                            "version": "8.2.28"
+                            "version": "8.2.28",
+                            "versions": [
+                                {
+                                    "version": "8.0",
+                                    "date": "2022-08-01"
+                                },
+                                {
+                                    "version": "8.1",
+                                    "date": "2023-03-05"
+                                },
+                                {
+                                    "version": "8.2.28",
+                                    "date": "2024-05-28"
+                                }
+                            ]
                         },
                         {
                             "product": "mysql",
-                            "version": "8.4.5"
+                            "version": "8.4.5",
+                            "versions": [
+                                {
+                                    "version": "8.4.5",
+                                    "date": "2026-10-28"
+                                }
+                            ]
                         },
                         {
                             "product": "nginx",
-                            "version": "1.30"
+                            "version": "1.30",
+                            "versions": [
+                                {
+                                    "version": "1.30",
+                                    "date": "2026-10-28"
+                                }
+                            ]
                         },
                         {
                             "product": "redis",
-                            "version": "7.4"
+                            "version": "7.4",
+                            "versions": [
+                                {
+                                    "version": "7.4",
+                                    "date": "2026-10-28"
+                                }
+                            ]
                         },
                         {
                             "product": "ubuntu",
-                            "version": "22.04"
+                            "version": "22.04",
+                            "versions": [
+                                {
+                                    "version": "22.04",
+                                    "date": "2026-10-28"
+                                }
+                            ]
                         }
                     ]
                 },
@@ -63,76 +131,55 @@
                     "stack": [
                         {
                             "product": "php",
-                            "version": "8.4"
+                            "version": "8.4",
+                            "versions": [
+                                {
+                                    "version": "8.4",
+                                    "date": "2026-10-28"
+                                }
+                            ]
                         },
                         {
                             "product": "mysql",
-                            "version": "8.4"
+                            "version": "8.4",
+                            "versions": [
+                                {
+                                    "version": "8.4",
+                                    "date": "2026-10-28"
+                                }
+                            ]
                         },
                         {
                             "product": "nginx",
-                            "version": "1.30"
+                            "version": "1.30",
+                            "versions": [
+                                {
+                                    "version": "1.30",
+                                    "date": "2026-10-28"
+                                }
+                            ]
                         },
                         {
                             "product": "redis",
-                            "version": "7.4"
+                            "version": "7.4",
+                            "versions": [
+                                {
+                                    "version": "7.4",
+                                    "date": "2026-10-28"
+                                }
+                            ]
                         },
                         {
                             "product": "ubuntu",
-                            "version": "24.04"
+                            "version": "24.04",
+                            "versions": [
+                                {
+                                    "version": "24.04",
+                                    "date": "2026-10-28"
+                                }
+                            ]
                         }
                     ]
-                }
-            ],
-            "history": [
-                {
-                    "date": "2022-08-01",
-                    "product": "php",
-                    "where": "production",
-                    "version": "8.0",
-                    "note": ""
-                },
-                {
-                    "date": "2022-08-01",
-                    "product": "laravel",
-                    "where": "",
-                    "version": "9",
-                    "note": ""
-                },
-                {
-                    "date": "2023-03-05",
-                    "product": "php",
-                    "where": "production",
-                    "version": "8.1",
-                    "note": ""
-                },
-                {
-                    "date": "2023-03-20",
-                    "product": "laravel",
-                    "where": "",
-                    "version": "10",
-                    "note": ""
-                },
-                {
-                    "date": "2024-05-28",
-                    "product": "php",
-                    "where": "production",
-                    "version": "8.2",
-                    "note": ""
-                },
-                {
-                    "date": "2024-06-10",
-                    "product": "laravel",
-                    "where": "",
-                    "version": "11",
-                    "note": ""
-                },
-                {
-                    "date": "2025-04-15",
-                    "product": "laravel",
-                    "where": "",
-                    "version": "12",
-                    "note": "Livewire 3-এ নেওয়া হয়েছে"
                 }
             ],
             "updatedAt": "2026-10-28"
@@ -150,7 +197,13 @@
             "tech": [
                 {
                     "product": "laravel",
-                    "version": "10"
+                    "version": "10",
+                    "versions": [
+                        {
+                            "version": "10",
+                            "date": "2026-06-14"
+                        }
+                    ]
                 }
             ],
             "deployments": [
@@ -159,15 +212,33 @@
                     "stack": [
                         {
                             "product": "php",
-                            "version": "8.1"
+                            "version": "8.1",
+                            "versions": [
+                                {
+                                    "version": "8.1",
+                                    "date": "2026-06-14"
+                                }
+                            ]
                         },
                         {
                             "product": "mysql",
-                            "version": "5.7"
+                            "version": "5.7",
+                            "versions": [
+                                {
+                                    "version": "5.7",
+                                    "date": "2026-06-14"
+                                }
+                            ]
                         },
                         {
                             "product": "apache",
-                            "version": "2.4"
+                            "version": "2.4",
+                            "versions": [
+                                {
+                                    "version": "2.4",
+                                    "date": "2026-06-14"
+                                }
+                            ]
                         }
                     ]
                 }
@@ -187,11 +258,27 @@
             "tech": [
                 {
                     "product": "laravel",
-                    "version": "13.1"
+                    "version": "13.1",
+                    "versions": [
+                        {
+                            "version": "11",
+                            "date": "2024-09-15"
+                        },
+                        {
+                            "version": "13.1",
+                            "date": "2026-03-28"
+                        }
+                    ]
                 },
                 {
                     "product": "vue",
-                    "version": "3.5"
+                    "version": "3.5",
+                    "versions": [
+                        {
+                            "version": "3.5",
+                            "date": "2026-11-02"
+                        }
+                    ]
                 }
             ],
             "deployments": [
@@ -200,37 +287,45 @@
                     "stack": [
                         {
                             "product": "php",
-                            "version": "8.2"
+                            "version": "8.2",
+                            "versions": [
+                                {
+                                    "version": "8.2",
+                                    "date": "2026-11-02"
+                                }
+                            ]
                         },
                         {
                             "product": "postgresql",
-                            "version": "16"
+                            "version": "16",
+                            "versions": [
+                                {
+                                    "version": "16",
+                                    "date": "2026-11-02"
+                                }
+                            ]
                         },
                         {
                             "product": "nginx",
-                            "version": "1.30"
+                            "version": "1.30",
+                            "versions": [
+                                {
+                                    "version": "1.30",
+                                    "date": "2026-11-02"
+                                }
+                            ]
                         },
                         {
                             "product": "ubuntu",
-                            "version": "24.04"
+                            "version": "24.04",
+                            "versions": [
+                                {
+                                    "version": "24.04",
+                                    "date": "2026-11-02"
+                                }
+                            ]
                         }
                     ]
-                }
-            ],
-            "history": [
-                {
-                    "date": "2024-09-15",
-                    "product": "laravel",
-                    "where": "",
-                    "version": "11",
-                    "note": ""
-                },
-                {
-                    "date": "2026-03-28",
-                    "product": "laravel",
-                    "where": "",
-                    "version": "13",
-                    "note": "সার্ভারের PHP এখনো আপগ্রেড হয়নি"
                 }
             ],
             "updatedAt": "2026-11-02"
@@ -248,15 +343,41 @@
             "tech": [
                 {
                     "product": "nextjs",
-                    "version": "16.0"
+                    "version": "16.0",
+                    "versions": [
+                        {
+                            "version": "14",
+                            "date": "2024-01-10"
+                        },
+                        {
+                            "version": "15",
+                            "date": "2025-02-20"
+                        },
+                        {
+                            "version": "16.0",
+                            "date": "2025-11-05"
+                        }
+                    ]
                 },
                 {
                     "product": "react",
-                    "version": "19.1"
+                    "version": "19.1",
+                    "versions": [
+                        {
+                            "version": "19.1",
+                            "date": "2026-09-20"
+                        }
+                    ]
                 },
                 {
                     "product": "tailwind-css",
-                    "version": "4.3"
+                    "version": "4.3",
+                    "versions": [
+                        {
+                            "version": "4.3",
+                            "date": "2026-09-20"
+                        }
+                    ]
                 }
             ],
             "deployments": [
@@ -265,54 +386,39 @@
                     "stack": [
                         {
                             "product": "nodejs",
-                            "version": "22.15"
+                            "version": "22.15",
+                            "versions": [
+                                {
+                                    "version": "18",
+                                    "date": "2023-06-01"
+                                },
+                                {
+                                    "version": "22.15",
+                                    "date": "2025-01-12"
+                                }
+                            ]
                         },
                         {
                             "product": "nginx",
-                            "version": "1.30"
+                            "version": "1.30",
+                            "versions": [
+                                {
+                                    "version": "1.30",
+                                    "date": "2026-09-20"
+                                }
+                            ]
                         },
                         {
                             "product": "docker",
-                            "version": "29"
+                            "version": "29",
+                            "versions": [
+                                {
+                                    "version": "29",
+                                    "date": "2026-09-20"
+                                }
+                            ]
                         }
                     ]
-                }
-            ],
-            "history": [
-                {
-                    "date": "2023-06-01",
-                    "product": "nodejs",
-                    "where": "production",
-                    "version": "18",
-                    "note": ""
-                },
-                {
-                    "date": "2024-01-10",
-                    "product": "nextjs",
-                    "where": "",
-                    "version": "14",
-                    "note": ""
-                },
-                {
-                    "date": "2025-01-12",
-                    "product": "nodejs",
-                    "where": "production",
-                    "version": "22",
-                    "note": ""
-                },
-                {
-                    "date": "2025-02-20",
-                    "product": "nextjs",
-                    "where": "",
-                    "version": "15",
-                    "note": ""
-                },
-                {
-                    "date": "2025-11-05",
-                    "product": "nextjs",
-                    "where": "",
-                    "version": "16",
-                    "note": ""
                 }
             ],
             "updatedAt": "2026-09-20"
@@ -331,7 +437,13 @@
             "tech": [
                 {
                     "product": "nestjs",
-                    "version": "12"
+                    "version": "12",
+                    "versions": [
+                        {
+                            "version": "12",
+                            "date": "2026-10-11"
+                        }
+                    ]
                 }
             ],
             "deployments": [
@@ -340,19 +452,43 @@
                     "stack": [
                         {
                             "product": "nodejs",
-                            "version": "20.18"
+                            "version": "20.18",
+                            "versions": [
+                                {
+                                    "version": "20.18",
+                                    "date": "2026-10-11"
+                                }
+                            ]
                         },
                         {
                             "product": "postgresql",
-                            "version": "15"
+                            "version": "15",
+                            "versions": [
+                                {
+                                    "version": "15",
+                                    "date": "2026-10-11"
+                                }
+                            ]
                         },
                         {
                             "product": "redis",
-                            "version": "7.4"
+                            "version": "7.4",
+                            "versions": [
+                                {
+                                    "version": "7.4",
+                                    "date": "2026-10-11"
+                                }
+                            ]
                         },
                         {
                             "product": "docker",
-                            "version": "29"
+                            "version": "29",
+                            "versions": [
+                                {
+                                    "version": "29",
+                                    "date": "2026-10-11"
+                                }
+                            ]
                         }
                     ]
                 },
@@ -361,19 +497,43 @@
                     "stack": [
                         {
                             "product": "nodejs",
-                            "version": "24"
+                            "version": "24",
+                            "versions": [
+                                {
+                                    "version": "24",
+                                    "date": "2026-10-11"
+                                }
+                            ]
                         },
                         {
                             "product": "postgresql",
-                            "version": "17"
+                            "version": "17",
+                            "versions": [
+                                {
+                                    "version": "17",
+                                    "date": "2026-10-11"
+                                }
+                            ]
                         },
                         {
                             "product": "redis",
-                            "version": "7.4"
+                            "version": "7.4",
+                            "versions": [
+                                {
+                                    "version": "7.4",
+                                    "date": "2026-10-11"
+                                }
+                            ]
                         },
                         {
                             "product": "docker",
-                            "version": "29"
+                            "version": "29",
+                            "versions": [
+                                {
+                                    "version": "29",
+                                    "date": "2026-10-11"
+                                }
+                            ]
                         }
                     ]
                 }
@@ -393,15 +553,33 @@
             "tech": [
                 {
                     "product": "react",
-                    "version": "19.2"
+                    "version": "19.2",
+                    "versions": [
+                        {
+                            "version": "19.2",
+                            "date": "2026-08-05"
+                        }
+                    ]
                 },
                 {
                     "product": "vite",
-                    "version": "6"
+                    "version": "6",
+                    "versions": [
+                        {
+                            "version": "6",
+                            "date": "2026-08-05"
+                        }
+                    ]
                 },
                 {
                     "product": "tailwind-css",
-                    "version": "3.4"
+                    "version": "3.4",
+                    "versions": [
+                        {
+                            "version": "3.4",
+                            "date": "2026-08-05"
+                        }
+                    ]
                 }
             ],
             "deployments": [
@@ -410,7 +588,13 @@
                     "stack": [
                         {
                             "product": "nodejs",
-                            "version": "22"
+                            "version": "22",
+                            "versions": [
+                                {
+                                    "version": "22",
+                                    "date": "2026-08-05"
+                                }
+                            ]
                         }
                     ]
                 }
@@ -430,11 +614,27 @@
             "tech": [
                 {
                     "product": "laravel",
-                    "version": "13"
+                    "version": "13",
+                    "versions": [
+                        {
+                            "version": "10",
+                            "date": "2023-02-01"
+                        },
+                        {
+                            "version": "13",
+                            "date": "2026-04-22"
+                        }
+                    ]
                 },
                 {
                     "product": "livewire",
-                    "version": "4"
+                    "version": "4",
+                    "versions": [
+                        {
+                            "version": "4",
+                            "date": "2026-11-05"
+                        }
+                    ]
                 }
             ],
             "deployments": [
@@ -443,51 +643,49 @@
                     "stack": [
                         {
                             "product": "php",
-                            "version": "8.4"
+                            "version": "8.4",
+                            "versions": [
+                                {
+                                    "version": "8.1",
+                                    "date": "2023-02-01"
+                                },
+                                {
+                                    "version": "8.4",
+                                    "date": "2025-12-10"
+                                }
+                            ]
                         },
                         {
                             "product": "mariadb",
-                            "version": "11.4"
+                            "version": "11.4",
+                            "versions": [
+                                {
+                                    "version": "11.4",
+                                    "date": "2026-11-05"
+                                }
+                            ]
                         },
                         {
                             "product": "nginx",
-                            "version": "1.30"
+                            "version": "1.30",
+                            "versions": [
+                                {
+                                    "version": "1.30",
+                                    "date": "2026-11-05"
+                                }
+                            ]
                         },
                         {
                             "product": "ubuntu",
-                            "version": "24.04"
+                            "version": "24.04",
+                            "versions": [
+                                {
+                                    "version": "24.04",
+                                    "date": "2026-11-05"
+                                }
+                            ]
                         }
                     ]
-                }
-            ],
-            "history": [
-                {
-                    "date": "2023-02-01",
-                    "product": "php",
-                    "where": "production",
-                    "version": "8.1",
-                    "note": ""
-                },
-                {
-                    "date": "2023-02-01",
-                    "product": "laravel",
-                    "where": "",
-                    "version": "10",
-                    "note": ""
-                },
-                {
-                    "date": "2025-12-10",
-                    "product": "php",
-                    "where": "production",
-                    "version": "8.4",
-                    "note": ""
-                },
-                {
-                    "date": "2026-04-22",
-                    "product": "laravel",
-                    "where": "",
-                    "version": "13",
-                    "note": "দুই ধাপ একসাথে, টেস্টসহ ৩ সপ্তাহ"
                 }
             ],
             "updatedAt": "2026-11-05"
@@ -506,7 +704,13 @@
             "tech": [
                 {
                     "product": "django",
-                    "version": "5.2"
+                    "version": "5.2",
+                    "versions": [
+                        {
+                            "version": "5.2",
+                            "date": "2026-07-30"
+                        }
+                    ]
                 }
             ],
             "deployments": [
@@ -515,15 +719,33 @@
                     "stack": [
                         {
                             "product": "python",
-                            "version": "3.12"
+                            "version": "3.12",
+                            "versions": [
+                                {
+                                    "version": "3.12",
+                                    "date": "2026-07-30"
+                                }
+                            ]
                         },
                         {
                             "product": "postgresql",
-                            "version": "17"
+                            "version": "17",
+                            "versions": [
+                                {
+                                    "version": "17",
+                                    "date": "2026-07-30"
+                                }
+                            ]
                         },
                         {
                             "product": "debian",
-                            "version": "12"
+                            "version": "12",
+                            "versions": [
+                                {
+                                    "version": "12",
+                                    "date": "2026-07-30"
+                                }
+                            ]
                         }
                     ]
                 }
@@ -543,7 +765,13 @@
             "tech": [
                 {
                     "product": "astro",
-                    "version": "5"
+                    "version": "5",
+                    "versions": [
+                        {
+                            "version": "5",
+                            "date": "2026-10-01"
+                        }
+                    ]
                 }
             ],
             "deployments": [
@@ -567,11 +795,23 @@
             "tech": [
                 {
                     "product": "electron",
-                    "version": "45"
+                    "version": "45",
+                    "versions": [
+                        {
+                            "version": "45",
+                            "date": "2026-09-01"
+                        }
+                    ]
                 },
                 {
                     "product": "react",
-                    "version": "19"
+                    "version": "19",
+                    "versions": [
+                        {
+                            "version": "19",
+                            "date": "2026-09-01"
+                        }
+                    ]
                 }
             ],
             "deployments": [],
@@ -590,7 +830,13 @@
             "tech": [
                 {
                     "product": "laravel",
-                    "version": "8"
+                    "version": "8",
+                    "versions": [
+                        {
+                            "version": "8",
+                            "date": "2025-03-10"
+                        }
+                    ]
                 }
             ],
             "deployments": [
@@ -599,11 +845,23 @@
                     "stack": [
                         {
                             "product": "php",
-                            "version": "7.4"
+                            "version": "7.4",
+                            "versions": [
+                                {
+                                    "version": "7.4",
+                                    "date": "2025-03-10"
+                                }
+                            ]
                         },
                         {
                             "product": "mysql",
-                            "version": "5.7"
+                            "version": "5.7",
+                            "versions": [
+                                {
+                                    "version": "5.7",
+                                    "date": "2025-03-10"
+                                }
+                            ]
                         }
                     ]
                 }

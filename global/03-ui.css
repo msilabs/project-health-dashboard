@@ -1391,84 +1391,116 @@ dialog.modal .sheet {
     font-size: 0.78rem;
 }
 
-/* আপগ্রেডের ইতিহাস: এডিটে প্রতিটা অংশ একটা ব্লক, ভেতরে ভার্সন আর তারিখের সারি */
-.hist-group {
-    display: grid;
-    gap: 0.6rem;
-    padding: 0.85rem;
-    border: 1px solid var(--border);
+/* এডিটে টেক বা সফটওয়্যারের কার্ড: ওপরে নাম, নিচে নতুন থেকে পুরনো ভার্সন */
+.ver-card {
+    overflow: hidden;
+    border: 1px solid var(--border-strong);
     border-radius: var(--radius-sm);
-    background: var(--surface-2);
+    background: var(--surface);
 }
 
-.hist-group-head {
+.ver-card-head {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 10rem) auto;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.4rem 0.5rem;
+    align-items: center;
+    padding: 0.6rem 0.6rem 0.6rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.ver-card-head input {
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
+    font-weight: 600;
+}
+
+.ver-card-head input:hover,
+.ver-card-head input:focus {
+    border-color: var(--border);
+    background: var(--surface);
+}
+
+.ver-list {
+    display: grid;
+    gap: 0.7rem;
+    padding: 0.75rem;
+}
+
+.ver-add {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    height: 2.2rem;
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius-sm);
+    background: none;
+    color: var(--muted);
+    font: inherit;
+    font-size: 0.84rem;
+    cursor: pointer;
+}
+
+.ver-add:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.ver-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr) auto;
     gap: 0.5rem;
     align-items: center;
 }
 
-.hist-row {
-    display: grid;
-    grid-template-columns: minmax(0, 0.8fr) 9.5rem minmax(0, 1.2fr) auto;
-    gap: 0.5rem;
-    align-items: center;
+/* সারিগুলোর মাঝে খাড়া দাগ: পুরনো থেকে নতুনের দিকে */
+.ver-list > * + .ver-row::before {
+    content: '';
+    position: absolute;
+    top: -0.7rem;
+    left: 1.05rem;
+    height: 0.7rem;
+    border-left: 1.5px solid var(--border-strong);
 }
 
-@media (max-width: 520px) {
-    .hist-row {
-        grid-template-columns: minmax(0, 1fr) 9.5rem auto;
-    }
-
-    .hist-row [data-k="note"] {
-        grid-column: 1 / -1;
-        grid-row: 2;
-    }
-
-    .hist-group-head {
-        grid-template-columns: minmax(0, 1fr) auto;
-    }
-
-    .hist-group-head select {
-        grid-column: 1;
-        grid-row: 2;
-    }
+.ver-list > .ver-add + .ver-row::before {
+    border-left-style: dashed;
 }
 
-/* শুরু থেকে এখন: দেখার মোডে */
-.journey {
-    display: grid;
-    gap: 0.65rem;
-    padding: 0.8rem 0.85rem;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-}
-
-.journey-head {
+.ver-date {
+    position: relative;
     display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
-    font-size: 0.88rem;
-}
-
-.journey-head .muted {
-    font-size: 0.78rem;
-}
-
-.journey-compare {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-    gap: 0.75rem;
     align-items: center;
 }
 
-.journey-compare > div {
-    display: grid;
-    justify-items: start;
-    gap: 0.25rem;
-    padding: 0.6rem 0.7rem;
-    border-radius: var(--radius-sm);
-    background: var(--surface-2);
+.ver-date .icon {
+    position: absolute;
+    left: 0.65rem;
+    width: 0.95rem;
+    height: 0.95rem;
+    color: var(--muted);
+    pointer-events: none;
+}
+
+.ver-date input {
+    width: 100%;
+    padding-left: 2rem;
+}
+
+.ver-row [data-k='version'] {
+    font-weight: 600;
+}
+
+.ver-row.is-dup input {
+    border-color: var(--eol);
+}
+
+.ver-error {
+    margin: -0.25rem 0.75rem 0.75rem;
+    color: var(--eol);
+    font-size: 0.78rem;
 }
 
 .section-title .link-btn {
@@ -1482,69 +1514,68 @@ dialog.modal .sheet {
     height: 0.9rem;
 }
 
-.journey-arrow {
-    color: var(--muted);
+/* দেখার কার্ড: ওপরে অবস্থার সারি, নিচে তারিখ আর ভার্সনের বাক্স */
+.ver-card.is-view .part {
+    border-bottom: 1px solid var(--border);
 }
 
-.journey-steps {
-    display: grid;
-    gap: 0.3rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    font-size: 0.8rem;
-}
-
-.journey-steps li {
+.ver-box {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    gap: 0.2rem 0.75rem;
+    gap: 0.5rem;
+    min-width: 0;
+    height: 2.2rem;
+    padding: 0 0.7rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    font-size: 0.86rem;
+    white-space: nowrap;
 }
 
-.step-date {
-    padding: 0;
-    border: 0;
-    border-bottom: 1px dashed var(--border-strong);
-    background: none;
-    color: var(--muted);
-    font: inherit;
-    cursor: pointer;
+.ver-row.is-view {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
 }
 
-.step-date:hover {
-    color: var(--accent);
-    border-bottom-color: var(--accent);
+.ver-row.is-view .ver-box:first-child {
+    color: var(--text-2);
 }
 
-.step-del {
-    display: inline-grid;
-    place-items: center;
-    width: 1.3rem;
-    height: 1.3rem;
+.ver-v {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.ver-v input {
+    width: 100%;
+}
+
+.ver-now {
+    display: none;
     margin-left: auto;
-    padding: 0;
-    border: 0;
-    border-radius: 6px;
-    background: none;
-    color: var(--muted);
-    opacity: 0.5;
-    cursor: pointer;
+    padding: 0.05rem 0.45rem;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 0.7rem;
+    font-weight: 650;
 }
 
-.step-del .icon {
-    width: 0.8rem;
-    height: 0.8rem;
+.ver-row.is-current .ver-now {
+    display: inline-block;
 }
 
-.journey-steps li:hover .step-del,
-.step-del:focus-visible {
-    opacity: 1;
+/* এডিটে "এখন" চিহ্ন ইনপুটের ভেতরে ডানে */
+.ver-v input + .ver-now {
+    position: absolute;
+    right: 0.5rem;
+    pointer-events: none;
 }
 
-.step-del:hover {
-    background: var(--surface-2);
-    color: var(--text);
+.ver-row.is-current .ver-v input,
+.ver-row.is-current .ver-v.ver-box {
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
 }
 
 textarea.prose {

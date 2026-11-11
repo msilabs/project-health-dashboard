@@ -129,12 +129,9 @@ test('upgradeJourney compares the first version with the current one', () => {
     d.catalog.tech[0].versions.push({ version: '9', supportUntil: '2023-08-08', securityUntil: '2024-02-06', requires: [] });
     const project = P.normalizeProject({
         name: 'Shop',
-        tech: ['laravel 13.1'],
-        history: [
-            { date: '2022-01-01', product: 'laravel', version: '9' },
-            { date: '2023-03-20', product: 'laravel', version: '11' },
-            { date: '2026-04-01', product: 'laravel', version: '13', note: 'done' },
-            { date: '2026-05-01', product: 'vue', version: '3' }
+        tech: [
+            { product: 'laravel', versions: [{ version: '9', date: '2022-01-01' }, { version: '11', date: '2023-03-20' }, { version: '13.1', date: '2026-04-01' }] },
+            { product: 'vue', versions: [{ version: '3', date: '2026-05-01' }] }
         ]
     });
     const tracks = plain(P.upgradeJourney(d, project));
@@ -150,7 +147,6 @@ test('upgradeJourney compares the first version with the current one', () => {
     assert.equal(t.steps.length, 2);
     const text = P.upgradeSummaryText(d, project);
     assert.match(text, /Laravel: 9 থেকে 13\.1/);
-    assert.match(text, /done/);
     assert.equal(P.upgradeSummaryText(d, P.normalizeProject({ name: 'X' })), '');
 });
 
@@ -160,12 +156,7 @@ test('upgradeReport filters by date range and counts before and after', () => {
     d.projects = [
         P.normalizeProject({
             name: 'Shop',
-            tech: ['laravel 13.1'],
-            history: [
-                { date: '2022-01-01', product: 'laravel', version: '9' },
-                { date: '2023-03-20', product: 'laravel', version: '11' },
-                { date: '2026-04-01', product: 'laravel', version: '13' }
-            ]
+            tech: [{ product: 'laravel', versions: [{ version: '9', date: '2022-01-01' }, { version: '11', date: '2023-03-20' }, { version: '13.1', date: '2026-04-01' }] }]
         }),
         P.normalizeProject({ name: 'Idle', tech: ['laravel 11'] })
     ];

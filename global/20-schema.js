@@ -1,7 +1,7 @@
 /* ডেটার কাঠামো: যেকোনো উৎসের (localStorage, import, AI) ডেটা এখানে একই আকারে আনা হয় */
 (function (P) {
     P.APP = 'project-health';
-    P.SCHEMA_VERSION = 4;
+    P.SCHEMA_VERSION = 5;
 
     P.KINDS = ['tech', 'env'];
     P.KIND_LABEL = { tech: 'টেক', env: 'সার্ভার' };
@@ -117,8 +117,37 @@
         };
     };
 
-    // {product, version}; AI কখনো "Laravel 11" বা "laravel@11" লেখে, সেটাও নেওয়া হয়
-    P.normalizeRef = function (r) {
+    // প্রতিটা টেক বা সার্ভারের অংশে ভার্সনের তালিকা: কোন তারিখ থেকে কোন ভার্সন চলছে।
+    // একই তারিখে একটাই ভার্সন (পরেরটা থাকে), তারিখ অনুযায়ী সাজানো; সবচেয়ে নতুনটাই এখনকার ভার্সন।
+    function normalizeVersions(v, fallback) {
+        var byDay = {};
+        list(v).forEach(function (x) {
+            if (!x || typeof x !== 'object') return;
+            var version = str(x.version, 40);
+            if (!version) return;
+            var date = P.cleanDate(x.date || '') || fallback;
+            byDay[date] = { version: version, date: date };
+        });
+        var out = Object.keys(byDay)
+            .sort()
+            .map(function (k) {
+                return byDay[k];
+            });
+        // পরপর একই ভার্সন হলে প্রথমটাই থাকে
+        return out
+            .filter(function (x, i) {
+                return i === 0 || P.cleanVersion(x.version) !== P.cleanVersion(out[i - 1].version);
+            })
+            .slice(-100);
+    }
+
+    function latest(versions) {
+        return versions.length ? versions[versions.length - 1].version : '';
+    }
+
+    // {product, version, versions}। version সবসময় versions-এর শেষটা; versions না থাকলে version থেকে বানানো হয়।
+    // AI কখনো "Laravel 11" বা "laravel@11" লেখে, সেটাও নেওয়া হয়। fallback: তারিখ না থাকলে যে তারিখ বসবে।
+    P.normalizeRef = function (r, fallback) {
         if (typeof r === 'string') {
             var m = r.trim().match(/^(.+?)[\s@]+v?(\d[\w.\-]*)$/);
             r = m ? { product: m[1], version: m[2] } : { product: r, version: '' };
@@ -126,63 +155,106 @@
         if (!r || typeof r !== 'object') return null;
         var product = P.slug(r.product || r.id || r.name);
         if (!product) return null;
-        return { product: product, version: str(r.version, 40) };
+        fallback = fallback || P.isoDate(P.today());
+        var versions = normalizeVersions(r.versions, fallback);
+        var version = str(r.version, 40);
+        if (!versions.length && version) versions = [{ version: version, date: fallback }];
+        return { product: product, version: latest(versions), versions: versions };
     };
 
-    function refs(v) {
-        return list(v).map(P.normalizeRef).filter(Boolean);
+    function refs(v, fallback) {
+        return list(v)
+            .map(function (r) {
+                return P.normalizeRef(r, fallback);
+            })
+            .filter(Boolean);
     }
 
-    P.normalizeDeployment = function (d) {
+    P.normalizeDeployment = function (d, fallback) {
         if (!d || typeof d !== 'object') return null;
         return {
             name: str(d.name || (typeof d.env === 'string' ? d.env : ''), 40) || 'production',
-            stack: refs(d.stack || d.components || (Array.isArray(d.env) ? d.env : []))
+            stack: refs(d.stack || d.components || (Array.isArray(d.env) ? d.env : []), fallback)
         };
-    };
-
-    // ইতিহাসের একটা এন্ট্রি: কোন তারিখে কোন ভার্সন। where ফাঁকা মানে টেক, নইলে এনভায়রনমেন্টের নাম।
-    // পরপর দুই এন্ট্রি থেকে আপগ্রেডের ধাপ বের হয় (যেমন 10, তারপর 12)।
-    P.normalizeEntry = function (h) {
-        if (!h || typeof h !== 'object') return null;
-        var x = {
-            date: P.cleanDate(h.date || ''),
-            product: P.slug(h.product),
-            where: str(h.where, 40),
-            version: str(h.version, 40),
-            note: str(h.note, 300)
-        };
-        return x.date && x.product && x.version ? x : null;
     };
 
     function byDate(a, b) {
         return a.date < b.date ? -1 : a.date > b.date ? 1 : 0;
     }
 
-    // schemaVersion 3-এর ধাপ {from, to}: প্রতিটা অংশের প্রথম ধাপের from একই তারিখে শুরুর এন্ট্রি হয়
+    /* ---------- পুরনো ইতিহাস (schemaVersion 3 আর 4) ---------- */
+
+    // v3-এর ধাপ {from, to}: প্রতিটা অংশের প্রথম ধাপের from একই তারিখে শুরুর এন্ট্রি হয়
     function fromSteps(arr) {
         var seen = {};
         var out = [];
         arr.slice().sort(byDate).forEach(function (h) {
             if (!h || typeof h !== 'object' || h.version !== undefined) return out.push(h);
             var key = P.slug(h.product) + '|' + str(h.where, 40);
-            if (!seen[key] && h.from) out.push({ date: h.date, product: h.product, where: h.where, version: h.from, note: '' });
+            if (!seen[key] && h.from) out.push({ date: h.date, product: h.product, where: h.where, version: h.from });
             seen[key] = true;
-            out.push({ date: h.date, product: h.product, where: h.where, version: h.to, note: h.note });
+            out.push({ date: h.date, product: h.product, where: h.where, version: h.to });
         });
         return out;
     }
 
-    P.normalizeHistory = function (v) {
-        return fromSteps(list(v)).map(P.normalizeEntry).filter(Boolean).sort(byDate).slice(-300);
-    };
+    // v4-এর project.history {date, product, where, version} মিলিয়ে অংশগুলোর versions বানানো।
+    // এখনকার ভার্সন ইতিহাসের শেষটার চেয়ে আলাদা হলে (12 আর 12.40 একই ধরা হয়) সেটা শেষে যোগ হয়।
+    function attachHistory(history, tech, deployments, fallback) {
+        var entries = fromSteps(list(history))
+            .map(function (h) {
+                return h && typeof h === 'object' ? { date: P.cleanDate(h.date || ''), product: P.slug(h.product), where: str(h.where, 40), version: str(h.version, 40) } : null;
+            })
+            .filter(function (h) {
+                return h && h.date && h.product && h.version;
+            })
+            .sort(byDate);
+        if (!entries.length) return;
+        function apply(ref, where) {
+            var mine = entries.filter(function (h) {
+                return h.product === ref.product && h.where === where;
+            });
+            if (!mine.length) return;
+            var versions = mine.map(function (h) {
+                return { version: h.version, date: h.date };
+            });
+            var last = versions[versions.length - 1];
+            var cur = P.cleanVersion(ref.version);
+            var lc = P.cleanVersion(last.version);
+            if (ref.version && (cur === lc || cur.indexOf(lc + '.') === 0)) last.version = ref.version;
+            else if (ref.version) versions.push({ version: ref.version, date: fallback > last.date ? fallback : P.isoDate(P.today()) });
+            ref.versions = normalizeVersions(versions, fallback);
+            ref.version = latest(ref.versions);
+        }
+        tech.forEach(function (r) {
+            apply(r, '');
+        });
+        deployments.forEach(function (d) {
+            d.stack.forEach(function (r) {
+                apply(r, d.name);
+            });
+        });
+    }
 
     P.normalizeProject = function (p) {
         if (!p || typeof p !== 'object') return null;
         var name = str(p.name || p.repo, 120);
         var id = P.slug(p.id || name || p.repo);
         if (!id) return null;
+        var updatedAt = P.cleanDate(p.updatedAt || '');
+        var fallback = updatedAt || P.isoDate(P.today());
         var seenDep = {};
+        var tech = refs(p.tech, fallback);
+        var deployments = list(p.deployments)
+            .map(function (d) {
+                return P.normalizeDeployment(d, fallback);
+            })
+            .filter(function (d) {
+                if (!d || seenDep[d.name]) return false;
+                seenDep[d.name] = true;
+                return true;
+            });
+        attachHistory(p.history, tech, deployments, fallback);
         return {
             id: id,
             name: name || id,
@@ -192,16 +264,9 @@
             // পুরনো ডেটার 'maintenance' এখন 'active'
             lifecycle: p.lifecycle === 'archived' ? 'archived' : 'active',
             note: str(p.note, 1000),
-            tech: refs(p.tech),
-            deployments: list(p.deployments)
-                .map(P.normalizeDeployment)
-                .filter(function (d) {
-                    if (!d || seenDep[d.name]) return false;
-                    seenDep[d.name] = true;
-                    return true;
-                }),
-            history: P.normalizeHistory(p.history),
-            updatedAt: P.cleanDate(p.updatedAt || '')
+            tech: tech,
+            deployments: deployments,
+            updatedAt: updatedAt
         };
     };
 
@@ -356,7 +421,40 @@
             .sort(P.byName);
     }
 
-    P.mergeProject = function (a, b) {
+    // দুই ভার্সনের তালিকা মেলানো: একই তারিখে b-রটা থাকে, আর পরপর একই সাইকেল হলে আগেরটা।
+    // তাই AI-এর দেওয়া {laravel 12} আজকের তারিখে এলেও আগের "12.40, ৯ নভেম্বর" বদলায় না; 13 এলে শেষে যোগ হয়।
+    function mergeVersions(a, b, same) {
+        var byDay = {};
+        a.concat(b).forEach(function (x) {
+            byDay[x.date] = x;
+        });
+        var out = [];
+        Object.keys(byDay)
+            .sort()
+            .forEach(function (k) {
+                var x = byDay[k];
+                if (out.length && same(out[out.length - 1].version, x.version)) return;
+                out.push({ version: x.version, date: x.date });
+            });
+        return out;
+    }
+
+    // b-তে থাকা অংশগুলোই থাকে (আগের মতো); a-তেও থাকলে ভার্সনের তালিকা মেলানো হয়
+    function mergeRefs(a, b, kind, data) {
+        if (!b.length) return a;
+        return b.map(function (ref) {
+            var old = a.filter(function (x) {
+                return x.product === ref.product;
+            })[0];
+            if (!old) return ref;
+            var versions = mergeVersions(old.versions, ref.versions, function (x, y) {
+                return data ? P.sameCycle(data, kind, ref.product, x, y) : P.cleanVersion(x) === P.cleanVersion(y);
+            });
+            return { product: ref.product, version: latest(versions), versions: versions };
+        });
+    }
+
+    P.mergeProject = function (a, b, data) {
         var deps = a.deployments.map(function (d) {
             return P.clone(d);
         });
@@ -368,7 +466,7 @@
                 deps.push(d);
                 return;
             }
-            if (d.stack.length) cur.stack = d.stack;
+            cur.stack = mergeRefs(cur.stack, d.stack, 'env', data);
         });
         return {
             id: a.id,
@@ -378,95 +476,19 @@
             tags: b.tags.length ? b.tags : a.tags,
             lifecycle: b.lifecycle !== 'active' ? b.lifecycle : a.lifecycle,
             note: fill(a.note, b.note),
-            tech: b.tech.length ? b.tech : a.tech,
+            tech: mergeRefs(a.tech, b.tech, 'tech', data),
             deployments: deps,
-            history: mergeHistory(a.history, b.history),
             updatedAt: fill(a.updatedAt, b.updatedAt)
         };
     };
 
-    function entryKey(h) {
-        return [h.date, h.product, h.where, h.version].join('|');
-    }
-    P.entryKey = entryKey;
-
-    function mergeHistory(a, b) {
-        var seen = {};
-        return a
-            .concat(b)
-            .filter(function (h) {
-                var k = entryKey(h);
-                if (seen[k]) return false;
-                seen[k] = true;
-                return true;
-            })
-            .sort(byDate);
-    }
-
-    // দুই ভার্সন একই সাইকেলের কিনা (12.40 আর 12.41 একই, তাই সেটা আপগ্রেড ধরা হয় না)
+    // দুই ভার্সন একই সাইকেলের কিনা (12.40 আর 12.41 একই)
     P.sameCycle = function (data, kind, productId, a, b) {
         if (P.cleanVersion(a) === P.cleanVersion(b)) return true;
         var product = P.findProduct(data, kind, productId);
         var ca = product ? P.matchCycle(product.versions, a) : null;
         var cb = product ? P.matchCycle(product.versions, b) : null;
         return !!(ca && cb && ca === cb);
-    };
-
-    // before থেকে after-এ কোনো ভার্সনের সাইকেল বদলালে after-এর প্রজেক্টের history-তে এন্ট্রি যোগ হয়।
-    // ঐ অংশের ইতিহাস ফাঁকা থাকলে আগের ভার্সনও যোগ হয়, আগের সেভের তারিখে।
-    // একই দিনে কয়েকবার বদলালে আজকের এন্ট্রিটাই বদলায়।
-    P.recordUpgrades = function (before, after, date) {
-        var old = {};
-        before.projects.forEach(function (p) {
-            old[p.id] = p;
-        });
-        after.projects.forEach(function (p) {
-            var prev = old[p.id];
-            if (!prev) return;
-            var changes = [];
-            function compare(kind, where, a, b) {
-                b.forEach(function (ref) {
-                    var was = a.filter(function (x) {
-                        return x.product === ref.product;
-                    })[0];
-                    if (!was || !was.version || !ref.version || P.sameCycle(after, kind, ref.product, was.version, ref.version)) return;
-                    changes.push({ kind: kind, product: ref.product, where: where, from: was.version, to: ref.version });
-                });
-            }
-            compare('tech', '', prev.tech, p.tech);
-            p.deployments.forEach(function (d) {
-                var pd = prev.deployments.filter(function (x) {
-                    return x.name === d.name;
-                })[0];
-                if (pd) compare('env', d.name, pd.stack, d.stack);
-            });
-            if (!changes.length) return;
-            p.history = p.history || [];
-            changes.forEach(function (c) {
-                var same = function (a, b) {
-                    return P.sameCycle(after, c.kind, c.product, a, b);
-                };
-                var track = p.history.filter(function (h) {
-                    return h.product === c.product && h.where === c.where;
-                });
-                var last = track[track.length - 1];
-                var entry = { date: date, product: c.product, where: c.where, version: c.to, note: '' };
-                if (!last) {
-                    p.history.push({ date: prev.updatedAt && prev.updatedAt <= date ? prev.updatedAt : date, product: c.product, where: c.where, version: c.from, note: '' }, entry);
-                    return;
-                }
-                // হাতে লেখা ইতিহাসে এই ভার্সন আগেই আছে
-                if (same(last.version, c.to)) return;
-                if (last.date === date && track.length > 1) {
-                    last.version = c.to;
-                    if (same(track[track.length - 2].version, c.to)) p.history.splice(p.history.indexOf(last), 1);
-                    return;
-                }
-                p.history.push(entry);
-            });
-            p.history.sort(byDate);
-        });
-        return after;
     };
 
     // mode: 'merge' (একই id মিলিয়ে হালনাগাদ) বা 'replace' (ইনপুটে থাকা অংশ পুরো বদল)
@@ -487,7 +509,7 @@
                     byId[p.id] = i;
                 });
                 incoming.projects.forEach(function (p) {
-                    if (byId[p.id] !== undefined) out.projects[byId[p.id]] = P.mergeProject(out.projects[byId[p.id]], p);
+                    if (byId[p.id] !== undefined) out.projects[byId[p.id]] = P.mergeProject(out.projects[byId[p.id]], p, out);
                     else out.projects.push(P.clone(p));
                 });
             }
