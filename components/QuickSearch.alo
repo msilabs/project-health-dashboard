@@ -25,6 +25,7 @@
     const ACTIONS = [
         { label: 'ড্যাশবোর্ড', icon: 'grid', run: function () { location.href = P.url('/'); } },
         { label: 'প্রজেক্ট', icon: 'folder', run: function () { location.href = P.url('/projects/'); } },
+        { label: 'আপগ্রেডের রিপোর্ট', icon: 'report', run: function () { location.href = P.url('/upgrades/'); } },
         { label: 'ক্যাটালগ', icon: 'book', run: function () { location.href = P.url('/catalog/'); } },
         { label: 'নতুন প্রজেক্ট', icon: 'plus', run: function () { ui.openProject(null); } },
         { label: 'ডেটা import', icon: 'upload', run: function () { ui.openImport('file'); } },

@@ -1,0 +1,163 @@
+<head>
+    <title>আপগ্রেড | {{ data.site.name }}</title>
+</head>
+
+<template>
+    <div class="page-head">
+        <div>
+            <span class="eyebrow print-only" id="print-meta"></span>
+            <h1>আপগ্রেডের রিপোর্ট</h1>
+            <p id="lede">&nbsp;</p>
+        </div>
+        <div class="actions no-print">
+            <button class="btn" type="button" id="print" data-tip="প্রিন্টের ঘরে 'Save as PDF' বাছলে PDF ফাইল হবে"><Icon name="download" />প্রিন্ট / PDF</button>
+        </div>
+    </div>
+
+    <section class="card no-print">
+        <div class="toolbar">
+            <label class="field-inline">থেকে <input type="date" id="f-from" aria-label="শুরুর তারিখ"></label>
+            <label class="field-inline">পর্যন্ত <input type="date" id="f-to" aria-label="শেষের তারিখ"></label>
+            <div class="segmented" id="presets" role="group" aria-label="সময়"></div>
+        </div>
+    </section>
+
+    <div class="stack stack-lg" id="content" hidden>
+        <section class="card up-overview" aria-label="আগে আর এখন">
+            <div class="up-hero">
+                <div>
+                    <div class="hero-label">ঝুঁকি থেকে বেরিয়েছে</div>
+                    <div class="hero-num" id="hero-num"></div>
+                </div>
+                <div class="up-facts" id="facts"></div>
+            </div>
+            <div class="up-bars" id="bars"></div>
+            <div class="up-legend" id="legend"></div>
+        </section>
+        <div class="stack" id="list"></div>
+    </div>
+
+    <section class="card" id="empty" hidden>
+        <div class="empty">
+            <span class="chip-icon"><Icon name="report" /></span>
+            <h2 id="empty-title"></h2>
+            <p id="empty-text"></p>
+        </div>
+    </section>
+</template>
+
+<script>
+    const P = PHD;
+    const ui = P.ui;
+    const esc = P.esc;
+    const query = ui.query();
+    const f = { from: P.cleanDate(query.get('from') || ''), to: P.cleanDate(query.get('to') || '') };
+
+    // দ্রুত বাছাই: সব সময়, এই বছর, গত ১২ মাস
+    function presets() {
+        const today = P.isoDate(P.today());
+        const y = today.slice(0, 4);
+        const yearAgo = P.isoDate(P.today() - 365 * P.DAY);
+        return [
+            { label: 'সব সময়', from: '', to: '' },
+            { label: 'এই বছর', from: y + '-01-01', to: '' },
+            { label: 'গত ১২ মাস', from: yearAgo, to: '' }
+        ];
+    }
+
+    function rangeText() {
+        if (f.from && f.to) return P.fmtDate(f.from) + ' থেকে ' + P.fmtDate(f.to);
+        if (f.from) return P.fmtDate(f.from) + ' থেকে আজ পর্যন্ত';
+        if (f.to) return P.fmtDate(f.to) + ' পর্যন্ত';
+        return 'শুরু থেকে আজ পর্যন্ত';
+    }
+
+    function bar(label, counts, total) {
+        const segs = P.STATUS_ORDER.filter(function (s) { return counts[s]; }).map(function (s) {
+            return '<span class="s-' + s + '" style="flex: ' + counts[s] + '" data-tip="' + esc(P.STATUS[s].label + ': ' + P.num(counts[s]) + 'টি অংশ') + '">' + P.num(counts[s]) + '</span>';
+        }).join('');
+        const aria = P.STATUS_ORDER.filter(function (s) { return counts[s]; }).map(function (s) { return P.STATUS[s].label + ' ' + counts[s]; }).join(', ');
+        return '<div class="up-bar"><span class="up-bar-label">' + label + '</span><div class="up-seg" role="img" aria-label="' + esc(label + ': ' + aria) + '">' + segs + '</div></div>';
+    }
+
+    function cell(item) {
+        const date = item.end ? (item.days < 0 ? P.fmtDate(item.end) + '-এ শেষ' : P.fmtDate(item.end) + ' পর্যন্ত') : '';
+        return '<b>' + esc(item.label) + '</b><div class="up-state">' + ui.badge(item.status, item.status === 'unknown' ? item.text : null) + (date ? '<span class="small muted">' + esc(date) + '</span>' : '') + '</div>';
+    }
+
+    function projectCard(x) {
+        const p = x.project;
+        return '<section class="card up-card">' +
+            '<div class="card-head"><button class="up-title" type="button" data-open="' + esc(p.id) + '">' + ui.avatar(p.name) + '<b>' + esc(p.name) + '</b>' +
+            (p.lifecycle === 'archived' ? '<span class="tag">' + esc(P.LIFECYCLES.archived) + '</span>' : '') + '</button></div>' +
+            '<div class="tablewrap"><table class="table up-table"><thead><tr><th>অংশ</th><th>আগে</th><th aria-label="থেকে"></th><th>এখন</th><th>ধাপ</th></tr></thead><tbody>' +
+            x.tracks.map(function (t) {
+                return '<tr>' +
+                    '<td><b>' + esc(t.productName) + '</b>' + (t.where ? '<div class="small muted">' + esc(t.where) + '</div>' : '') + '</td>' +
+                    '<td>' + cell(t.start) + '</td>' +
+                    '<td class="up-arrow" aria-hidden="true">→</td>' +
+                    '<td>' + cell(t.current) + '</td>' +
+                    '<td class="up-steps">' + t.steps.map(function (h) {
+                        return '<div><span class="muted">' + P.fmtDate(h.date) + '</span> <span class="v">' + esc(h.from) + ' → ' + esc(h.to) + '</span>' + (h.note ? '<span class="muted"> · ' + esc(h.note) + '</span>' : '') + '</div>';
+                    }).join('') + '</td>' +
+                    '</tr>';
+            }).join('') +
+            '</tbody></table></div></section>';
+    }
+
+    function render() {
+        const data = P.store.get();
+        const r = P.upgradeReport(data, f);
+        ui.$('#f-from').value = f.from;
+        ui.$('#f-to').value = f.to;
+        ui.$('#presets').innerHTML = presets().map(function (x, i) {
+            return '<button type="button" data-preset="' + i + '" aria-pressed="' + (f.from === x.from && f.to === x.to) + '">' + x.label + '</button>';
+        }).join('');
+        ui.$('#print-meta').textContent = data.projects.length ? 'তৈরি: ' + P.fmtDate(P.isoDate(P.today())) : '';
+        ui.setQuery(f);
+
+        const has = r.projects.length > 0;
+        ui.$('#content').hidden = !has;
+        ui.$('#empty').hidden = has;
+        if (!has) {
+            const any = data.projects.some(function (p) { return p.history.length; });
+            ui.$('#lede').textContent = rangeText();
+            ui.$('#empty-title').textContent = any ? 'এই সময়ে কোনো আপগ্রেড নেই' : 'এখনো কোনো আপগ্রেডের ইতিহাস নেই';
+            ui.$('#empty-text').textContent = any
+                ? 'তারিখ বদলে দেখুন, বা "সব সময়" বাছুন।'
+                : 'প্রজেক্ট এডিট করে ভার্সন বদলালে ধাপ নিজে থেকেই যোগ হয়। আগের আপগ্রেড লিখতে প্রজেক্টের "এডিট করুন" থেকে "আপগ্রেডের ইতিহাস" খুলুন।';
+            return;
+        }
+
+        ui.$('#lede').textContent = rangeText() + ': ' + P.num(r.projects.length) + 'টি প্রজেক্টে ' + P.num(r.tracks) + 'টি অংশ আপগ্রেড হয়েছে, মোট ' + P.num(r.steps) + 'টি ধাপে।';
+        ui.$('#hero-num').innerHTML = P.num(r.fixed) + '<small>/' + P.num(r.tracks) + 'টি অংশ</small>';
+        const stillRisky = r.after.eol + r.after.critical;
+        ui.$('#facts').innerHTML =
+            ui.badge('unknown', 'আগে ঝুঁকিতে ছিল ' + P.num(r.before.eol + r.before.critical) + 'টি') +
+            ui.badge(stillRisky ? 'eol' : 'ok', stillRisky ? 'এখনো ঝুঁকিতে ' + P.num(stillRisky) + 'টি' : 'এখন কোনোটা ঝুঁকিতে নেই');
+        ui.$('#bars').innerHTML = bar('আগে', r.before, r.tracks) + bar('এখন', r.after, r.tracks);
+        ui.$('#legend').innerHTML = P.STATUS_ORDER.filter(function (s) { return r.before[s] || r.after[s]; }).map(function (s) {
+            return '<span><span class="dot s-' + s + '"></span>' + P.STATUS[s].label + '</span>';
+        }).join('') + '<span class="muted">অবস্থা আজকের তারিখ ধরে: আপগ্রেড না করলে আজ কী হতো, আর এখন কী আছে।</span>';
+        ui.$('#list').innerHTML = r.projects.map(projectCard).join('');
+    }
+
+    ui.$('#f-from').addEventListener('change', function (e) { f.from = P.cleanDate(e.target.value); render(); });
+    ui.$('#f-to').addEventListener('change', function (e) { f.to = P.cleanDate(e.target.value); render(); });
+    ui.$('#presets').addEventListener('click', function (e) {
+        const b = e.target.closest('[data-preset]');
+        if (!b) return;
+        const x = presets()[Number(b.dataset.preset)];
+        f.from = x.from;
+        f.to = x.to;
+        render();
+    });
+    ui.$('#list').addEventListener('click', function (e) {
+        const b = e.target.closest('[data-open]');
+        if (b) ui.openProject(b.dataset.open);
+    });
+    ui.$('#print').addEventListener('click', function () { window.print(); });
+
+    P.store.ready().then(render);
+    ui.onChange(render);
+</script>

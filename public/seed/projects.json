@@ -208,6 +208,16 @@
                     ]
                 }
             ],
+            "history": [
+                {
+                    "date": "2026-03-28",
+                    "product": "laravel",
+                    "where": "",
+                    "from": "11",
+                    "to": "13",
+                    "note": "সার্ভারের PHP এখনো আপগ্রেড হয়নি"
+                }
+            ],
             "updatedAt": "2026-11-02"
         },
         {
@@ -251,6 +261,32 @@
                             "version": "29"
                         }
                     ]
+                }
+            ],
+            "history": [
+                {
+                    "date": "2025-01-12",
+                    "product": "nodejs",
+                    "where": "production",
+                    "from": "18",
+                    "to": "22",
+                    "note": ""
+                },
+                {
+                    "date": "2025-02-20",
+                    "product": "nextjs",
+                    "where": "",
+                    "from": "14",
+                    "to": "15",
+                    "note": ""
+                },
+                {
+                    "date": "2025-11-05",
+                    "product": "nextjs",
+                    "where": "",
+                    "from": "15",
+                    "to": "16",
+                    "note": ""
                 }
             ],
             "updatedAt": "2026-09-20"
@@ -396,6 +432,24 @@
                             "version": "24.04"
                         }
                     ]
+                }
+            ],
+            "history": [
+                {
+                    "date": "2025-12-10",
+                    "product": "php",
+                    "where": "production",
+                    "from": "8.1",
+                    "to": "8.4",
+                    "note": ""
+                },
+                {
+                    "date": "2026-04-22",
+                    "product": "laravel",
+                    "where": "",
+                    "from": "10",
+                    "to": "13",
+                    "note": "দুই ধাপ একসাথে, টেস্টসহ ৩ সপ্তাহ"
                 }
             ],
             "updatedAt": "2026-11-05"

@@ -147,3 +147,37 @@ test('upgradeJourney compares the first version with the current one', () => {
     assert.match(text, /done/);
     assert.equal(P.upgradeSummaryText(d, P.normalizeProject({ name: 'X' })), '');
 });
+
+test('upgradeReport filters by date range and counts before and after', () => {
+    const d = P.clone(data);
+    d.catalog.tech[0].versions.push({ version: '9', supportUntil: '2023-08-08', securityUntil: '2024-02-06', requires: [] });
+    d.projects = [
+        P.normalizeProject({
+            name: 'Shop',
+            tech: ['laravel 13.1'],
+            history: [
+                { date: '2023-03-20', product: 'laravel', from: '9', to: '11' },
+                { date: '2026-04-01', product: 'laravel', from: '11', to: '13' }
+            ]
+        }),
+        P.normalizeProject({ name: 'Idle', tech: ['laravel 11'] })
+    ];
+    const all = P.upgradeReport(d, {});
+    assert.equal(all.projects.length, 1);
+    assert.equal(all.tracks, 1);
+    assert.equal(all.steps, 2);
+    assert.equal(all.before.eol, 1);
+    assert.equal(all.after.ok, 1);
+    assert.equal(all.fixed, 1);
+
+    // শুধু প্রথম ধাপ: "এখন" হয় সেই ধাপের ভার্সন, বর্তমান নয়
+    const early = P.upgradeReport(d, { to: '2024-12-31' });
+    assert.equal(early.projects[0].tracks[0].current.version, '11');
+    assert.equal(early.steps, 1);
+
+    const late = P.upgradeReport(d, { from: '2026-01-01' });
+    assert.equal(late.projects[0].tracks[0].start.version, '11');
+    assert.equal(late.projects[0].tracks[0].current.version, '13.1');
+
+    assert.equal(P.upgradeReport(d, { from: '2030-01-01' }).projects.length, 0);
+});

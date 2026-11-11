@@ -366,10 +366,16 @@
 
     // প্রতিটা অংশের (যেমন Laravel, বা production-এর PHP) শুরুর ভার্সন, ধাপগুলো আর এখনকার ভার্সন।
     // দুই দিকের অবস্থা আজকের তারিখে: শুরুর ভার্সনে থেকে গেলে আজ কী হতো, আর এখন কী আছে।
-    P.upgradeJourney = function (data, project) {
+    // range {from, to} দিলে শুধু সেই সময়ের ধাপ ধরা হয়; শেষ ধাপটা সবচেয়ে নতুন না হলে "এখন" হয় সেই ধাপের ভার্সন।
+    P.upgradeJourney = function (data, project, range) {
+        var from = (range && range.from) || '';
+        var to = (range && range.to) || '';
+        var all = project.history || [];
         var tracks = {};
         var order = [];
-        (project.history || []).forEach(function (h) {
+        all.filter(function (h) {
+            return (!from || h.date >= from) && (!to || h.date <= to);
+        }).forEach(function (h) {
             var key = h.where + '|' + h.product;
             if (!tracks[key]) {
                 tracks[key] = { product: h.product, where: h.where, kind: h.where ? 'env' : 'tech', steps: [] };
@@ -390,8 +396,12 @@
                 })[0];
                 var first = t.steps[0];
                 var last = t.steps[t.steps.length - 1];
+                var newer = all.some(function (h) {
+                    return h.product === t.product && h.where === t.where && h.date > last.date;
+                });
+                var version = !newer && now && now.version ? now.version : last.to;
                 t.start = P.evaluateRef(data, t.kind, { product: t.product, version: first.from }, t.where || null);
-                t.current = P.evaluateRef(data, t.kind, { product: t.product, version: now && now.version ? now.version : last.to }, t.where || null);
+                t.current = P.evaluateRef(data, t.kind, { product: t.product, version: version }, t.where || null);
                 t.productName = t.start.productName;
                 t.firstDate = first.date;
                 t.lastDate = last.date;
@@ -400,6 +410,47 @@
             .sort(function (a, b) {
                 return (a.kind === b.kind ? 0 : a.kind === 'tech' ? -1 : 1) || (a.firstDate < b.firstDate ? -1 : a.firstDate > b.firstDate ? 1 : 0);
             });
+    };
+
+    // ঝুঁকিতে ছিল (সাপোর্ট শেষ বা জরুরি), এখন আর নেই
+    P.isRiskFixed = function (t) {
+        var risky = function (s) {
+            return s === 'eol' || s === 'critical';
+        };
+        return risky(t.start.status) && !risky(t.current.status) && t.current.status !== 'unknown';
+    };
+
+    // আপগ্রেড পেজের হিসাব: সময়ের মধ্যে যেসব প্রজেক্টে আপগ্রেড হয়েছে, আর আগে-এখনের অবস্থার গোনা
+    P.upgradeReport = function (data, range) {
+        var before = {};
+        var after = {};
+        P.STATUS_ORDER.forEach(function (s) {
+            before[s] = 0;
+            after[s] = 0;
+        });
+        var out = { projects: [], before: before, after: after, tracks: 0, steps: 0, fixed: 0 };
+        data.projects.forEach(function (p) {
+            var tracks = P.upgradeJourney(data, p, range);
+            if (!tracks.length) return;
+            tracks.forEach(function (t) {
+                before[t.start.status]++;
+                after[t.current.status]++;
+                out.tracks++;
+                out.steps += t.steps.length;
+                if (P.isRiskFixed(t)) out.fixed++;
+            });
+            out.projects.push({
+                project: p,
+                tracks: tracks,
+                lastDate: tracks.reduce(function (d, t) {
+                    return t.lastDate > d ? t.lastDate : d;
+                }, '')
+            });
+        });
+        out.projects.sort(function (a, b) {
+            return a.lastDate < b.lastDate ? 1 : a.lastDate > b.lastDate ? -1 : P.byName(a.project, b.project);
+        });
+        return out;
     };
 
     P.statusLine = function (item) {

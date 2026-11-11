@@ -234,3 +234,38 @@ pre {
     scrollbar-width: thin;
     scrollbar-color: var(--border-strong) transparent;
 }
+
+/* প্রিন্ট আর PDF সবসময় লাইট থিমে, যাতে কাগজে কালো পটভূমি না আসে */
+@media print {
+    :root,
+    :root:not([data-theme='light']),
+    :root[data-theme='dark'] {
+        --bg: #ffffff;
+        --bg-glow: transparent;
+        --surface: #ffffff;
+        --surface-2: #f4f5f7;
+        --surface-3: #eceef2;
+        --text: #101322;
+        --text-2: #3b4152;
+        --muted: #6b7183;
+        --border: #e6e8ee;
+        --border-strong: #d5d9e2;
+        --accent: #5b4cf5;
+        --eol: #e5484d;
+        --eol-bg: #fdeeee;
+        --critical: #f76b15;
+        --critical-bg: #fff1e7;
+        --warning: #c48a0a;
+        --warning-bg: #fdf6e3;
+        --ok: #18a058;
+        --ok-bg: #e8f7ee;
+        --unknown: #9ca1b0;
+        --unknown-bg: #f1f2f5;
+        --shadow-xs: none;
+        --shadow-sm: none;
+        --shadow: none;
+        --highlight: none;
+
+        color-scheme: light;
+    }
+}
