@@ -131,11 +131,17 @@ test('upgradeJourney compares the first version with the current one', () => {
         name: 'Shop',
         tech: ['laravel 13.1'],
         history: [
-            { date: '2023-03-20', product: 'laravel', from: '9', to: '11' },
-            { date: '2026-04-01', product: 'laravel', from: '11', to: '13', note: 'done' }
+            { date: '2022-01-01', product: 'laravel', version: '9' },
+            { date: '2023-03-20', product: 'laravel', version: '11' },
+            { date: '2026-04-01', product: 'laravel', version: '13', note: 'done' },
+            { date: '2026-05-01', product: 'vue', version: '3' }
         ]
     });
-    const [t] = plain(P.upgradeJourney(d, project));
+    const tracks = plain(P.upgradeJourney(d, project));
+    assert.equal(tracks.length, 1);
+    const [t] = tracks;
+    assert.equal(t.entries.length, 3);
+    assert.equal(t.firstDate, '2022-01-01');
     assert.equal(t.productName, 'Laravel');
     assert.equal(t.start.version, '9');
     assert.equal(t.start.status, 'eol');
@@ -156,8 +162,9 @@ test('upgradeReport filters by date range and counts before and after', () => {
             name: 'Shop',
             tech: ['laravel 13.1'],
             history: [
-                { date: '2023-03-20', product: 'laravel', from: '9', to: '11' },
-                { date: '2026-04-01', product: 'laravel', from: '11', to: '13' }
+                { date: '2022-01-01', product: 'laravel', version: '9' },
+                { date: '2023-03-20', product: 'laravel', version: '11' },
+                { date: '2026-04-01', product: 'laravel', version: '13' }
             ]
         }),
         P.normalizeProject({ name: 'Idle', tech: ['laravel 11'] })

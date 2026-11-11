@@ -364,28 +364,40 @@
 
     /* ---------- আপগ্রেডের ইতিহাস: শুরু থেকে এখন ---------- */
 
-    // প্রতিটা অংশের (যেমন Laravel, বা production-এর PHP) শুরুর ভার্সন, ধাপগুলো আর এখনকার ভার্সন।
+    // প্রতিটা অংশের (যেমন Laravel, বা production-এর PHP) ভার্সনের তালিকা থেকে ধাপ, শুরুর আর এখনকার ভার্সন।
     // দুই দিকের অবস্থা আজকের তারিখে: শুরুর ভার্সনে থেকে গেলে আজ কী হতো, আর এখন কী আছে।
     // range {from, to} দিলে শুধু সেই সময়ের ধাপ ধরা হয়; শেষ ধাপটা সবচেয়ে নতুন না হলে "এখন" হয় সেই ধাপের ভার্সন।
+    // entries: দেখানোর মতো এন্ট্রি (শুরুর ভার্সনসহ); steps: {date, from, to, note}
     P.upgradeJourney = function (data, project, range) {
         var from = (range && range.from) || '';
         var to = (range && range.to) || '';
-        var all = project.history || [];
         var tracks = {};
         var order = [];
-        all.filter(function (h) {
-            return (!from || h.date >= from) && (!to || h.date <= to);
-        }).forEach(function (h) {
+        (project.history || []).forEach(function (h) {
             var key = h.where + '|' + h.product;
             if (!tracks[key]) {
-                tracks[key] = { product: h.product, where: h.where, kind: h.where ? 'env' : 'tech', steps: [] };
+                tracks[key] = { product: h.product, where: h.where, kind: h.where ? 'env' : 'tech', all: [] };
                 order.push(key);
             }
-            tracks[key].steps.push(h);
+            tracks[key].all.push(h);
         });
         return order
             .map(function (key) {
                 var t = tracks[key];
+                var all = t.all;
+                var pairs = [];
+                for (var i = 1; i < all.length; i++) {
+                    if ((!from || all[i].date >= from) && (!to || all[i].date <= to)) pairs.push(i);
+                }
+                if (!pairs.length) return null;
+                t.steps = pairs.map(function (i) {
+                    return { date: all[i].date, from: all[i - 1].version, to: all[i].version, note: all[i].note };
+                });
+                t.entries = [all[pairs[0] - 1]].concat(
+                    pairs.map(function (i) {
+                        return all[i];
+                    })
+                );
                 var refs = t.where
                     ? (project.deployments.filter(function (d) {
                           return d.name === t.where;
@@ -394,19 +406,17 @@
                 var now = refs.filter(function (r) {
                     return r.product === t.product;
                 })[0];
-                var first = t.steps[0];
-                var last = t.steps[t.steps.length - 1];
-                var newer = all.some(function (h) {
-                    return h.product === t.product && h.where === t.where && h.date > last.date;
-                });
-                var version = !newer && now && now.version ? now.version : last.to;
-                t.start = P.evaluateRef(data, t.kind, { product: t.product, version: first.from }, t.where || null);
-                t.current = P.evaluateRef(data, t.kind, { product: t.product, version: version }, t.where || null);
+                var lastStep = t.steps[t.steps.length - 1];
+                var isLatest = pairs[pairs.length - 1] === all.length - 1;
+                t.start = P.evaluateRef(data, t.kind, { product: t.product, version: t.steps[0].from }, t.where || null);
+                t.current = P.evaluateRef(data, t.kind, { product: t.product, version: isLatest && now && now.version ? now.version : lastStep.to }, t.where || null);
                 t.productName = t.start.productName;
-                t.firstDate = first.date;
-                t.lastDate = last.date;
+                t.firstDate = t.entries[0].date;
+                t.lastDate = lastStep.date;
+                delete t.all;
                 return t;
             })
+            .filter(Boolean)
             .sort(function (a, b) {
                 return (a.kind === b.kind ? 0 : a.kind === 'tech' ? -1 : 1) || (a.firstDate < b.firstDate ? -1 : a.firstDate > b.firstDate ? 1 : 0);
             });
@@ -465,10 +475,11 @@
         tracks.forEach(function (t) {
             lines.push('');
             lines.push((t.where ? t.where + '-এ ' : '') + t.productName + ': ' + P.cleanVersion(t.start.version) + ' থেকে ' + P.cleanVersion(t.current.version));
-            lines.push('- শুরুতে: ' + t.start.label + ', ' + P.fmtDate(t.firstDate) + '-এর আগে। আজ এটা থাকলে: ' + P.statusLine(t.start));
+            lines.push('- শুরুতে: ' + t.start.label + ' (' + P.fmtDate(t.firstDate) + ')। আজ এটা থাকলে: ' + P.statusLine(t.start));
             lines.push('- এখন: ' + t.current.label + ', ' + P.statusLine(t.current));
-            t.steps.forEach(function (h) {
-                lines.push('- ' + P.fmtDate(h.date) + ': ' + h.from + ' → ' + h.to + (h.note ? '। ' + h.note : ''));
+            lines.push('- ভার্সনের ইতিহাস:');
+            t.entries.forEach(function (h) {
+                lines.push('  ' + P.fmtDate(h.date) + ': ' + t.productName + ' ' + h.version + (h.note ? '। ' + h.note : ''));
             });
         });
         return lines.join('\n');

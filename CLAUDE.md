@@ -23,7 +23,7 @@
 - `public/seed/projects.json`: made-up sample projects shown on first visit. Never put real client or repo names here, because the site is public.
 - `project.history` is filled by `P.recordUpgrades(before, after, date)`, called only on drawer save and merge-mode import (not on replace, undo or reset), so restoring a backup does not create fake steps.
 - `private/` is git-ignored. Keep real data exports there.
-- The data shape is defined in `global/20-schema.js` (`schemaVersion` 3; v3 added `project.history`). If you change it, bump the version and migrate in `normalizeData`.
+- The data shape is defined in `global/20-schema.js` (`schemaVersion` 4; `project.history` is a list of `{date, product, where, version, note}` entries, steps are derived from consecutive entries in `P.upgradeJourney`; v3 `{from, to}` steps are converted in `normalizeHistory`). If you change it, bump the version and migrate in `normalizeData`.
 
 ## Checks
 - `npm test` runs the node:test suite in `tests/`.

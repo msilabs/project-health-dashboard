@@ -90,15 +90,15 @@
         return '<section class="card up-card">' +
             '<div class="card-head"><button class="up-title" type="button" data-open="' + esc(p.id) + '">' + ui.avatar(p.name) + '<b>' + esc(p.name) + '</b>' +
             (p.lifecycle === 'archived' ? '<span class="tag">' + esc(P.LIFECYCLES.archived) + '</span>' : '') + '</button></div>' +
-            '<div class="tablewrap"><table class="table up-table"><thead><tr><th>অংশ</th><th>আগে</th><th aria-label="থেকে"></th><th>এখন</th><th>ধাপ</th></tr></thead><tbody>' +
+            '<div class="tablewrap"><table class="table up-table"><thead><tr><th>অংশ</th><th>আগে</th><th aria-label="থেকে"></th><th>এখন</th><th>ভার্সনের ইতিহাস</th></tr></thead><tbody>' +
             x.tracks.map(function (t) {
                 return '<tr>' +
                     '<td><b>' + esc(t.productName) + '</b>' + (t.where ? '<div class="small muted">' + esc(t.where) + '</div>' : '') + '</td>' +
                     '<td>' + cell(t.start) + '</td>' +
                     '<td class="up-arrow" aria-hidden="true">→</td>' +
                     '<td>' + cell(t.current) + '</td>' +
-                    '<td class="up-steps">' + t.steps.map(function (h) {
-                        return '<div><span class="muted">' + P.fmtDate(h.date) + '</span> <span class="v">' + esc(h.from) + ' → ' + esc(h.to) + '</span>' + (h.note ? '<span class="muted"> · ' + esc(h.note) + '</span>' : '') + '</div>';
+                    '<td class="up-steps">' + t.entries.map(function (h) {
+                        return '<div><span class="muted">' + P.fmtDate(h.date) + '</span> <span class="v">' + esc(h.version) + '</span>' + (h.note ? '<span class="muted"> · ' + esc(h.note) + '</span>' : '') + '</div>';
                     }).join('') + '</td>' +
                     '</tr>';
             }).join('') +

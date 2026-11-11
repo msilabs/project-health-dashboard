@@ -86,43 +86,52 @@
             ],
             "history": [
                 {
+                    "date": "2022-08-01",
+                    "product": "php",
+                    "where": "production",
+                    "version": "8.0",
+                    "note": ""
+                },
+                {
+                    "date": "2022-08-01",
+                    "product": "laravel",
+                    "where": "",
+                    "version": "9",
+                    "note": ""
+                },
+                {
                     "date": "2023-03-05",
                     "product": "php",
                     "where": "production",
-                    "from": "8.0",
-                    "to": "8.1",
+                    "version": "8.1",
                     "note": ""
                 },
                 {
                     "date": "2023-03-20",
                     "product": "laravel",
                     "where": "",
-                    "from": "9",
-                    "to": "10",
+                    "version": "10",
                     "note": ""
                 },
                 {
                     "date": "2024-05-28",
                     "product": "php",
                     "where": "production",
-                    "from": "8.1",
-                    "to": "8.2",
+                    "version": "8.2",
                     "note": ""
                 },
                 {
                     "date": "2024-06-10",
                     "product": "laravel",
                     "where": "",
-                    "from": "10",
-                    "to": "11",
+                    "version": "11",
                     "note": ""
                 },
                 {
                     "date": "2025-04-15",
                     "product": "laravel",
                     "where": "",
-                    "from": "11",
-                    "to": "12",
+                    "version": "12",
                     "note": "Livewire 3-এ নেওয়া হয়েছে"
                 }
             ],
@@ -210,11 +219,17 @@
             ],
             "history": [
                 {
+                    "date": "2024-09-15",
+                    "product": "laravel",
+                    "where": "",
+                    "version": "11",
+                    "note": ""
+                },
+                {
                     "date": "2026-03-28",
                     "product": "laravel",
                     "where": "",
-                    "from": "11",
-                    "to": "13",
+                    "version": "13",
                     "note": "সার্ভারের PHP এখনো আপগ্রেড হয়নি"
                 }
             ],
@@ -265,27 +280,38 @@
             ],
             "history": [
                 {
+                    "date": "2023-06-01",
+                    "product": "nodejs",
+                    "where": "production",
+                    "version": "18",
+                    "note": ""
+                },
+                {
+                    "date": "2024-01-10",
+                    "product": "nextjs",
+                    "where": "",
+                    "version": "14",
+                    "note": ""
+                },
+                {
                     "date": "2025-01-12",
                     "product": "nodejs",
                     "where": "production",
-                    "from": "18",
-                    "to": "22",
+                    "version": "22",
                     "note": ""
                 },
                 {
                     "date": "2025-02-20",
                     "product": "nextjs",
                     "where": "",
-                    "from": "14",
-                    "to": "15",
+                    "version": "15",
                     "note": ""
                 },
                 {
                     "date": "2025-11-05",
                     "product": "nextjs",
                     "where": "",
-                    "from": "15",
-                    "to": "16",
+                    "version": "16",
                     "note": ""
                 }
             ],
@@ -436,19 +462,31 @@
             ],
             "history": [
                 {
+                    "date": "2023-02-01",
+                    "product": "php",
+                    "where": "production",
+                    "version": "8.1",
+                    "note": ""
+                },
+                {
+                    "date": "2023-02-01",
+                    "product": "laravel",
+                    "where": "",
+                    "version": "10",
+                    "note": ""
+                },
+                {
                     "date": "2025-12-10",
                     "product": "php",
                     "where": "production",
-                    "from": "8.1",
-                    "to": "8.4",
+                    "version": "8.4",
                     "note": ""
                 },
                 {
                     "date": "2026-04-22",
                     "product": "laravel",
                     "where": "",
-                    "from": "10",
-                    "to": "13",
+                    "version": "13",
                     "note": "দুই ধাপ একসাথে, টেস্টসহ ৩ সপ্তাহ"
                 }
             ],

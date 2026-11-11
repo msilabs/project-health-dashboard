@@ -1,7 +1,7 @@
 /* ডেটার কাঠামো: যেকোনো উৎসের (localStorage, import, AI) ডেটা এখানে একই আকারে আনা হয় */
 (function (P) {
     P.APP = 'project-health';
-    P.SCHEMA_VERSION = 3;
+    P.SCHEMA_VERSION = 4;
 
     P.KINDS = ['tech', 'env'];
     P.KIND_LABEL = { tech: 'টেক', env: 'সার্ভার' };
@@ -141,26 +141,40 @@
         };
     };
 
-    // আপগ্রেডের একটা ধাপ। where ফাঁকা মানে টেক, নইলে এনভায়রনমেন্টের নাম।
-    P.normalizeUpgrade = function (h) {
+    // ইতিহাসের একটা এন্ট্রি: কোন তারিখে কোন ভার্সন। where ফাঁকা মানে টেক, নইলে এনভায়রনমেন্টের নাম।
+    // পরপর দুই এন্ট্রি থেকে আপগ্রেডের ধাপ বের হয় (যেমন 10, তারপর 12)।
+    P.normalizeEntry = function (h) {
         if (!h || typeof h !== 'object') return null;
         var x = {
             date: P.cleanDate(h.date || ''),
             product: P.slug(h.product),
             where: str(h.where, 40),
-            from: str(h.from, 40),
-            to: str(h.to, 40),
+            version: str(h.version, 40),
             note: str(h.note, 300)
         };
-        return x.date && x.product && x.to && x.from !== x.to ? x : null;
+        return x.date && x.product && x.version ? x : null;
     };
 
     function byDate(a, b) {
         return a.date < b.date ? -1 : a.date > b.date ? 1 : 0;
     }
 
+    // schemaVersion 3-এর ধাপ {from, to}: প্রতিটা অংশের প্রথম ধাপের from একই তারিখে শুরুর এন্ট্রি হয়
+    function fromSteps(arr) {
+        var seen = {};
+        var out = [];
+        arr.slice().sort(byDate).forEach(function (h) {
+            if (!h || typeof h !== 'object' || h.version !== undefined) return out.push(h);
+            var key = P.slug(h.product) + '|' + str(h.where, 40);
+            if (!seen[key] && h.from) out.push({ date: h.date, product: h.product, where: h.where, version: h.from, note: '' });
+            seen[key] = true;
+            out.push({ date: h.date, product: h.product, where: h.where, version: h.to, note: h.note });
+        });
+        return out;
+    }
+
     P.normalizeHistory = function (v) {
-        return list(v).map(P.normalizeUpgrade).filter(Boolean).sort(byDate).slice(-300);
+        return fromSteps(list(v)).map(P.normalizeEntry).filter(Boolean).sort(byDate).slice(-300);
     };
 
     P.normalizeProject = function (p) {
@@ -371,16 +385,17 @@
         };
     };
 
-    function upgradeKey(h) {
-        return [h.date, h.product, h.where, h.from, h.to].join('|');
+    function entryKey(h) {
+        return [h.date, h.product, h.where, h.version].join('|');
     }
+    P.entryKey = entryKey;
 
     function mergeHistory(a, b) {
         var seen = {};
         return a
             .concat(b)
             .filter(function (h) {
-                var k = upgradeKey(h);
+                var k = entryKey(h);
                 if (seen[k]) return false;
                 seen[k] = true;
                 return true;
@@ -397,8 +412,9 @@
         return !!(ca && cb && ca === cb);
     };
 
-    // before থেকে after-এ কোনো ভার্সনের সাইকেল বদলালে after-এর প্রজেক্টের history-তে একটা ধাপ যোগ হয়।
-    // একই দিনে একই অংশ কয়েকবার বদলালে একটাই ধাপ থাকে।
+    // before থেকে after-এ কোনো ভার্সনের সাইকেল বদলালে after-এর প্রজেক্টের history-তে এন্ট্রি যোগ হয়।
+    // ঐ অংশের ইতিহাস ফাঁকা থাকলে আগের ভার্সনও যোগ হয়, আগের সেভের তারিখে।
+    // একই দিনে কয়েকবার বদলালে আজকের এন্ট্রিটাই বদলায়।
     P.recordUpgrades = function (before, after, date) {
         var old = {};
         before.projects.forEach(function (p) {
@@ -427,18 +443,26 @@
             if (!changes.length) return;
             p.history = p.history || [];
             changes.forEach(function (c) {
-                var same = p.history.filter(function (h) {
+                var same = function (a, b) {
+                    return P.sameCycle(after, c.kind, c.product, a, b);
+                };
+                var track = p.history.filter(function (h) {
                     return h.product === c.product && h.where === c.where;
                 });
-                var last = same[same.length - 1];
-                // হাতে লেখা ধাপে এই বদল আগেই আছে
-                if (last && P.sameCycle(after, c.kind, c.product, last.to, c.to)) return;
-                if (last && last.date === date) {
-                    last.to = c.to;
-                    if (P.sameCycle(after, c.kind, c.product, last.from, last.to)) p.history.splice(p.history.indexOf(last), 1);
+                var last = track[track.length - 1];
+                var entry = { date: date, product: c.product, where: c.where, version: c.to, note: '' };
+                if (!last) {
+                    p.history.push({ date: prev.updatedAt && prev.updatedAt <= date ? prev.updatedAt : date, product: c.product, where: c.where, version: c.from, note: '' }, entry);
                     return;
                 }
-                p.history.push({ date: date, product: c.product, where: c.where, from: c.from, to: c.to, note: '' });
+                // হাতে লেখা ইতিহাসে এই ভার্সন আগেই আছে
+                if (same(last.version, c.to)) return;
+                if (last.date === date && track.length > 1) {
+                    last.version = c.to;
+                    if (same(track[track.length - 2].version, c.to)) p.history.splice(p.history.indexOf(last), 1);
+                    return;
+                }
+                p.history.push(entry);
             });
             p.history.sort(byDate);
         });

@@ -1351,31 +1351,47 @@ dialog.modal .sheet {
     font-size: 0.78rem;
 }
 
-/* আপগ্রেডের ইতিহাস: এডিটে একটা ধাপ দুই সারিতে */
-.hist-row {
+/* আপগ্রেডের ইতিহাস: এডিটে প্রতিটা অংশ একটা ব্লক, ভেতরে ভার্সন আর তারিখের সারি */
+.hist-group {
     display: grid;
-    grid-template-columns: 9rem minmax(0, 1fr) minmax(0, 1.2fr) auto;
-    gap: 0.5rem;
-    align-items: center;
-    padding-bottom: 0.6rem;
-    border-bottom: 1px dashed var(--border);
+    gap: 0.6rem;
+    padding: 0.85rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface-2);
 }
 
-.hist-row [data-k="note"] {
-    grid-column: span 2;
+.hist-group-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 10rem) auto;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.hist-row {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) 9.5rem minmax(0, 1.2fr) auto;
+    gap: 0.5rem;
+    align-items: center;
 }
 
 @media (max-width: 520px) {
     .hist-row {
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
-    }
-
-    .hist-row [data-k="product"] {
-        grid-column: 1 / 3;
+        grid-template-columns: minmax(0, 1fr) 9.5rem auto;
     }
 
     .hist-row [data-k="note"] {
         grid-column: 1 / -1;
+        grid-row: 2;
+    }
+
+    .hist-group-head {
+        grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .hist-group-head select {
+        grid-column: 1;
+        grid-row: 2;
     }
 }
 
