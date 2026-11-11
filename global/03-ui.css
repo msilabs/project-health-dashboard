@@ -7,7 +7,10 @@
 
 .main {
     position: relative;
+    display: flex;
+    flex-direction: column;
     min-width: 0;
+    min-height: 100vh;
     isolation: isolate;
 }
 
@@ -22,7 +25,9 @@
 }
 
 .page {
+    flex: 1;
     display: grid;
+    align-content: start;
     gap: 1.25rem;
     width: min(100% - 3rem, var(--page));
     margin-inline: auto;
@@ -63,6 +68,7 @@
     align-items: center;
     gap: 0.55rem;
     width: min(100%, 26rem);
+    min-width: 0;
     height: 2.2rem;
     padding: 0 0.6rem 0 0.75rem;
     border: 1px solid var(--border);
@@ -80,6 +86,9 @@
 
 .search-trigger span {
     flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 kbd {
@@ -114,7 +123,38 @@ kbd {
 
 @media (max-width: 40rem) {
     .search-trigger kbd,
-    .topbar .btn-primary .label {
+    .topbar .btn .label {
+        display: none;
+    }
+}
+
+/* ---------- ফুটার ---------- */
+.site-foot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.4rem 1rem;
+    width: min(100% - 3rem, var(--page));
+    margin: 0 auto;
+    padding: 1.1rem 0 1.6rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.8rem;
+}
+
+.site-foot a {
+    color: var(--text-2);
+    font-weight: 550;
+}
+
+@media (max-width: 60rem) {
+    .site-foot {
+        width: min(100% - 2rem, var(--page));
+    }
+}
+
+@media print {
+    .site-foot {
         display: none;
     }
 }
@@ -2193,6 +2233,11 @@ dialog.palette {
 
     .app {
         display: block;
+    }
+
+    .main {
+        display: block;
+        min-height: 0;
     }
 
     .main::before {

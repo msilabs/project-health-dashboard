@@ -30,6 +30,8 @@
         <template else-if="props.name === 'compare'"><path d="M7 4v16M17 4v16M3 8h8M13 16h8" /></template>
         <template else-if="props.name === 'calendar'"><rect x="3" y="5" width="18" height="16" rx="2" /><path d="M3 10h18M8 3v4M16 3v4" /></template>
         <template else-if="props.name === 'shield'"><path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6z" /><path d="m9 12 2 2 4-4" /></template>
+        <template else-if="props.name === 'star'"><path d="m12 3.5 2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z" /></template>
+        <template else-if="props.name === 'bug'"><rect x="7" y="7" width="10" height="13" rx="5" /><path d="M9 7a3 3 0 0 1 6 0M12 11v9M7 12H3M21 12h-4M7.5 16.5 4 18.5M16.5 16.5l3.5 2M7.5 9 4.5 7M16.5 9l3-2" /></template>
         <template else-if="props.name === 'chevron'"><path d="m9 6 6 6-6 6" /></template>
     </svg>
 </template>

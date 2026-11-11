@@ -9,6 +9,9 @@
             <h1>পোর্টফোলিওর স্বাস্থ্য</h1>
             <p id="lede">&nbsp;</p>
         </div>
+        <div class="actions">
+            <button class="btn btn-primary" type="button" data-action="new-project"><Icon name="plus" />নতুন প্রজেক্ট</button>
+        </div>
     </div>
 
     <div class="stack stack-lg" id="skeleton" aria-hidden="true">

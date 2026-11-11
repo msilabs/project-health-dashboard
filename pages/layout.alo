@@ -16,7 +16,8 @@
                 <button class="btn btn-ghost btn-icon menu-toggle" type="button" data-action="nav-open" aria-label="মেনু খুলুন"><Icon name="menu" /></button>
                 <button class="search-trigger" type="button" data-action="search"><Icon name="search" /><span>প্রজেক্ট, প্রোডাক্ট বা ভার্সন খুঁজুন…</span><kbd id="kbd-mod">⌘</kbd><kbd>K</kbd></button>
                 <span class="spacer"></span>
-                <button class="btn btn-primary" type="button" data-action="new-project"><Icon name="plus" /><span class="label">নতুন প্রজেক্ট</span></button>
+                <a class="btn" href="{{ data.site.repo }}" target="_blank" rel="noopener" aria-label="GitHub-এ স্টার দিন"><Icon name="star" /><span class="label">GitHub-এ স্টার</span></a>
+                <a class="btn btn-ghost" href="{{ data.site.repo }}/issues/new" target="_blank" rel="noopener" aria-label="সমস্যা বা পরামর্শ জানান"><Icon name="bug" /><span class="label">সমস্যা জানান</span></a>
             </header>
             <main id="main" class="page">
                 <div class="sample-bar" id="sample-bar" hidden>
@@ -27,6 +28,10 @@
                 </div>
                 <slot />
             </main>
+            <footer class="site-foot">
+                <span><a href="https://github.com/msilabs" target="_blank" rel="noopener">msilabs</a>-এর <a href="https://github.com/msilabs/alo" target="_blank" rel="noopener">আলো (Alo)</a> দিয়ে বানানো</span>
+                <span><a href="{{ data.site.repo }}" target="_blank" rel="noopener">সোর্স কোড</a> · MIT</span>
+            </footer>
         </div>
     </div>
     <ProjectDrawer />
