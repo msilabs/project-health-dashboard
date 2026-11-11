@@ -362,6 +362,67 @@
         });
     };
 
+    /* ---------- আপগ্রেডের ইতিহাস: শুরু থেকে এখন ---------- */
+
+    // প্রতিটা অংশের (যেমন Laravel, বা production-এর PHP) শুরুর ভার্সন, ধাপগুলো আর এখনকার ভার্সন।
+    // দুই দিকের অবস্থা আজকের তারিখে: শুরুর ভার্সনে থেকে গেলে আজ কী হতো, আর এখন কী আছে।
+    P.upgradeJourney = function (data, project) {
+        var tracks = {};
+        var order = [];
+        (project.history || []).forEach(function (h) {
+            var key = h.where + '|' + h.product;
+            if (!tracks[key]) {
+                tracks[key] = { product: h.product, where: h.where, kind: h.where ? 'env' : 'tech', steps: [] };
+                order.push(key);
+            }
+            tracks[key].steps.push(h);
+        });
+        return order
+            .map(function (key) {
+                var t = tracks[key];
+                var refs = t.where
+                    ? (project.deployments.filter(function (d) {
+                          return d.name === t.where;
+                      })[0] || { stack: [] }).stack
+                    : project.tech;
+                var now = refs.filter(function (r) {
+                    return r.product === t.product;
+                })[0];
+                var first = t.steps[0];
+                var last = t.steps[t.steps.length - 1];
+                t.start = P.evaluateRef(data, t.kind, { product: t.product, version: first.from }, t.where || null);
+                t.current = P.evaluateRef(data, t.kind, { product: t.product, version: now && now.version ? now.version : last.to }, t.where || null);
+                t.productName = t.start.productName;
+                t.firstDate = first.date;
+                t.lastDate = last.date;
+                return t;
+            })
+            .sort(function (a, b) {
+                return (a.kind === b.kind ? 0 : a.kind === 'tech' ? -1 : 1) || (a.firstDate < b.firstDate ? -1 : a.firstDate > b.firstDate ? 1 : 0);
+            });
+    };
+
+    P.statusLine = function (item) {
+        return P.STATUS[item.status].label + (item.status !== 'unknown' && item.text ? ' (' + item.text + ')' : '');
+    };
+
+    // ম্যানেজমেন্টকে পাঠানোর মতো সাধারণ লেখা
+    P.upgradeSummaryText = function (data, project) {
+        var tracks = P.upgradeJourney(data, project);
+        if (!tracks.length) return '';
+        var lines = [project.name + ': আপগ্রেডের হিসাব (' + P.fmtDate(P.isoDate(P.today())) + ')'];
+        tracks.forEach(function (t) {
+            lines.push('');
+            lines.push((t.where ? t.where + '-এ ' : '') + t.productName + ': ' + P.cleanVersion(t.start.version) + ' থেকে ' + P.cleanVersion(t.current.version));
+            lines.push('- শুরুতে: ' + t.start.label + ', ' + P.fmtDate(t.firstDate) + '-এর আগে। আজ এটা থাকলে: ' + P.statusLine(t.start));
+            lines.push('- এখন: ' + t.current.label + ', ' + P.statusLine(t.current));
+            t.steps.forEach(function (h) {
+                lines.push('- ' + P.fmtDate(h.date) + ': ' + h.from + ' → ' + h.to + (h.note ? '। ' + h.note : ''));
+            });
+        });
+        return lines.join('\n');
+    };
+
     P.summaryText = function (a, settings) {
         if (!a.total) return 'এখনো কোনো প্রজেক্ট নেই।';
         var parts = [P.num(a.total) + 'টি প্রজেক্টের মধ্যে ' + P.num(a.counts.eol) + 'টিতে কোনো অংশের সাপোর্ট শেষ হয়ে গেছে, আর ' + P.num(a.counts.critical) + 'টিতে ' + P.num(settings.redDays) + ' দিনের মধ্যে শেষ হবে।'];

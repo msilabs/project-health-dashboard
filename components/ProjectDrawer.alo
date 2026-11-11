@@ -47,6 +47,34 @@
         return '<div class="parts">' + items.map(function (x) { return ui.part(x, ui.fixLink(x)); }).join('') + '</div>';
     }
 
+    function stateHtml(item) {
+        if (item.status === 'ok') return '<span class="small muted">' + esc(item.end ? P.fmtDate(item.end) + ' পর্যন্ত সাপোর্ট' : item.text) + '</span>';
+        const date = item.end ? (item.days < 0 ? P.fmtDate(item.end) + '-এ শেষ' : P.fmtDate(item.end) + ' পর্যন্ত') : '';
+        return ui.badge(item.status, item.status === 'unknown' ? item.text : null) + (date ? '<span class="small muted">' + esc(date) + '</span>' : '');
+    }
+
+    // শুরু থেকে এখন: প্রতিটা অংশের শুরুর আর এখনকার ভার্সন পাশাপাশি, নিচে ধাপগুলো
+    function journeyHtml(p) {
+        const tracks = P.upgradeJourney(P.store.get(), p);
+        if (!tracks.length) return '';
+        return '<div class="section"><span class="section-title">শুরু থেকে এখন <button class="link-btn" type="button" data-copy-summary>' + ui.icon('copy') + 'সারাংশ কপি</button></span>' +
+            tracks.map(function (t) {
+                return '<div class="journey">' +
+                    '<div class="journey-head"><b>' + esc(t.productName) + '</b>' + (t.where ? '<span class="muted">' + esc(t.where) + '</span>' : '') + '</div>' +
+                    '<div class="journey-compare">' +
+                    '<div><span class="small muted">শুরুতে</span><b>' + esc(t.start.label) + '</b>' + stateHtml(t.start) + '</div>' +
+                    '<span class="journey-arrow" aria-hidden="true">→</span>' +
+                    '<div><span class="small muted">এখন</span><b>' + esc(t.current.label) + '</b>' + stateHtml(t.current) + '</div>' +
+                    '</div>' +
+                    '<ol class="journey-steps">' + t.steps.map(function (h) {
+                        return '<li><button class="step-date" type="button" data-edit-step="' + p.history.indexOf(h) + '" data-tip="তারিখ বা ধাপ বদলান">' + P.fmtDate(h.date) + '</button><span>' + esc(h.from) + ' → ' + esc(h.to) + '</span>' + (h.note ? '<span class="muted">' + esc(h.note) + '</span>' : '') +
+                            '<button class="step-del" type="button" data-del-step="' + p.history.indexOf(h) + '" aria-label="ধাপটা মুছুন" data-tip="ধাপটা মুছুন">' + ui.icon('x') + '</button></li>';
+                    }).join('') + '</ol>' +
+                    '</div>';
+            }).join('') +
+            '</div>';
+    }
+
     function renderView(p) {
         const r = P.analyzeProject(P.store.get(), p);
         $el.querySelector('#pd-title').textContent = p.name;
@@ -64,6 +92,7 @@
             html += '<div class="section"><span class="section-title">' + esc(d.name) + '</span>' + partsHtml(items) + '</div>';
         });
         if (!p.deployments.length) html += '<div class="section"><span class="section-title">এনভায়রনমেন্ট</span><p class="small muted">কোনো এনভায়রনমেন্ট যোগ করা হয়নি।</p></div>';
+        html += journeyHtml(p);
         const info = [];
         if (p.repo) info.push('<a href="' + esc(p.repo) + '" target="_blank" rel="noopener">' + esc(p.repo.replace(/^https?:\/\//, '')) + '</a>');
         if (p.note) info.push('<span>' + esc(p.note) + '</span>');
@@ -140,6 +169,38 @@
         );
     }
 
+    // আপগ্রেডের একটা ধাপ: তারিখ, কোথায়, প্রোডাক্ট, আগের আর নতুন ভার্সন, নোট
+    function histRow(h, wheres) {
+        h = h || { date: '', where: '', product: '', from: '', to: '', note: '' };
+        const kind = h.where ? 'env' : 'tech';
+        const opts = P.unique([''].concat(wheres, h.where ? [h.where] : [])).map(function (w) {
+            return '<option value="' + esc(w) + '"' + (w === h.where ? ' selected' : '') + '>' + (w ? esc(w) : 'টেক') + '</option>';
+        }).join('');
+        return (
+            '<div class="hist-row" data-hist>' +
+            '<input type="date" data-k="date" value="' + esc(h.date) + '" aria-label="তারিখ">' +
+            '<select data-k="where" aria-label="কোথায়">' + opts + '</select>' +
+            '<input type="text" data-k="product" value="' + esc(h.product ? productName(kind, h.product) : '') + '" list="dl-products-' + kind + '" placeholder="যেমন Laravel" aria-label="প্রোডাক্ট" autocomplete="off">' +
+            '<button class="btn btn-ghost btn-sm btn-icon" type="button" data-remove-hist aria-label="সরান">' + ui.icon('x') + '</button>' +
+            '<input type="text" data-k="from" value="' + esc(h.from) + '" placeholder="আগে, যেমন 9" aria-label="আগের ভার্সন" autocomplete="off">' +
+            '<input type="text" data-k="to" value="' + esc(h.to) + '" placeholder="পরে, যেমন 10" aria-label="নতুন ভার্সন" autocomplete="off">' +
+            '<input type="text" data-k="note" value="' + esc(h.note) + '" placeholder="নোট (ঐচ্ছিক)" aria-label="নোট" maxlength="300">' +
+            '</div>'
+        );
+    }
+
+    function readHistory() {
+        const rows = Array.prototype.map.call(body.querySelectorAll('[data-hist]'), function (row) {
+            const v = function (k) { return row.querySelector('[data-k="' + k + '"]').value.trim(); };
+            const where = v('where');
+            const product = v('product') ? ui.findProductByText(P.store.get(), where ? 'env' : 'tech', v('product')) : null;
+            return { date: v('date'), where: where, product: product ? product.id : P.slug(v('product')), from: v('from'), to: v('to'), note: v('note') };
+        });
+        const filled = rows.filter(function (h) { return h.product || h.from || h.to || h.note; });
+        const bad = filled.some(function (h) { return !P.normalizeUpgrade(h); });
+        return { history: filled, bad: bad };
+    }
+
     function renderEdit(p) {
         const data = P.store.get();
         $el.querySelector('#pd-title').textContent = current ? 'প্রজেক্ট এডিট' : 'নতুন প্রজেক্ট';
@@ -147,6 +208,7 @@
         $el.querySelector('[data-meta]').innerHTML = '';
         $el.querySelector('[data-lists]').innerHTML = ui.datalists(data);
         const hasMore = p.owner || p.tags.length || p.repo || p.note || p.lifecycle === 'archived';
+        const wheres = p.deployments.map(function (d) { return d.name; });
         body.innerHTML =
             '<label class="field"><span>নাম *</span><input type="text" name="name" value="' + esc(p.name) + '" maxlength="120"></label>' +
             '<div class="section"><span class="section-title">টেক <span class="hint">কোডে যা ব্যবহার হয়</span></span>' +
@@ -163,6 +225,11 @@
             '<label class="field"><span>রিপো বা লিংক</span><input type="text" name="repo" value="' + esc(p.repo) + '" placeholder="https://github.com/…"></label>' +
             '<label class="field"><span>নোট</span><textarea class="prose" name="note" rows="2">' + esc(p.note) + '</textarea></label>' +
             '<label class="check"><input type="checkbox" name="archived"' + (p.lifecycle === 'archived' ? ' checked' : '') + '>আর্কাইভ করা (ড্যাশবোর্ডের হিসাবে ধরা হবে না)</label>' +
+            '</details>' +
+            '<details class="fold"' + (p.history.length ? ' open' : '') + '><summary>আপগ্রেডের ইতিহাস</summary>' +
+            '<p class="small muted">এখান থেকে ভার্সন বদলালে ধাপটা নিজে থেকেই যোগ হয়। আগের আপগ্রেডগুলো (যেমন Laravel 9 থেকে 10) এখানে হাতে লিখুন।</p>' +
+            '<div class="stack stack-sm" data-history>' + p.history.map(function (h) { return histRow(h, wheres); }).join('') + '</div>' +
+            '<div><button class="btn btn-ghost btn-sm" type="button" data-add-hist>' + ui.icon('plus') + 'আপগ্রেডের ধাপ</button></div>' +
             '</details>' +
             '<p class="notice s-eol" data-error hidden></p>';
         foot.innerHTML =
@@ -208,7 +275,7 @@
 
     function render() {
         if (editing) {
-            const blank = { name: '', repo: '', owner: '', tags: [], lifecycle: 'active', note: '', tech: [], deployments: [{ name: P.DEPLOYMENT_NAMES[0], stack: [] }] };
+            const blank = { name: '', repo: '', owner: '', tags: [], lifecycle: 'active', note: '', tech: [], deployments: [{ name: P.DEPLOYMENT_NAMES[0], stack: [] }], history: [] };
             renderEdit(current ? find(current) || blank : blank);
         } else {
             const p = find(current);
@@ -245,6 +312,9 @@
         if (!input.name) return showError('প্রজেক্টের নাম লিখুন।');
         const names = input.deployments.map(function (d) { return d.name || 'production'; });
         if (P.unique(names).length !== names.length) return showError('একই নামের দুটো এনভায়রনমেন্ট আছে। নাম আলাদা করুন।');
+        const hist = readHistory();
+        if (hist.bad) return showError('আপগ্রেডের প্রতিটা ধাপে তারিখ, প্রোডাক্ট আর নতুন ভার্সন লিখুন; আগের আর নতুন ভার্সন এক হতে পারবে না।');
+        input.history = hist.history;
         const data = P.store.get();
         let id = current;
         if (!id) {
@@ -257,14 +327,45 @@
         const isNew = !current;
         P.store.update(function (next) {
             const i = next.projects.findIndex(function (p) { return p.id === id; });
-            if (i === -1) next.projects.push(project);
-            else next.projects[i] = project;
+            if (i === -1) next.projects.push(P.clone(project));
+            else next.projects[i] = P.clone(project);
+            P.recordUpgrades(data, next, P.isoDate(P.today()));
         });
         current = id;
         editing = false;
         render();
-        ui.toast(isNew ? '"' + project.name + '" যোগ হয়েছে।' : 'সেভ হয়েছে।');
+        const added = addedSteps(project.history, find(id).history);
+        if (isNew) ui.toast('"' + project.name + '" যোগ হয়েছে।');
+        else if (!added.length) ui.toast('সেভ হয়েছে।');
+        else {
+            // ভুল ভার্সন ঠিক করা হলে সেটা আপগ্রেড নয়; এক ক্লিকে ধাপটা বাদ দেওয়া যায়
+            ui.toast('সেভ হয়েছে। ইতিহাসে যোগ হলো: ' + added.map(stepLabel).join(', '), 'ok', {
+                label: 'ধাপ বাদ দিন',
+                fn: function () {
+                    const keys = added.map(stepKey);
+                    P.store.update(function (next) {
+                        const p = next.projects.find(function (x) { return x.id === id; });
+                        if (p) p.history = p.history.filter(function (h) { return keys.indexOf(stepKey(h)) === -1; });
+                    });
+                    if (current === id && !editing) render();
+                    ui.toast('ধাপ বাদ দেওয়া হয়েছে, ভার্সন যা লিখেছেন তা-ই আছে।');
+                }
+            });
+        }
     });
+
+    function stepKey(h) {
+        return [h.date, h.product, h.where, h.from, h.to].join('|');
+    }
+
+    function stepLabel(h) {
+        return (h.where ? h.where + '-এ ' : '') + productName(h.where ? 'env' : 'tech', h.product) + ' ' + h.from + ' → ' + h.to;
+    }
+
+    function addedSteps(before, after) {
+        const keys = before.map(stepKey);
+        return after.filter(function (h) { return keys.indexOf(stepKey(h)) === -1; });
+    }
 
     $el.addEventListener('click', function (e) {
         const t = e.target.closest('button');
@@ -300,11 +401,62 @@
             t.closest('[data-dep]').remove();
         } else if (t.hasAttribute('data-fetch')) {
             fetchProduct(t.closest('.edit-row'), t);
+        } else if (t.hasAttribute('data-copy-summary')) {
+            ui.copy(P.upgradeSummaryText(P.store.get(), find(current))).then(function () {
+                ui.toast('সারাংশ কপি হয়েছে। ইমেইল বা চ্যাটে পেস্ট করুন।');
+            }, function () {
+                ui.toast('কপি করা গেল না।', 'eol');
+            });
+        } else if (t.hasAttribute('data-edit-step')) {
+            // এডিট মোডে ইতিহাসের ভাঁজ খুলে ঐ ধাপের তারিখে যাওয়া
+            editing = true;
+            render();
+            const row = body.querySelectorAll('[data-hist]')[Number(t.dataset.editStep)];
+            if (!row) return;
+            row.closest('details').open = true;
+            row.scrollIntoView({ block: 'center' });
+            row.querySelector('[data-k="date"]').focus({ preventScroll: true });
+        } else if (t.hasAttribute('data-del-step')) {
+            const p = find(current);
+            const i = Number(t.dataset.delStep);
+            if (!p || !p.history[i]) return;
+            const label = stepLabel(p.history[i]);
+            const next = P.clone(P.store.get());
+            next.projects.find(function (x) { return x.id === p.id; }).history.splice(i, 1);
+            P.store.apply(next, 'ইতিহাসের ধাপ মুছে ফেলা');
+            ui.undoToast('ধাপ মুছে ফেলা হয়েছে: ' + label);
+        } else if (t.hasAttribute('data-add-hist')) {
+            addHistRow();
+        } else if (t.hasAttribute('data-remove-hist')) {
+            t.closest('[data-hist]').remove();
         }
     });
 
+    // নতুন ধাপে আগের ধাপের প্রোডাক্ট আর নতুন ভার্সন বসে যায়, যাতে 9 → 10 → 11 দ্রুত লেখা যায়
+    function addHistRow() {
+        const box = body.querySelector('[data-history]');
+        const rows = box.querySelectorAll('[data-hist]');
+        const wheres = Array.prototype.map.call(body.querySelectorAll('[data-dep] [data-k="name"]'), function (i) { return i.value.trim(); }).filter(Boolean);
+        let h = null;
+        if (rows.length) {
+            const prev = rows[rows.length - 1];
+            const v = function (k) { return prev.querySelector('[data-k="' + k + '"]').value.trim(); };
+            h = { date: '', where: v('where'), product: '', from: v('to'), to: '', note: '' };
+        }
+        box.insertAdjacentHTML('beforeend', histRow(h, wheres));
+        const row = box.lastElementChild;
+        if (rows.length) row.querySelector('[data-k="product"]').value = rows[rows.length - 1].querySelector('[data-k="product"]').value;
+        row.querySelector('[data-k="date"]').focus();
+    }
+
     $el.addEventListener('input', function (e) {
-        if (e.target.matches('input[data-k="product"]')) checkRow(e.target.closest('.edit-row'));
+        if (e.target.matches('.edit-row input[data-k="product"]')) checkRow(e.target.closest('.edit-row'));
+    });
+
+    $el.addEventListener('change', function (e) {
+        if (e.target.matches('[data-hist] select[data-k="where"]')) {
+            e.target.closest('[data-hist]').querySelector('[data-k="product"]').setAttribute('list', 'dl-products-' + (e.target.value ? 'env' : 'tech'));
+        }
     });
 
     ui.onChange(function (e) {

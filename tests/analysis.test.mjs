@@ -123,3 +123,27 @@ test('a version older than every ended catalog version counts as ended', () => {
     assert.equal(items[0].status, 'eol');
     assert.equal(items[1].status, 'unknown', '8.2 sits between known cycles, so it stays unknown');
 });
+
+test('upgradeJourney compares the first version with the current one', () => {
+    const d = P.clone(data);
+    d.catalog.tech[0].versions.push({ version: '9', supportUntil: '2023-08-08', securityUntil: '2024-02-06', requires: [] });
+    const project = P.normalizeProject({
+        name: 'Shop',
+        tech: ['laravel 13.1'],
+        history: [
+            { date: '2023-03-20', product: 'laravel', from: '9', to: '11' },
+            { date: '2026-04-01', product: 'laravel', from: '11', to: '13', note: 'done' }
+        ]
+    });
+    const [t] = plain(P.upgradeJourney(d, project));
+    assert.equal(t.productName, 'Laravel');
+    assert.equal(t.start.version, '9');
+    assert.equal(t.start.status, 'eol');
+    assert.equal(t.current.version, '13.1');
+    assert.equal(t.current.status, 'ok');
+    assert.equal(t.steps.length, 2);
+    const text = P.upgradeSummaryText(d, project);
+    assert.match(text, /Laravel: 9 থেকে 13\.1/);
+    assert.match(text, /done/);
+    assert.equal(P.upgradeSummaryText(d, P.normalizeProject({ name: 'X' })), '');
+});

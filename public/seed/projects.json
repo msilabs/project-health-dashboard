@@ -84,6 +84,48 @@
                     ]
                 }
             ],
+            "history": [
+                {
+                    "date": "2023-03-05",
+                    "product": "php",
+                    "where": "production",
+                    "from": "8.0",
+                    "to": "8.1",
+                    "note": ""
+                },
+                {
+                    "date": "2023-03-20",
+                    "product": "laravel",
+                    "where": "",
+                    "from": "9",
+                    "to": "10",
+                    "note": ""
+                },
+                {
+                    "date": "2024-05-28",
+                    "product": "php",
+                    "where": "production",
+                    "from": "8.1",
+                    "to": "8.2",
+                    "note": ""
+                },
+                {
+                    "date": "2024-06-10",
+                    "product": "laravel",
+                    "where": "",
+                    "from": "10",
+                    "to": "11",
+                    "note": ""
+                },
+                {
+                    "date": "2025-04-15",
+                    "product": "laravel",
+                    "where": "",
+                    "from": "11",
+                    "to": "12",
+                    "note": "Livewire 3-এ নেওয়া হয়েছে"
+                }
+            ],
             "updatedAt": "2026-10-28"
         },
         {

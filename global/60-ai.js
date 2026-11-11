@@ -37,6 +37,26 @@
         throw new Error('no-json');
     };
 
+    // ধাপের নোট পাঠানো হয় না, শুধু ভার্সন আর তারিখ
+    function upgradesDone(data, rows) {
+        var out = [];
+        rows.forEach(function (r) {
+            P.upgradeJourney(data, r.project).forEach(function (t) {
+                out.push({
+                    project: r.project.name,
+                    part: (t.where ? t.where + ': ' : '') + t.productName,
+                    from: t.start.version,
+                    to: t.current.version,
+                    since: t.firstDate,
+                    steps: t.steps.length,
+                    statusIfNotUpgraded: t.start.status,
+                    statusNow: t.current.status
+                });
+            });
+        });
+        return out;
+    }
+
     function catalogIds(data, kind) {
         return data.catalog[kind]
             .map(function (p) {
@@ -149,7 +169,8 @@
                 thresholds: { criticalDays: data.settings.redDays, warningDays: data.settings.yellowDays },
                 endedOrEndingSoon: up,
                 problems: a.issues.map(function (i) { return i.project.name + ': ' + i.text; }),
-                partsWithUnknownStatus: a.rows.reduce(function (n, r) { return n + r.unknownCount; }, 0)
+                partsWithUnknownStatus: a.rows.reduce(function (n, r) { return n + r.unknownCount; }, 0),
+                upgradesDone: upgradesDone(data, a.rows)
             };
             return [
                 'Write a short management report on the health of our software portfolio, using only the data below.',
@@ -162,8 +183,9 @@
                 '১. এক লাইনে সামগ্রিক অবস্থা।',
                 '২. এখনই যা করা দরকার (সাপোর্ট শেষ বা জরুরি)।',
                 '৩. আগামী ৩ মাস আর ১২ মাসের পরিকল্পনা।',
-                '৪. ব্যবস্থা না নিলে ঝুঁকি কী (নিরাপত্তা, হোস্টিং, ক্লায়েন্ট)।',
-                '৫. কোন তথ্য এখনো জানা নেই।',
+                '৪. যা আপগ্রেড হয়ে গেছে (upgradesDone থাকলে): শুরুর ভার্সন থেকে এখনকার ভার্সন, আর তাতে ঝুঁকি কতটা কমেছে।',
+                '৫. ব্যবস্থা না নিলে ঝুঁকি কী (নিরাপত্তা, হোস্টিং, ক্লায়েন্ট)।',
+                '৬. কোন তথ্য এখনো জানা নেই।',
                 '',
                 'RULES: Do not invent numbers, dates or projects. Keep it under 400 words.',
                 String(input || '').trim() ? '\nEXTRA CONTEXT FROM ME:\n' + fence(input) : ''

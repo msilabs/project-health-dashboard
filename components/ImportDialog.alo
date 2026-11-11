@@ -156,7 +156,10 @@
             if (incoming.has.projects) parts.push(P.num(incoming.projects.length) + 'টি প্রজেক্ট');
             if (incoming.has.tech || incoming.has.env) parts.push('ক্যাটালগ');
             if (incoming.has.settings) parts.push('সেটিংস');
-            preview(P.mergeData(P.store.get(), incoming, mode), source + '-এ আছে ' + parts.join(', ') + '। ' + (mode === 'merge' ? 'মিলিয়ে নিলে:' : 'বদলে দিলে:'));
+            const next = P.mergeData(P.store.get(), incoming, mode);
+            // মিলিয়ে নিলে ভার্সনের বদল ইতিহাসে যায়; পুরো বদলে (যেমন ব্যাকআপ ফেরানো) যায় না
+            if (mode === 'merge') P.recordUpgrades(P.store.get(), next, P.isoDate(P.today()));
+            preview(next, source + '-এ আছে ' + parts.join(', ') + '। ' + (mode === 'merge' ? 'মিলিয়ে নিলে:' : 'বদলে দিলে:'));
         } catch (err) {
             error(ui.importError(err));
         }
@@ -180,7 +183,7 @@
                 p.deployments.forEach(function (d) { d.stack.forEach(function (r) { if (!P.findProduct(data, 'env', r.product)) missing.push(r.product); }); });
             });
             if (missing.length) warnings.push('ক্যাটালগে নেই, তাই অবস্থা অজানা দেখাবে: ' + P.esc(P.unique(missing).join(', ')));
-            preview(P.mergeData(data, incoming, 'merge'), 'AI-এর উত্তরে ' + P.num(incoming.projects.length) + 'টি প্রজেক্ট। মিলিয়ে নিলে:', warnings);
+            preview(P.recordUpgrades(data, P.mergeData(data, incoming, 'merge'), P.isoDate(P.today())), 'AI-এর উত্তরে ' + P.num(incoming.projects.length) + 'টি প্রজেক্ট। মিলিয়ে নিলে:', warnings);
         } catch (err) {
             error(err.message === 'no-projects' ? 'উত্তরে "projects" তালিকা নেই। AI-কে প্রম্পটের ফরম্যাট মেনে আবার উত্তর দিতে বলুন।' : ui.importError(err));
         }
